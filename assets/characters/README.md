@@ -1,1 +1,2 @@
-These are the assets for the Main and Neutral characters.
+# Characters
+Images/Animations for Main and Neutral characters.
