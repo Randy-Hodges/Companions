@@ -1,2 +1,2 @@
 # Characters
-Images/Animations for Main and Neutral characters.
+Images/Animations for Main and Neutral characters
