@@ -1,23 +1,11 @@
 var playerJumpButton, currentPlayer;
-function playerTryJump(player){
-    console.log('ayoooo')
-    // give player ability to jump when touching ground
-    // if (player.body.blocked.down && player.jumpStorage == 0){
-    //     player.jumpStorage += 1;
-    // }
-    // // jumping 
-    // if (player.jumpStorage > 0){
-    //     player.jumpStorage -= 1;
-    //     //player.body.velocity.y = player.jumpVel;
-    // }
-    // console.log(player.jumpStorage)
-}
+
 
 Player = function(game, x = gameWidth/2, y = gameHeight/2){        
     // instantiate Sprite object
     Phaser.Sprite.call(this, game, x, y, 'player');
     this.anchor.setTo(.5,.5);   
-    this.scale.setTo(1,1);
+    this.scale.setTo(spawndirection,1);
 
     // add animations
     this.animations.add('idle side', [11,12,13,14,15]);
@@ -27,16 +15,17 @@ Player = function(game, x = gameWidth/2, y = gameHeight/2){
     // physics
     this.accelx = 450;
     game.physics.enable(this);
+    console.log(this.body.position.x, " ", console.log(this.body.position.y))
     this.body.setSize(9,28,28,20); // Creating hitbox. first two params are size of body, second two are offset of body
     this.body.gravity.y = 500;
     this.body.drag.x = 800;
     this.body.maxVelocity.x = 180;
+    this.body.maxVelocity.y = 400;
     this.body.collideWorldBounds = true;
 
     // jumping
-    this.jumpVel = -200;//not used
     this.jumpAccel = -3070;
-    this.jumpTime = 120 //ms
+    this.jumpInputTime = 120 //ms
     this.jumpStorage = 0; // should be initialized to 0, can increase for dev purposes
     this.currentlyJumping = false;
     currentPlayer = this;
@@ -49,7 +38,7 @@ Player = function(game, x = gameWidth/2, y = gameHeight/2){
             }
             // jumping 
             if (currentPlayer.jumpStorage > 0){
-                //currentPlayer.jumpStorage -= 1;
+                currentPlayer.jumpStorage -= 1; // comment this line out for infinite jumps
                 currentPlayer.currentlyJumping = true;
                 //currentPlayer.body.velocity.y = currentPlayer.jumpVel;
                 currentPlayer.body.acceleration.y = currentPlayer.jumpAccel;
@@ -104,7 +93,7 @@ Player.prototype.update = function() {
     }
     // ----- VERTICAL MOVEMENT -----
     // Jumping is mostly controlled under the section 'jumping' located in the Player function.
-    if ( playerJumpButton.duration > currentPlayer.jumpTime){
+    if ( playerJumpButton.duration > currentPlayer.jumpInputTime){
         currentPlayer.currentlyJumping = false;
         currentPlayer.body.acceleration.y = 0;
     }
@@ -137,3 +126,17 @@ class Player extends Phaser.Sprite{
     }
 }
 */
+
+// function playerTryJump(player){
+//     console.log('ayoooo')
+//     // give player ability to jump when touching ground
+//     // if (player.body.blocked.down && player.jumpStorage == 0){
+//     //     player.jumpStorage += 1;
+//     // }
+//     // // jumping 
+//     // if (player.jumpStorage > 0){
+//     //     player.jumpStorage -= 1;
+//     //     //player.body.velocity.y = player.jumpVel;
+//     // }
+//     // console.log(player.jumpStorage)
+// }
