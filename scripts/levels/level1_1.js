@@ -45,7 +45,7 @@ demo.level1_1.prototype = {
 
         // Coins
         coin_group = game.add.group();
-        coin_positions = [[49,22],[57,13],[49,28],[73,24],[35,8]] // in units of tiles
+        coin_positions = [[49,22],[57,13],[49,28],[76,24],[35,8]] // in units of tiles
         coin_positions.forEach(coin_pos => {
             coin = new Coin(game, coin_pos[0]*tileLength, coin_pos[1]*tileLength);
             game.add.existing(coin);

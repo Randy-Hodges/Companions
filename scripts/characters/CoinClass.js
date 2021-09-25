@@ -1,10 +1,10 @@
 Coin = function(game, x, y){        
     // instantiate Sprite object
     Phaser.Sprite.call(this, game, x, y, 'coin');
-    this.anchor.setTo(.5,.5);   
+    //this.anchor.setTo(.5,.5);   
     this.scale.setTo(1,1);
 
-    this.animations.add('rotate', [0,1,2,3,4])
+    this.animations.add('rotate', [0,1,2,3,4]);
 
     // physics
     game.physics.enable(this);
