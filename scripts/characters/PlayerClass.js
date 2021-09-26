@@ -2,7 +2,7 @@ var playerJumpButton, currentPlayer;
 
 
 Player = function(game, x = gameWidth/2, y = gameHeight/2){ 
-    // *****INSTANTIATE AN ENEMY GROUP BEFORE THE PLAYER IN THE CODE FOR COLLISIONS WITH ENEMIES
+    // *INSTANTIATE AN ENEMY GROUP BEFORE THE PLAYER IN THE CODE FOR COLLISIONS WITH ENEMIES
     
     // instantiate Sprite object
     Phaser.Sprite.call(this, game, x, y, 'player');
@@ -15,6 +15,7 @@ Player = function(game, x = gameWidth/2, y = gameHeight/2){
     this.frame = 11;
     this.animations.add('slash side', [8,9,10], frameRate = 10);
     this.animations.add('slash down', [0,1,2], frameRate = 10);
+    this.stopAnimations = false;
     
     // physics
     this.accelx = 750;
@@ -25,7 +26,7 @@ Player = function(game, x = gameWidth/2, y = gameHeight/2){
     this.body.maxVelocity.x = 180;
     this.body.maxVelocity.y = 400;
     this.body.collideWorldBounds = true;
-
+    
     this.faceDirection = 1;
 
     /* #region jumping */
@@ -56,7 +57,8 @@ Player = function(game, x = gameWidth/2, y = gameHeight/2){
         })
         /* #endregion */
         
-    // ----- SLASHING -----
+    /* #region ----- SLASHING ----- */
+    // Animations
     slashSide = this.animations.getAnimation('slash side');
     slashSide.onStart.add(function(){
         currentPlayer.stopAnimations = true;
@@ -86,7 +88,6 @@ Player = function(game, x = gameWidth/2, y = gameHeight/2){
     this.addChild(slash)
 
     playerSlashButton = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-    console.log(playerSlashButton)
     playerSlashButton.onDown.add(
         function(){
             if (game.input.keyboard.isDown(Phaser.Keyboard.DOWN) || game.input.keyboard.isDown(Phaser.Keyboard.S)){
@@ -99,9 +100,8 @@ Player = function(game, x = gameWidth/2, y = gameHeight/2){
                     currentPlayer.animations.play('slash side');
                 }
             }
-            console.log('slash');
         });
-
+        /* #endregion */
 
     // custom variables
     this.invulnerableTime = game.time.now;
@@ -109,7 +109,6 @@ Player = function(game, x = gameWidth/2, y = gameHeight/2){
     this.iFrames = 2000 //actually in milliseconds, not frames
 
     
-    this.stopAnimations = false;
 }
 
 

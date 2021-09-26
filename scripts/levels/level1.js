@@ -1,7 +1,7 @@
 var levelOneTiles, currentPlayer, map, gdslime; 
+var score = 0, scoreText, addedAudio = false;
 var spawn = 0, spawndirection = -1;
 var tileLength = 16;
-var score = 0, scoreText;
 
 var demo = {};
 demo.level1 =  function(){};
@@ -22,10 +22,13 @@ demo.level1.prototype = {
         // configs
         create_game_configs();
 
-        // music 
-        backtrack = game.add.audio('backtrack');
-        backtrack.play();
-        backtrack.volume = .5;
+        // music
+        if (!addedAudio){
+            backtrack = game.add.audio('backtrack');
+            backtrack.play();
+            backtrack.volume = .5;
+            addedAudio = true;
+        }
 
         // sound effects
         coinCollect = game.add.audio('coin collect');
@@ -39,7 +42,7 @@ demo.level1.prototype = {
         map.addTilesetImage('Magic_Cliffs16','Magic_Cliffs16'); //make sure the tileset name is the same as the tileset name used in Tiled
         map.addTilesetImage('Magic_Cliffs16_2','Magic_Cliffs16'); //make sure the tileset name is the same as the tileset name used in Tiled
         map.addTilesetImage('nes-color-palette','nes-color-palette'); //make sure the tileset name is the same as the tileset name used in Tiled
-        levelOneTiles = map.createLayer('caveBackground');  
+        map.createLayer('caveBackground');  
         levelOneTiles = map.createLayer('mainGrass');  // layer name is the same as used in Tiled
         map.setCollisionByExclusion(magicCliffsNoCollide, true, 'mainGrass');
         // Game borders based on tilemap
@@ -57,8 +60,8 @@ demo.level1.prototype = {
         // Enemies
         enemyGroup = game.add.group();
         map.setLayer('enemies')
-        map.forEach(function(tile){addEnemyFromTilemap(tile)},1,0,0,240,40)
-        gdslime = new GDSlime(game, 35*tileLength, 35*tileLength);
+        map.forEach(function(tile){addEnemyFromTilemap(tile)},1,0,0,map.width,map.height)
+        gdslime = new GDSlime(game, 25*tileLength, 35*tileLength);
         game.add.existing(gdslime);
         enemyGroup.add(gdslime);
         
@@ -77,6 +80,7 @@ demo.level1.prototype = {
         // Score
         scoreText = game.add.text(16,16,"Score: " + score, { fontSize: '32px', fill: '#fff' });
         scoreText.fixedToCamera = true;
+
         
 
     },
@@ -93,7 +97,8 @@ demo.level1.prototype = {
     },
     render: function(){
         //console.log('rendering');
-       //game.debug.body(slash);
+    //    game.debug.body(gdslime.enfrente);
+    //    game.debug.body(gdslime);
        //game.debug.spriteInfo(player);
     },
     createSpawnPoints: function(){
@@ -113,11 +118,5 @@ demo.level1.prototype = {
         }
     }
 };
-function addEnemyFromTilemap(tile){
-    if (tile.index == 2346){
-        gdslime = new GDSlime(game, tile.x*tileLength, tile.y*tileLength);
-        game.add.existing(gdslime);
-        enemyGroup.add(gdslime);
-    }
-}
+
 

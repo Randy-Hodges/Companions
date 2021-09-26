@@ -32,5 +32,13 @@ function changeLevel(i, levelNum){
     game.state.start('level' + levelNum);
     backtrack.resume();
 }
+function addEnemyFromTilemap(tile){
+    if (tile.index == 2346){
+        gdslime = new GDSlime(game, tile.x*tileLength, tile.y*tileLength);
+        game.add.existing(gdslime);
+        enemyGroup.add(gdslime);
+    }
+}
+
 
 
