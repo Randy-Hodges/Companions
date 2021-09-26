@@ -1,4 +1,4 @@
-var levelOneTiles, currentPlayer, map; 
+var levelOneTiles, currentPlayer, map, gdslime; 
 var spawn = 0, spawndirection = -1;
 var tileLength = 16;
 var score = 0, scoreText;
@@ -13,6 +13,7 @@ demo.level1.prototype = {
         loadEnemies();
         game.load.tilemap('level1', "assets/tilemaps/basic_tilemap_027.json", null, Phaser.Tilemap.TILED_JSON);
         game.load.image('Magic_Cliffs16', "assets/tiles/Magic-Cliffs-Environment/PNG/tileset.png");
+        game.load.image('nes-color-palette', "assets/tiles/nes-color-palette.jpg");
         
         game.load.audio('backtrack', "assets/audio/music/speck_-_Home_Precarity_1.mp3")
 
@@ -37,11 +38,12 @@ demo.level1.prototype = {
         var map = game.add.tilemap('level1');
         map.addTilesetImage('Magic_Cliffs16','Magic_Cliffs16'); //make sure the tileset name is the same as the tileset name used in Tiled
         map.addTilesetImage('Magic_Cliffs16_2','Magic_Cliffs16'); //make sure the tileset name is the same as the tileset name used in Tiled
+        map.addTilesetImage('nes-color-palette','nes-color-palette'); //make sure the tileset name is the same as the tileset name used in Tiled
         levelOneTiles = map.createLayer('caveBackground');  
         levelOneTiles = map.createLayer('mainGrass');  // layer name is the same as used in Tiled
         map.setCollisionByExclusion(magicCliffsNoCollide, true, 'mainGrass');
         // Game borders based on tilemap
-        game.world.setBounds(0, 0, map.layer.width*tileLength, map.layer.height*tileLength);
+        game.world.setBounds(0, 0, map.layer.widthInPixels, map.layer.heightInPixels);
 
         // Coins
         coin_group = game.add.group();
@@ -53,8 +55,12 @@ demo.level1.prototype = {
         });
 
         // Enemies
+        enemyGroup = game.add.group();
+        map.setLayer('enemies')
+        map.forEach(function(tile){addEnemyFromTilemap(tile)},1,0,0,240,40)
         gdslime = new GDSlime(game, 35*tileLength, 35*tileLength);
         game.add.existing(gdslime);
+        enemyGroup.add(gdslime);
         
         // Warp points (doing it with coins that aren't physically loaded in the game)
         warp1 = new Coin(game, spawnpoint1[0]*tileLength, spawnpoint1[1]*tileLength);
@@ -71,13 +77,13 @@ demo.level1.prototype = {
         // Score
         scoreText = game.add.text(16,16,"Score: " + score, { fontSize: '32px', fill: '#fff' });
         scoreText.fixedToCamera = true;
+        
 
     },
     update: function(){
         // Collision
         game.physics.arcade.collide(currentPlayer, levelOneTiles);
-        game.physics.arcade.collide(gdslime, levelOneTiles);
-        game.physics.arcade.collide(gdslime, currentPlayer);
+        game.physics.arcade.collide(enemyGroup, levelOneTiles);
         game.physics.arcade.overlap(currentPlayer, coin_group, function(player, coin){coin.kill(); coinCollect.play(); score+=1;});
 
         // Warping
@@ -87,7 +93,7 @@ demo.level1.prototype = {
     },
     render: function(){
         //console.log('rendering');
-       //game.debug.body(player);
+       //game.debug.body(slash);
        //game.debug.spriteInfo(player);
     },
     createSpawnPoints: function(){
@@ -107,10 +113,11 @@ demo.level1.prototype = {
         }
     }
 };
-
-function changeLevel(i, levelNum){
-    backtrack.pause();
-    console.log('level change to: ' + levelNum);
-    game.state.start('level' + levelNum);
-    backtrack.resume();
+function addEnemyFromTilemap(tile){
+    if (tile.index == 2346){
+        gdslime = new GDSlime(game, tile.x*tileLength, tile.y*tileLength);
+        game.add.existing(gdslime);
+        enemyGroup.add(gdslime);
+    }
 }
+

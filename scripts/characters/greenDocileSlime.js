@@ -10,14 +10,20 @@ GDSlime = function(game, x, y){
     this.animations.add('moving', [4,5,6,7]);
     this.animations.add('attacking', [8,9,10,11,12]);
     this.animations.add('hurt', [13,14,15,16])
-    this.animations.add('dying', [1,17,18,19,20]);
-
+    this.animations.add('dying', [1,17,18,19,20], frameRate = 10);
+    dying = this.animations.getAnimation('dying');
+    dying.killOnComplete = true;
 
     // physics
     game.physics.enable(this);
+    this.body.setSize(18,11,7,14);
     this.movement_speed = 60;
     this.body.velocity.x = this.movement_speed;
     this.body.maxVelocity.x = this.movement_speed;
+
+    this.damage = {none: false, left: true, right: true, up: false, down: true};
+
+    this.stopAnimations = false;
 
     }
 
@@ -30,11 +36,30 @@ GDSlime.prototype.constructor = GDSlime;
 
 // (Automatically called by World.update)
 GDSlime.prototype.update = function() {
-    if (this.body.blocked.right || this.body.blocked.left){
-        this.movement_speed *= -1;
-        this.body.velocity.x = this.movement_speed;
-        this.scale.x = -this.scale.x;
+    if (enemyGroup){
+        game.physics.arcade.collide(enemyGroup, enemyGroup, function(enemy1, enemy2){switchDirectionSlime(enemy1); switchDirectionSlime(enemy2)});
     }
-    this.animations.play('moving', 10, true);
+    if (this.body.blocked.right || this.body.blocked.left){
+        switchDirectionSlime(this);
+    }
+    this.body.velocity.x = this.movement_speed;
+    if (!this.stopAnimations){
+        this.animations.play('moving', 10, true);
+    }
 };
+
+GDSlime.prototype.die = function() {
+    console.log('dying')
+    this.body.enable = false;
+    this.stopAnimations = true;
+    this.animations.play('dying');
+}
+
+
+function switchDirectionSlime(slime) {
+    slime.movement_speed *= -1;
+    slime.scale.x = -slime.scale.x;
+}
+
+
 

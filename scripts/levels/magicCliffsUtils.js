@@ -26,4 +26,11 @@ function updateScore(){
     scoreText.text.y = 0;
 }
 
+function changeLevel(i, levelNum){
+    backtrack.pause();
+    console.log('level change to: ' + levelNum);
+    game.state.start('level' + levelNum);
+    backtrack.resume();
+}
+
 

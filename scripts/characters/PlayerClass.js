@@ -1,17 +1,21 @@
 var playerJumpButton, currentPlayer;
 
 
-Player = function(game, x = gameWidth/2, y = gameHeight/2){        
+Player = function(game, x = gameWidth/2, y = gameHeight/2){ 
+    // *****INSTANTIATE AN ENEMY GROUP BEFORE THE PLAYER IN THE CODE FOR COLLISIONS WITH ENEMIES
+    
     // instantiate Sprite object
     Phaser.Sprite.call(this, game, x, y, 'player');
     this.anchor.setTo(.5,.5);   
     this.scale.setTo(spawndirection,1);
 
     // add animations
-    this.animations.add('idle side', [11,12,13,14,15]);
-    this.animations.add('walk side', [16,17,18,19,20,21]);
+    this.animations.add('idle side', [11,12,13,14,15], frameRate=10);
+    this.animations.add('walk side', [16,17,18,19,20,21], frameRate=10);
     this.frame = 11;
-
+    this.animations.add('slash side', [8,9,10], frameRate = 10);
+    this.animations.add('slash down', [0,1,2], frameRate = 10);
+    
     // physics
     this.accelx = 750;
     game.physics.enable(this);
@@ -22,7 +26,9 @@ Player = function(game, x = gameWidth/2, y = gameHeight/2){
     this.body.maxVelocity.y = 400;
     this.body.collideWorldBounds = true;
 
-    // jumping
+    this.faceDirection = 1;
+
+    /* #region jumping */
     this.jumpAccel = -3070;
     this.jumpInputTime = 120 //ms
     this.jumpStorage = 0; // should be initialized to 0, can increase for dev purposes
@@ -48,19 +54,78 @@ Player = function(game, x = gameWidth/2, y = gameHeight/2){
             currentPlayer.currentlyJumping = false;
             currentPlayer.body.acceleration.y = 0;
         })
+        /* #endregion */
+        
+    // ----- SLASHING -----
+    slashSide = this.animations.getAnimation('slash side');
+    slashSide.onStart.add(function(){
+        currentPlayer.stopAnimations = true;
+        currentPlayer.isSlashing = true;
+    });
+    slashSide.onComplete.add(function(){
+        currentPlayer.stopAnimations = false;
+        currentPlayer.isSlashing = false;
+    });
+    slashDown = this.animations.getAnimation('slash down');
+    slashDown.onStart.add(function(){
+        currentPlayer.stopAnimations = true;
+        currentPlayer.isSlashing = true;
+    });
+    slashDown.onComplete.add(function(){
+        currentPlayer.stopAnimations = false;
+        currentPlayer.isSlashing = false;
+    });
+    //slash mechanics
+    this.isSlashing = false;
+    slash = game.add.sprite(0,0);
+    this.slash = slash;
+    slash.anchor.setTo(0,.5);
+    game.physics.enable(slash);
+    slash.body.allowGravity = false;
+    slash.body.setSize(20,28,0,0);
+    this.addChild(slash)
+
+    playerSlashButton = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+    console.log(playerSlashButton)
+    playerSlashButton.onDown.add(
+        function(){
+            if (game.input.keyboard.isDown(Phaser.Keyboard.DOWN) || game.input.keyboard.isDown(Phaser.Keyboard.S)){
+                if (!currentPlayer.stopAnimations){
+                    currentPlayer.animations.play('slash down');
+                }
+            }
+            else{
+                if (!currentPlayer.stopAnimations){
+                    currentPlayer.animations.play('slash side');
+                }
+            }
+            console.log('slash');
+        });
+
+
+    // custom variables
+    this.invulnerableTime = game.time.now;
+    this.invulnerable = false;
+    this.iFrames = 2000 //actually in milliseconds, not frames
+
     
-    }
-
-
+    this.stopAnimations = false;
+}
 
 
 Player.prototype = Object.create(Phaser.Sprite.prototype);
 Player.prototype.constructor = Player;
 
-
 // (Automatically called by World.update)
 Player.prototype.update = function() {
-    playerSpeed = 1;
+    
+    this.slash.body.setSize(20,35,-10 + this.faceDirection*15,0);
+    if (this.isSlashing){
+        game.physics.arcade.overlap(this.slash, enemyGroup, function(slash, enemy){enemy.die()});
+        
+    }
+
+    /* #region Keyboard Input */
     customKeys = new CustomKeys();
     // ----- LATERAL MOVEMENT -----
     // Left (Movement)
@@ -76,19 +141,23 @@ Player.prototype.update = function() {
         this.body.acceleration.x = 0;
     }
     framerate = Math.abs(parseInt(this.body.velocity.x/50)) + 10;
-    // left ****Animation****
-    if (this.body.acceleration.x < 0){
-        this.scale.x = Math.abs(this.scale.x);
-        this.animations.play('walk side', framerate);
-    }
-    // right
-    else if (this.body.acceleration.x > 0){
-        this.scale.x = -Math.abs(this.scale.x);
-        this.animations.play('walk side', framerate);
-    }
-    // idle
-    if (this.body.velocity.x == 0) {
-        this.animations.play('idle side', 10, true);
+    if (!currentPlayer.stopAnimations){
+        // left ----Animation----
+        if (this.body.acceleration.x < 0){
+            this.scale.x = Math.abs(this.scale.x);
+            this.faceDirection = -1;
+            this.animations.play('walk side', framerate);
+        }
+        // right
+        else if (this.body.acceleration.x > 0){
+            this.scale.x = -Math.abs(this.scale.x);
+            this.faceDirection = 1;
+            this.animations.play('walk side', framerate);
+        }
+        // idle
+        if (this.body.velocity.x == 0) {
+            this.animations.play('idle side', loop=true);
+        }
     }
     // ----- VERTICAL MOVEMENT -----
     // Jumping is mostly controlled under the section 'jumping' located in the Player function.
@@ -96,46 +165,57 @@ Player.prototype.update = function() {
         currentPlayer.currentlyJumping = false;
         currentPlayer.body.acceleration.y = 0;
     }
-    // console.log(this.body.blocked.down)
-    // if (customKeys.isDown("W") && this.currentlyJumping && playerJumpButton.duration < 300 && playerJumpButton.duration > 60){
-    //     this.body.acceleration.y = -1000;
-    //     console.log('ayooo')
-    // }
+    
+    /* #endregion */
+
+    if (enemyGroup || bossFight){
+        if (!this.invulnerable){
+            game.physics.arcade.collide(currentPlayer, enemyGroup, function(player, enemy){
+                damageKnockbackApplied = playerDamageKnockback(player, enemy)
+                if (damageKnockbackApplied){
+                    player.invulnerable = true;
+                    player.invulnerableTime = game.time.now;  
+                    console.log("got hit")
+                }
+            });
+        }
+    }
+
+   // Invulnerability on hit
+   if (this.invulnerable && game.time.now - this.invulnerableTime > this.iFrames){
+       this.invulnerable = false;
+   }
 };
 
-
-
-/*
-class Player extends Phaser.Sprite{
-    constructor(){
-        
-        // new PIXI.BaseTexture("assets/sprites/characters/RPG Character/_side idle.png")
-        super(game, gameWidth/2, gameHeight/2, game.load.spritesheet('player', "assets/sprites/characters/RPG Character/_side idle.png", 64, 64));
-        this.anchor.x = .5;
-        this.anchor.y = .5;
-        //this.createAnimations();
-        //this.animations.play('idle side', 20, true);
+function playerDamageKnockback(player, enemy){
+    knockbackVel = 200;
+    damageKnockbackApplied = false;
+    if (player.body.touching.left){
+        player.body.velocity.x = knockbackVel;
+        if (enemy.damage.right){
+            damageKnockbackApplied = true;
+        }
     }
-
-    createAnimations(){
-        game.load.spritesheet('idle side', "assets/sprites/characters/RPG Character/_side idle.png", 64, 64);
-        game.load.spritesheet('walk side', "assets/sprites/characters/RPG Character/_side walk.png", 64, 64);
-        this.animations.add('idle side');
-        this.animations.add('walk side');
+    if (player.body.touching.right){
+        player.body.velocity.x = -knockbackVel;
+        if (enemy.damage.left){
+            damageKnockbackApplied = true;
+        }
     }
+    if (player.body.touching.up){
+        player.body.velocity.y = knockbackVel;
+        if (enemy.damage.down){
+            damageKnockbackApplied = true;
+        }
+    }
+    if (player.body.touching.down){
+        player.body.velocity.y = -knockbackVel;
+        if (enemy.damage.up){
+            damageKnockbackApplied = true;
+        }
+    }
+    return damageKnockbackApplied
+    // distance = game.physics.arcade.distanceBetween(player,enemy);
+    // console.log(distance)
 }
-*/
 
-// function playerTryJump(player){
-//     console.log('ayoooo')
-//     // give player ability to jump when touching ground
-//     // if (player.body.blocked.down && player.jumpStorage == 0){
-//     //     player.jumpStorage += 1;
-//     // }
-//     // // jumping 
-//     // if (player.jumpStorage > 0){
-//     //     player.jumpStorage -= 1;
-//     //     //player.body.velocity.y = player.jumpVel;
-//     // }
-//     // console.log(player.jumpStorage)
-// }
