@@ -3,7 +3,8 @@ demo.level1_1.prototype = {
     preload: function(){
         load_config_game();
         load_player();
-        load_items();
+        loadItems();
+        loadEnemies();
         game.load.tilemap('level1_1', "assets/tilemaps/basic_tilemap_2_010.json", null, Phaser.Tilemap.TILED_JSON);
         game.load.image('Magic_Cliffs16', "assets/tiles/Magic-Cliffs-Environment/PNG/tileset.png");
     },

@@ -4,20 +4,24 @@ magicCliffsNoCollide = [0,1768,1769,1801,1802,1803,1804,1805,1806,661,1831,1832,
     1897,1898,1900,1901,61,62,63,64,65,66,67,119,125,137,138,139,140,142,144,145,146,147,195,205,253,263,311,321,1815,1816,358,
     359,369,379,416,417,608,609,1337,1343,641,645,655,656,666,667,671,672,673,676,677,679,680,682,683,1401,699,731,734,735,737,
     738,740,741,757,789,815,847,873,905,931,963,989,661,1821,1520,1570,1571,1572,410,411,412,295,297,1455,1457,1587,1597,354,1514,
-    1405,1579,1638,1350,1293,1294,1353,1412,1470,1527,1528,1581,1584,1640,1636,1637,1348,1349,1585,1639,1642]
+    1405,1579,1638,1350,1293,1294,1353,1412,1470,1527,1528,1581,1584,1640,1636,1637,1348,1349,1585,1639,1642];
 
 
 function load_player(){
     game.load.spritesheet('player', "assets/sprites/characters/RPG Character/main_character_all.png", 64, 64); // Important for Player Init
 }
 
-function load_items(){
+function loadItems(){
     game.load.spritesheet('coin', "assets/sprites/items/money/MonedaD.png", 16, 16); 
     game.load.audio('coin collect', "assets/audio/soundeffects/Collect Coin Sound Effect.mp3");
 }
 
+function loadEnemies(){
+    game.load.spritesheet('greenDocileSlime', "assets/sprites/enemies/blue slime/slime-Sheet-green.png", 32, 25);
+}
+
 function updateScore(){
-    scoreText.text = "Score: " + score + "/10";
+    scoreText.text = "Score: " + score;
     scoreText.text.x = 0;
     scoreText.text.y = 0;
 }

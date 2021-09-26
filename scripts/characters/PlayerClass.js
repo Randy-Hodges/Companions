@@ -13,9 +13,8 @@ Player = function(game, x = gameWidth/2, y = gameHeight/2){
     this.frame = 11;
 
     // physics
-    this.accelx = 450;
+    this.accelx = 750;
     game.physics.enable(this);
-    console.log(this.body.position.x, " ", console.log(this.body.position.y))
     this.body.setSize(9,28,28,20); // Creating hitbox. first two params are size of body, second two are offset of body
     this.body.gravity.y = 500;
     this.body.drag.x = 800;

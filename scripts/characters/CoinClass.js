@@ -4,6 +4,7 @@ Coin = function(game, x, y){
     //this.anchor.setTo(.5,.5);   
     this.scale.setTo(1,1);
 
+    // Animations
     this.animations.add('rotate', [0,1,2,3,4]);
 
     // physics
