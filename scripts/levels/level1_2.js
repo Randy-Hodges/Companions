@@ -26,6 +26,7 @@ demo.level1_2.prototype = {
         var map = game.add.tilemap('level1_2');
         map.addTilesetImage('Magic_Cliffs16','Magic_Cliffs16'); //make sure the tileset name is the same as the tileset name used in Tiled
         map.addTilesetImage('Magic_Cliffs16_2','Magic_Cliffs16'); 
+        map.addTilesetImage('Magic_Cliffs16_3','Magic_Cliffs16'); 
         map.addTilesetImage('nes-color-palette','nes-color-palette'); //make sure the tileset name is the same as the tileset name used in Tiled
         map.createLayer('caveBackground');  
         levelOneTiles = map.createLayer('mainGrass');  // layer name is the same as used in Tiled
@@ -43,7 +44,6 @@ demo.level1_2.prototype = {
         
         // Warp points (doing it with coins bc I'm pressed for time)
         warp1 = new Coin(game, spawnpoint1[0]*tileLength, spawnpoint1[1]*tileLength);
-        warp2 = new Coin(game, spawnpoint2[0]*tileLength, spawnpoint2[1]*tileLength);
 
         // Enemies
         enemyGroup = game.add.group();
@@ -69,9 +69,8 @@ demo.level1_2.prototype = {
         //game.physics.arcade.overlap(currentPlayer, coin_group, function(player, coin){coin.kill(); coinCollect.play(); score+=1;});
 
         // Warping
-        game.physics.arcade.collide(currentPlayer, warp1, function(player, coin){spawn = 1; spawndirection = 1; changeLevel(0,"1");});
-        game.physics.arcade.collide(currentPlayer, warp2, function(player, coin){spawn = 2; spawndirection = -1; changeLevel(0,"1");});
-        updateScore();
+        game.physics.arcade.collide(currentPlayer, warp1, function(player, coin){spawn = 1; spawndirection = 1; changeLevel(0,"1_1");});
+        updateMoney();
     },
     render: function(){
         //console.log('rendering');
@@ -80,16 +79,10 @@ demo.level1_2.prototype = {
     },
     createSpawnPoints: function(){
         //SpawnPoints are in units of tiles
-        spawnpoint1 = [20, 20];
-        spawnpoint2 = [0,0];
+        spawnpoint1 = [10, 13];
         if (spawn == 2){
             spawnpoint = spawnpoint1.slice();
             spawnpoint[0] += 2;
-            console.log(spawnpoint, spawnpoint1)
-        }
-        if (spawn == 1){
-            spawnpoint = spawnpoint2.slice();
-            spawnpoint[0] -= 2;
         }
     }
 };
