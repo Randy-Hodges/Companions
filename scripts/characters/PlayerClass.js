@@ -174,6 +174,7 @@ Player.prototype.update = function() {
                 if (damageKnockbackApplied){
                     player.invulnerable = true;
                     player.invulnerableTime = game.time.now;  
+                    //dmgHearts(1);
                     console.log("got hit")
                 }
             });
@@ -193,12 +194,14 @@ function playerDamageKnockback(player, enemy){
         player.body.velocity.x = knockbackVel;
         if (enemy.damage.right){
             damageKnockbackApplied = true;
+            dmgHearts(1);
         }
     }
     if (player.body.touching.right){
         player.body.velocity.x = -knockbackVel;
         if (enemy.damage.left){
             damageKnockbackApplied = true;
+            dmgHearts(1);
         }
     }
     if (player.body.touching.up){
@@ -218,3 +221,40 @@ function playerDamageKnockback(player, enemy){
     // console.log(distance)
 }
 
+// Health Functions
+function createHearts(numhearts){
+    hearts = game.add.group();
+    hearts.fixedToCamera = true;
+    
+    for (var i = 0; i < numhearts; i += 1){
+        var heart = hearts.create(i*20 + 80, 13, 'heart');
+        
+    }
+    
+}
+
+function healHearts(numhearts, heal){
+    hearts.set(0,"checkVisible", true);
+    
+    for (var i = 0; i < heal; i += 1){
+        var heart = hearts.create(i*20 + 80, 13, 'heart');
+        
+    }
+}
+
+function dmgHearts(dmg){
+    var numhearts = hearts.countLiving();
+    
+    if (numhearts <= 1){
+        hearts.removeChildAt(numhearts - 1);
+        
+        heartText = game.add.text(64,64,"You are dead.", { fontSize: '72px', fill: '#000' });
+        heartText.fixedToCamera = true;
+        
+        changeLevel(0,"0");
+    } else {
+        hearts.removeChildAt(numhearts - 1);
+    }
+    
+    console.log(numhearts);
+}
