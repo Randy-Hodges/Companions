@@ -4,8 +4,8 @@ var demo = {};
 demo.level1 =  function(){};
 demo.level1.prototype = {
     preload: function(){
-        load_config_game();
-        load_player();
+        loadGameConfigs();
+        loadPlayer();
         loadItems();
         loadEnemies();
         game.load.tilemap('level1', "assets/tilemaps/basic_tilemap_027.json", null, Phaser.Tilemap.TILED_JSON);
@@ -17,7 +17,7 @@ demo.level1.prototype = {
     },
     create: function(){
         // configs
-        create_game_configs();
+        createGameConfigs();
 
         // music
         if (!addedAudio){
