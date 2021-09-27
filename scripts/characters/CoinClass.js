@@ -10,9 +10,7 @@ Coin = function(game, x, y){
 
     // physics
     game.physics.enable(this);
-    //this.body.setSize(9,28,28,20); // Creating hitbox. first two params are size of body, second two are offset of body
-    //this.body.data.gravityScale=0;
-    this.body.acceleration.y = -400;
+    this.body.acceleration.y = -400; // counteracts gravity
 
 }
 

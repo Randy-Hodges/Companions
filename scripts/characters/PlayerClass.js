@@ -121,6 +121,8 @@ Player.prototype.constructor = Player;
 
 // (Automatically called by World.update)
 Player.prototype.update = function() {
+    game.physics.enable(this);
+    game.physics.enable(slash);
     
     this.slash.body.setSize(20,35,-10 + this.faceDirection*15,0);
     if (this.isSlashing){

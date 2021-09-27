@@ -1,8 +1,8 @@
 var levelOneTilesTiles;
 var i = 0;
-GDSlime = function(game, x, y){        
+Slime = function(game, x, y, spritesheetStrID){        
     // instantiate Sprite object
-    Phaser.Sprite.call(this, game, x, y, 'greenDocileSlime');
+    Phaser.Sprite.call(this, game, x, y, spritesheetStrID);
     this.anchor.setTo(.5,.5); 
     scale = 1.3;  
     this.scale.setTo(-scale,scale);
@@ -45,12 +45,12 @@ GDSlime = function(game, x, y){
 
 
 
-GDSlime.prototype = Object.create(Phaser.Sprite.prototype);
-GDSlime.prototype.constructor = GDSlime;
+Slime.prototype = Object.create(Phaser.Sprite.prototype);
+Slime.prototype.constructor = Slime;
 
 
 // (Automatically called by World.update)
-GDSlime.prototype.update = function() {
+Slime.prototype.update = function() {
     // Ledge Detection
     this.enfrente.body.setSize(18,11, - 9 + this.faceDirection*20,1);
     // offset to get correct tile of slime
@@ -79,7 +79,7 @@ GDSlime.prototype.update = function() {
     }
 };
 
-GDSlime.prototype.die = function() {
+Slime.prototype.die = function() {
     this.body.enable = false;
     this.stopAnimations = true;
     this.animations.play('dying');
