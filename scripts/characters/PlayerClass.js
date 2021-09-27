@@ -9,7 +9,7 @@ Player = function(game, x = gameWidth/2, y = gameHeight/2){
     this.anchor.setTo(.5,.5);   
     this.scale.setTo(spawndirection, 1);
 
-    // hearts
+    // hearts - HP
     this.maxHearts = 3;
     this.currentHearts = 3;
 
@@ -237,13 +237,18 @@ function createHearts(numhearts){
     
 }
 
-function healHearts(numhearts, heal){
-    hearts.set(0,"checkVisible", true);
+function healHearts(heal){
+    var numhearts = currentPlayer.currentHearts + 1;
     
-    for (var i = 0; i < heal; i += 1){
-        var heart = hearts.create(i*20 + 80, 13, 'heart');
+    if (numhearts >= currentPlayer.maxHearts){
+        console.log("At max hearts!");
         
+    } else {
+        currentPlayer.currentHearts += 1;
+        createHearts(numhearts);
     }
+    
+    console.log(currentPlayer.currentHearts);
 }
 
 function dmgHearts(dmg){
@@ -262,5 +267,5 @@ function dmgHearts(dmg){
 
     currentPlayer.currentHearts -= 1;
     
-    console.log(numhearts);
+    console.log(currentPlayer.currentHearts);
 }

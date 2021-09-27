@@ -53,6 +53,15 @@ demo.level1.prototype = {
             game.add.existing(coin);
             coin_group.add(coin);
         });
+        
+        // Medi - Hearts
+        heart_group = game.add.group();
+        heart_positions = [[29,35],[184,19],[201,9],[115,18],[15,16]] // in units of tiles
+        heart_positions.forEach(heart_pos => {
+            heart = new Medi(game, heart_pos[0]*tileLength, heart_pos[1]*tileLength);
+            game.add.existing(heart);
+            heart_group.add(heart);
+        });
 
         // Enemies
         enemyGroup = game.add.group();
@@ -89,6 +98,7 @@ demo.level1.prototype = {
         game.physics.arcade.collide(currentPlayer, levelOneTiles);
         game.physics.arcade.collide(enemyGroup, levelOneTiles);
         game.physics.arcade.overlap(currentPlayer, coin_group, function(player, coin){coin.kill(); coinCollect.play(); money+=1;});
+        game.physics.arcade.overlap(currentPlayer, heart_group, function(player, heart){heart.kill(); healHearts(1); /*heartCollect.play();*/});
 
         // Warping
         game.physics.arcade.collide(currentPlayer, warp1, function(player, coin){spawn = 1; spawndirection = 1; changeLevel(0,"1_1");});

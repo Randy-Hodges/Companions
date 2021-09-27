@@ -1,12 +1,12 @@
-// Coin - Money Collectible that gives 1 coin
-Coin = function(game, x, y){        
+// Medi - Heart Collectible that heals
+Medi = function(game, x, y){        
     // instantiate Sprite object
-    Phaser.Sprite.call(this, game, x, y, 'coin');
+    Phaser.Sprite.call(this, game, x, y, 'heart');
     //this.anchor.setTo(.5,.5);   
     this.scale.setTo(1,1);
 
     // Animations
-    this.animations.add('rotate', [0,1,2,3,4]);
+    this.animations.add('heartbeat', [0,1,2,3,4,5]);
 
     // physics
     game.physics.enable(this);
@@ -17,11 +17,11 @@ Coin = function(game, x, y){
 }
 
 
-Coin.prototype = Object.create(Phaser.Sprite.prototype);
-Coin.prototype.constructor = Coin;
+Medi.prototype = Object.create(Phaser.Sprite.prototype);
+Medi.prototype.constructor = Medi;
 
 
 // (Automatically called by World.update)
-Coin.prototype.update = function() {
-    this.animations.play('rotate', 10);
+Medi.prototype.update = function() {
+    this.animations.play('heartbeat', 10);
 }
