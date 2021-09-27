@@ -237,6 +237,12 @@ function createHearts(numhearts){
     
 }
 
+function increaseMaxHearts(increasenum){
+     var numhearts = currentPlayer.currentHearts + increasenum;
+    currentPlayer.currentHearts += increasenum;
+    createHearts(numhearts);
+}
+
 function healHearts(heal){
     var numhearts = currentPlayer.currentHearts + 1;
     
