@@ -1,4 +1,11 @@
+<<<<<<< Updated upstream
 
+=======
+var levelOneTiles, currentPlayer, map, gdslime; 
+var money = 0, moneyText, addedAudio = false;
+var spawn = 0, spawndirection = -1;
+var tileLength = 16;
+>>>>>>> Stashed changes
 
 var demo = {};
 demo.level1 =  function(){};
@@ -44,7 +51,7 @@ demo.level1.prototype = {
         map.setCollisionByExclusion(magicCliffsNoCollide, true, 'mainGrass');
         // Game borders based on tilemap
         game.world.setBounds(0, 0, map.layer.widthInPixels, map.layer.heightInPixels);
-
+        
         // Coins
         coin_group = game.add.group();
         coin_positions = [[30,35],[185,19],[202,9],[116,18],[14,16]] // in units of tiles
@@ -74,21 +81,33 @@ demo.level1.prototype = {
         // Tilemap Infront
         map.createLayer('front');
 
+<<<<<<< Updated upstream
         // Score
         scoreText = game.add.text(16,16,"Score: " + score, { fontSize: '32px', fill: '#fff' });
         scoreText.fixedToCamera = true;
 
+=======
+        // Money - Coins
+        moneyText = game.add.text(8,26,"Coins: " + money, { fontSize: '18px', fill: '#fff' });
+        moneyText.fixedToCamera = true;
+        
+        // Hearts
+        heartText = game.add.text(8,8,"Hearts: ", { fontSize: '18px', fill: '#fff' });
+        heartText.fixedToCamera = true;
+        createHearts(3);
+        
+>>>>>>> Stashed changes
     },
     update: function(){
         // Collision
         game.physics.arcade.collide(currentPlayer, levelOneTiles);
         game.physics.arcade.collide(enemyGroup, levelOneTiles);
-        game.physics.arcade.overlap(currentPlayer, coin_group, function(player, coin){coin.kill(); coinCollect.play(); score+=1;});
+        game.physics.arcade.overlap(currentPlayer, coin_group, function(player, coin){coin.kill(); coinCollect.play(); money+=1;});
 
         // Warping
         game.physics.arcade.collide(currentPlayer, warp1, function(player, coin){spawn = 1; spawndirection = 1; changeLevel(0,"1_1");});
         game.physics.arcade.collide(currentPlayer, warp2, function(player, coin){spawn = 2; spawndirection = -1; changeLevel(0,"1_1");});
-        updateScore();
+        updateMoney();
     },
     render: function(){
         //console.log('rendering');
