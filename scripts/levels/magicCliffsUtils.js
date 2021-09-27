@@ -1,6 +1,6 @@
-var spawn = 2, spawndirection = -1;
 var levelOneTiles, currentPlayer, map, gdslime; 
-var score = 0, scoreText, addedAudio = false;
+var money = 0, moneyText, addedAudio = false;
+var spawn = 0, spawndirection = -1;
 var tileLength = 16;
 
 

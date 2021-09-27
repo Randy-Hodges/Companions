@@ -53,9 +53,14 @@ demo.level1_2.prototype = {
         // Tilemap Infront
         map.createLayer('front');
 
-        // Score
-        scoreText = game.add.text(16,16,"Score: " + score, { fontSize: '32px', fill: '#fff' });
-        scoreText.fixedToCamera = true;
+        // Money - Coins
+        moneyText = game.add.text(8,26,"Coins: " + money, { fontSize: '18px', fill: '#fff' });
+        moneyText.fixedToCamera = true;
+        
+        // Hearts
+        heartText = game.add.text(8,8,"Hearts: ", { fontSize: '18px', fill: '#fff' });
+        heartText.fixedToCamera = true;
+        createHearts(3);
     },
     update: function(){
         // Collision

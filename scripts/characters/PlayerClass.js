@@ -7,7 +7,11 @@ Player = function(game, x = gameWidth/2, y = gameHeight/2){
     // instantiate Sprite object
     Phaser.Sprite.call(this, game, x, y, 'player');
     this.anchor.setTo(.5,.5);   
-    this.scale.setTo(spawndirection,1);
+    this.scale.setTo(spawndirection, 1);
+
+    // hearts
+    this.maxHearts = 3;
+    this.currentHearts = 3;
 
     // add animations
     this.animations.add('idle side', [11,12,13,14,15], frameRate=10);
@@ -255,6 +259,8 @@ function dmgHearts(dmg){
     } else {
         hearts.removeChildAt(numhearts - 1);
     }
+
+    currentPlayer.currentHearts -= 1;
     
     console.log(numhearts);
 }

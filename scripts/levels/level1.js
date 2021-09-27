@@ -1,11 +1,4 @@
-<<<<<<< Updated upstream
 
-=======
-var levelOneTiles, currentPlayer, map, gdslime; 
-var money = 0, moneyText, addedAudio = false;
-var spawn = 0, spawndirection = -1;
-var tileLength = 16;
->>>>>>> Stashed changes
 
 var demo = {};
 demo.level1 =  function(){};
@@ -19,7 +12,7 @@ demo.level1.prototype = {
         game.load.image('Magic_Cliffs16', "assets/tiles/Magic-Cliffs-Environment/PNG/tileset.png");
         game.load.image('nes-color-palette', "assets/tiles/nes-color-palette.jpg");
         
-        game.load.audio('backtrack', "assets/audio/music/speck_-_Home_Precarity_1.mp3")
+        game.load.audio('backtrack', "assets/audio/music/speck_-_Home_Precarity_1.mp3");
 
     },
     create: function(){
@@ -81,12 +74,6 @@ demo.level1.prototype = {
         // Tilemap Infront
         map.createLayer('front');
 
-<<<<<<< Updated upstream
-        // Score
-        scoreText = game.add.text(16,16,"Score: " + score, { fontSize: '32px', fill: '#fff' });
-        scoreText.fixedToCamera = true;
-
-=======
         // Money - Coins
         moneyText = game.add.text(8,26,"Coins: " + money, { fontSize: '18px', fill: '#fff' });
         moneyText.fixedToCamera = true;
@@ -94,9 +81,8 @@ demo.level1.prototype = {
         // Hearts
         heartText = game.add.text(8,8,"Hearts: ", { fontSize: '18px', fill: '#fff' });
         heartText.fixedToCamera = true;
-        createHearts(3);
+        createHearts(currentPlayer.currentHearts);
         
->>>>>>> Stashed changes
     },
     update: function(){
         // Collision

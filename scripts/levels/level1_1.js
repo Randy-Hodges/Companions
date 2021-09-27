@@ -59,8 +59,13 @@ demo.level1_1.prototype = {
         map.createLayer('front');
 
         // Money - Coins
-        scoreText = game.add.text(16,16,"Coins: " + score + "/10", { fontSize: '32px', fill: '#fff' });
-        scoreText.fixedToCamera = true;
+        moneyText = game.add.text(8,26,"Coins: " + money, { fontSize: '18px', fill: '#fff' });
+        moneyText.fixedToCamera = true;
+        
+        // Hearts
+        heartText = game.add.text(8,8,"Hearts: ", { fontSize: '18px', fill: '#fff' });
+        heartText.fixedToCamera = true;
+        createHearts(3);
     },
     update: function(){
         // Collision
@@ -79,13 +84,13 @@ demo.level1_1.prototype = {
         //game.debug.spriteInfo(player);
     },
     createSpawnPoints: function(){
-        spawnpoint1 = [70,13];
-        spawnpoint2 = [10,13];
-        if (spawn == 1){
+        spawnpoint2 = [70,13];
+        spawnpoint1 = [10,13];
+        if (spawn == 2){
             spawnpoint = spawnpoint1.slice();
             spawnpoint[0] += 2; // Don't spawn in on warp point
         }
-        if (spawn == 2){
+        if (spawn == 1){
             spawnpoint = spawnpoint2.slice();
             spawnpoint[0] -= 2;
         }
