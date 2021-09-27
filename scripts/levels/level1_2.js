@@ -1,7 +1,3 @@
-var spawn = 2, spawndirection = -1;
-var levelOneTiles, currentPlayer, map, gdslime; 
-var score = 0, scoreText, addedAudio = false;
-var tileLength = 16;
 
 demo.level1_2 =  function(){};
 demo.level1_2.prototype = {

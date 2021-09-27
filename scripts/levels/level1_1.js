@@ -79,27 +79,16 @@ demo.level1_1.prototype = {
         //game.debug.spriteInfo(player);
     },
     createSpawnPoints: function(){
-        spawnpoint1 = [10,13];
-        spawnpoint2 = [70,13];
-        if (spawn == 2){
-            spawnpoint = spawnpoint1.slice();
-            spawnpoint[0] += 2;
-            console.log(spawnpoint, spawnpoint1)
-        }
+        spawnpoint1 = [70,13];
+        spawnpoint2 = [10,13];
         if (spawn == 1){
+            spawnpoint = spawnpoint1.slice();
+            spawnpoint[0] += 2; // Don't spawn in on warp point
+        }
+        if (spawn == 2){
             spawnpoint = spawnpoint2.slice();
             spawnpoint[0] -= 2;
         }
     }
 };
 
-// {
-    //     preload: function(){},
-    //     create: function(){
-    //         game.stage.backgroundColor = 'a1bbee';
-    //         console.log('level 2');
-    //         game.input.keyboard.addKey(Phaser.Keyboard.ONE).onDown.add(changeLevel, null, null, 1);
-    //         game.input.keyboard.addKey(Phaser.Keyboard.TWO).onDown.add(changeLevel, null, null, 2);
-    //     },
-    //     update: function(){}
-    //}

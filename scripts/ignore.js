@@ -39,3 +39,14 @@ class Player extends Phaser.Sprite{
     //     this.body.acceleration.y = -1000;
     //     console.log('ayooo')
     // }
+
+// {
+    //     preload: function(){},
+    //     create: function(){
+    //         game.stage.backgroundColor = 'a1bbee';
+    //         console.log('level 2');
+    //         game.input.keyboard.addKey(Phaser.Keyboard.ONE).onDown.add(changeLevel, null, null, 1);
+    //         game.input.keyboard.addKey(Phaser.Keyboard.TWO).onDown.add(changeLevel, null, null, 2);
+    //     },
+    //     update: function(){}
+    //}

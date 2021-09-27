@@ -1,3 +1,7 @@
+var spawn = 2, spawndirection = -1;
+var levelOneTiles, currentPlayer, map, gdslime; 
+var score = 0, scoreText, addedAudio = false;
+var tileLength = 16;
 
 
 magicCliffsNoCollide = [0,1768,1769,1801,1802,1803,1804,1805,1806,661,1831,1832,1833,1826,1827,646,642,644,643,1859,1891,
