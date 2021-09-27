@@ -67,9 +67,9 @@ demo.level1.prototype = {
         enemyGroup = game.add.group();
         map.setLayer('enemies')
         map.forEach(function(tile){addEnemyFromTilemap(tile)},1,0,0,map.width,map.height)
-        gdslime = new GDSlime(game, 25*tileLength, 35*tileLength);
-        game.add.existing(gdslime);
-        enemyGroup.add(gdslime);
+        // gdslime = new GDSlime(game, 25*tileLength, 35*tileLength);
+        // game.add.existing(gdslime);
+        // enemyGroup.add(gdslime);
         
         // Warp points (doing it with coins that aren't physically loaded in the game)
         warp1 = new Coin(game, spawnpoint1[0]*tileLength, spawnpoint1[1]*tileLength);
