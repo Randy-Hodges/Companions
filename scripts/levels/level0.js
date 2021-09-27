@@ -11,8 +11,8 @@ demo.level0.prototype = {
         game.physics.arcade.collide(currentPlayer, levelZeroTiles);
 
         // Warping
-        game.physics.arcade.collide(currentPlayer, warp1, function(player, coin){spawn = 1; spawndirection = 1; changeLevel(0,"1_1");});
-        game.physics.arcade.collide(currentPlayer, warp2, function(player, coin){spawn = 2; spawndirection = -1; changeLevel(0,"1_1");});
+        game.physics.arcade.collide(currentPlayer, shop1, function(player, coin){spawn = 1; spawndirection = 1; changeLevel(0,"0_1");});
+        game.physics.arcade.collide(currentPlayer, shop2, function(player, coin){spawn = 2; spawndirection = -1; changeLevel(0,"0_2");});
         updateMoney();
         
     }
