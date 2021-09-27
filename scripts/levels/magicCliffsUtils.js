@@ -25,7 +25,7 @@ function loadItems(){
 
 function loadEnemies(){
     game.load.spritesheet('greenDocileSlime', "assets/sprites/enemies/blue slime/slime-Sheet-green.png", 32, 25);
-    game.load.spritesheet('greenSlime', "assets/sprites/enemies/blue slime/slime-Sheet-green-yellowEyes.png", 32, 25);
+    game.load.spritesheet('greenAngrySlime', "assets/sprites/enemies/blue slime/slime-Sheet-green-yellowEyes.png", 32, 25);
 }
 
 function updateMoney(){
@@ -43,7 +43,7 @@ function changeLevel(i, levelNum){
 
 function addEnemyFromTilemap(tile){
     if (tile.index == 2346){
-        slime = new greenAngrySlime(game, tile.x*tileLength, tile.y*tileLength,'greenDocileSlime');
+        slime = new Slime(game, tile.x*tileLength, tile.y*tileLength,'greenDocileSlime');
         game.add.existing(slime);
         enemyGroup.add(slime);
     }

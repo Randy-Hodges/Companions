@@ -64,8 +64,8 @@ demo.level1.prototype = {
 
         // Enemies
         enemyGroup = game.add.group();
-        map.setLayer('enemies')
-        map.forEach(function(tile){addEnemyFromTilemap(tile)},1,0,0,map.width,map.height)
+        map.setLayer('enemies');
+        map.forEach(function(tile){addEnemyFromTilemap(tile)},1,0,0,map.width,map.height);
         // gdslime = new GDSlime(game, 25*tileLength, 35*tileLength);
         // game.add.existing(gdslime);
         // enemyGroup.add(gdslime);
