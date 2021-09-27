@@ -246,7 +246,7 @@ function increaseMaxHearts(increasenum){
 }
 
 function healHearts(heal){
-    var numhearts = currentPlayer.currentHearts + 1;
+    var numhearts = currentPlayer.currentHearts;
     
     if (numhearts >= currentPlayer.maxHearts){
         console.log("At max hearts!");
