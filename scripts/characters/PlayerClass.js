@@ -246,14 +246,12 @@ function increaseMaxHearts(increasenum){
 }
 
 function healHearts(heal){
-    var numhearts = currentPlayer.currentHearts;
-    
-    if (numhearts >= currentPlayer.maxHearts){
+    if (currentPlayer.currentHearts >= currentPlayer.maxHearts){
         console.log("At max hearts!");
         
     } else {
         currentPlayer.currentHearts += 1;
-        createHearts(numhearts);
+        createHearts(currentPlayer.currentHearts);
     }
     
     console.log(currentPlayer.currentHearts);
@@ -262,7 +260,7 @@ function healHearts(heal){
 function dmgHearts(dmg){
     var numhearts = hearts.countLiving();
     
-    if (numhearts <= 1){
+    if (currentPlayer.currentHearts <= 1){
         hearts.removeChildAt(numhearts - 1);
         
         heartText = game.add.text(64,64,"You are dead.", { fontSize: '72px', fill: '#000' });
