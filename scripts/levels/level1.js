@@ -12,7 +12,7 @@ demo.level1.prototype = {
         game.load.image('Magic_Cliffs16', "assets/tiles/Magic-Cliffs-Environment/PNG/tileset.png");
         game.load.image('nes-color-palette', "assets/tiles/nes-color-palette.jpg");
         
-        game.load.audio('backtrack', "assets/audio/music/speck_-_Home_Precarity_1.mp3");
+        game.load.audio('backtrack', "assets/audio/music/Blizzard Island.mp3");
 
     },
     create: function(){
