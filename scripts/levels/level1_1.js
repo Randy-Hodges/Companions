@@ -71,7 +71,7 @@ demo.level1_1.prototype = {
         // Collision
         game.physics.arcade.collide(currentPlayer, levelOneTiles);
         game.physics.arcade.collide(enemyGroup, levelOneTiles);
-        game.physics.arcade.overlap(currentPlayer, coin_group, function(player, coin){coin.kill(); coinCollect.play(); score+=1;});
+        game.physics.arcade.overlap(currentPlayer, coin_group, function(player, coin){coin.kill(); coinCollect.play(); money+=1;});
 
         // Warping
         game.physics.arcade.collide(currentPlayer, warp1, function(player, coin){spawn = 1; spawndirection = 1; changeLevel(0,"1");});
