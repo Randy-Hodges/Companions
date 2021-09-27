@@ -20,16 +20,17 @@ function load_player(){
 function loadItems(){
     game.load.spritesheet('coin', "assets/sprites/items/money/MonedaD.png", 16, 16); 
     game.load.audio('coin collect', "assets/audio/soundeffects/Collect Coin Sound Effect.mp3");
+    game.load.spritesheet('heart', "assets/sprites/items/Collectible/heart_tilesheet.png", 13, 13);
 }
 
 function loadEnemies(){
     game.load.spritesheet('greenDocileSlime', "assets/sprites/enemies/blue slime/slime-Sheet-green.png", 32, 25);
 }
 
-function updateScore(){
-    scoreText.text = "Score: " + score;
-    scoreText.text.x = 0;
-    scoreText.text.y = 0;
+function updateMoney(){
+    moneyText.text = "Coins: " + money;
+    moneyText.text.x = 0;
+    moneyText.text.y = 0;
 }
 
 function changeLevel(i, levelNum){
@@ -38,6 +39,7 @@ function changeLevel(i, levelNum){
     game.state.start('level' + levelNum);
     backtrack.resume();
 }
+
 function addEnemyFromTilemap(tile){
     if (tile.index == 2346){
         gdslime = new GDSlime(game, tile.x*tileLength, tile.y*tileLength);
@@ -45,6 +47,3 @@ function addEnemyFromTilemap(tile){
         enemyGroup.add(gdslime);
     }
 }
-
-
-

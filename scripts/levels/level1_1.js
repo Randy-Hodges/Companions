@@ -58,8 +58,8 @@ demo.level1_1.prototype = {
         // Tilemap Infront
         map.createLayer('front');
 
-        // Score
-        scoreText = game.add.text(16,16,"Score: " + score + "/10", { fontSize: '32px', fill: '#fff' });
+        // Money - Coins
+        scoreText = game.add.text(16,16,"Coins: " + score + "/10", { fontSize: '32px', fill: '#fff' });
         scoreText.fixedToCamera = true;
     },
     update: function(){
@@ -71,7 +71,7 @@ demo.level1_1.prototype = {
         // Warping
         game.physics.arcade.collide(currentPlayer, warp1, function(player, coin){spawn = 1; spawndirection = 1; changeLevel(0,"1");});
         game.physics.arcade.collide(currentPlayer, warp2, function(player, coin){spawn = 2; spawndirection = -1; changeLevel(0,"1");});
-        updateScore();
+        updateMoney();
     },
     render: function(){
         //console.log('rendering');
