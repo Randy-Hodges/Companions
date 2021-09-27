@@ -1,7 +1,4 @@
-var levelOneTiles, currentPlayer, map, gdslime; 
-var score = 0, scoreText, addedAudio = false;
-var spawn = 0, spawndirection = -1;
-var tileLength = 16;
+
 
 var demo = {};
 demo.level1 =  function(){};
@@ -80,8 +77,6 @@ demo.level1.prototype = {
         // Score
         scoreText = game.add.text(16,16,"Score: " + score, { fontSize: '32px', fill: '#fff' });
         scoreText.fixedToCamera = true;
-
-        
 
     },
     update: function(){
