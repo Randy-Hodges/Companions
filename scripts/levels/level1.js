@@ -23,7 +23,7 @@ demo.level1.prototype = {
         if (!addedAudio){
             backtrack = game.add.audio('backtrack');
             backtrack.play();
-            backtrack.volume = .5;
+            backtrack.volume = .1;
             addedAudio = true;
         }
 
