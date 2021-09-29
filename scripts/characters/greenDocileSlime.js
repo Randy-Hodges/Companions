@@ -30,7 +30,7 @@ Slime = function(game, x, y, spritesheetStrID){
     //damage player
     this.damage = {none: false, left: true, right: true, up: false, down: true};
 
-    //ledge tracking sprite
+    //ledge tracking sprite (not used)
     enfrente = game.add.sprite(0,0);
     enfrente.scale.setTo(scale, scale)
     game.physics.enable(enfrente);
@@ -51,6 +51,9 @@ Slime.prototype.constructor = Slime;
 
 // (Automatically called by World.update)
 Slime.prototype.update = function() {
+    if (!this.exists){
+        return;
+    }
     // Ledge Detection
     this.enfrente.body.setSize(18,11, - 9 + this.faceDirection*20,1);
     // offset to get correct tile of slime

@@ -76,6 +76,7 @@ demo.level1.prototype = {
 
         // Player init
         currentPlayer = new Player(game, spawnpoint[0]*tileLength, spawnpoint[1]*tileLength);
+        // game.stage.addChild(currentPlayer);
         game.add.existing(currentPlayer);
         game.camera.follow(currentPlayer);
 
@@ -100,7 +101,7 @@ demo.level1.prototype = {
         game.physics.arcade.overlap(currentPlayer, heart_group, function(player, heart){heart.kill(); healHearts(1); /*heartCollect.play();*/});
 
         // Warping
-        game.physics.arcade.collide(currentPlayer, warp1, function(player, coin){spawn = 1; spawndirection = 1; changeLevel(0,"1_1");});
+        game.physics.arcade.collide(currentPlayer, warp1, function(player, coin){spawn = 1; spawndirection = 1; console.log(currentPlayer); changeLevel(0,"1_1");});
         game.physics.arcade.collide(currentPlayer, warp2, function(player, coin){spawn = 2; spawndirection = -1; changeLevel(0,"1_1");});
         updateMoney();
     },

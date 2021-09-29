@@ -1,5 +1,32 @@
-var playerJumpButton, currentPlayer;
+var playerJumpButton, currentPlayer, basePlayer;
 
+/*
+Intended to be used to store the data of the current Player. Ideally everything would be in one class or there would be 
+some kind of inheritance, but this is what I'm doing to work around Phaser Sprites. If this was python, I probably could
+have figured out how to do this better.
+*/
+BasePlayer = function(){ 
+
+    // hearts - HP
+    this.maxHearts = 5;
+    this.currentHearts = 5;
+    
+    /* #region Physics */
+    this.accelx = 750;
+    this.gravityY = 500;
+    this.dragX = 800;
+    this.maxVelX = 180;
+    this.maxVelY = 400;
+        
+    /* #region jumping */
+    this.jumpAccel = -3070;
+    this.jumpInputTime = 120 //ms
+    this.jumpStorage = 0; // should be initialized to 0, can increase for dev purposes
+    
+    /* #endregion */
+}
+
+basePlayer = new BasePlayer()
 
 Player = function(game, x = gameWidth/2, y = gameHeight/2){ 
     // *INSTANTIATE AN ENEMY GROUP BEFORE THE PLAYER IN THE CODE FOR COLLISIONS WITH ENEMIES
@@ -10,8 +37,8 @@ Player = function(game, x = gameWidth/2, y = gameHeight/2){
     this.scale.setTo(spawndirection, 1);
 
     // hearts - HP
-    this.maxHearts = 3;
-    this.currentHearts = 3;
+    this.maxHearts = basePlayer.maxHearts;
+    this.currentHearts = basePlayer.currentHearts;
 
     // add animations
     this.animations.add('idle side', [11,12,13,14,15], frameRate=10);
@@ -21,27 +48,28 @@ Player = function(game, x = gameWidth/2, y = gameHeight/2){
     this.animations.add('slash down', [0,1,2], frameRate = 10);
     this.stopAnimations = false;
     
-    // physics
-    this.accelx = 750;
+    /* #region Physics */
+    this.accelx = basePlayer.accelx;
     game.physics.enable(this);
     this.body.setSize(9,28,28,20); // Creating hitbox. first two params are size of body, second two are offset of body
-    this.body.gravity.y = 500;
-    this.body.drag.x = 800;
-    this.body.maxVelocity.x = 180;
-    this.body.maxVelocity.y = 400;
+    this.body.gravity.y = basePlayer.gravityY;
+    this.body.drag.x = basePlayer.dragX;
+    this.body.maxVelocity.x = basePlayer.maxVelX;
+    this.body.maxVelocity.y = basePlayer.maxVelY;
     this.body.collideWorldBounds = true;
     
-    this.faceDirection = 1;
+    this.faceDirection = 1; // x Direction player is facing. 1 or -1
 
     /* #region jumping */
-    this.jumpAccel = -3070;
-    this.jumpInputTime = 120 //ms
-    this.jumpStorage = 0; // should be initialized to 0, can increase for dev purposes
+    this.jumpAccel = basePlayer.jumpAccel;
+    this.jumpInputTime = basePlayer.jumpInputTime; //ms
+    this.jumpStorage = basePlayer.jumpStorage; // should be initialized to 0, can increase for dev purposes
     this.currentlyJumping = false;
     currentPlayer = this;
     playerJumpButton =  game.input.keyboard.addKey(Phaser.Keyboard.W);
     playerJumpButton.onDown.add(
         function(){
+            console.log('jump')
             // give player ability to jump when touching ground
             if (currentPlayer.body.blocked.down && currentPlayer.jumpStorage == 0){
                 currentPlayer.jumpStorage += 1;
@@ -106,13 +134,13 @@ Player = function(game, x = gameWidth/2, y = gameHeight/2){
             }
         });
         /* #endregion */
+        
+        /* #endregion */
 
-    // custom variables
+    // Invulnerability
     this.invulnerableTime = game.time.now;
     this.invulnerable = false;
-    this.iFrames = 2000 //actually in milliseconds, not frames
-
-    
+    this.iFrames = 2000 //actually in milliseconds, not frames    
 }
 
 
@@ -180,7 +208,6 @@ Player.prototype.update = function() {
                 if (damageKnockbackApplied){
                     player.invulnerable = true;
                     player.invulnerableTime = game.time.now;  
-                    //dmgHearts(1);
                     console.log("got hit")
                 }
             });
@@ -192,6 +219,15 @@ Player.prototype.update = function() {
        this.invulnerable = false;
    }
 };
+
+Player.prototype.changePosition = function() {
+    x = 400;
+    y = 400;
+    Phaser.Sprite.call(this, game, x, y, 'player');
+    // this.body.position.x = x;
+    // this.body.position.y = y;
+}
+
 
 function playerDamageKnockback(player, enemy){
     knockbackVel = 200;
@@ -240,27 +276,27 @@ function createHearts(numhearts){
 }
 
 function increaseMaxHearts(increasenum){
-     var numhearts = currentPlayer.currentHearts + increasenum;
-    currentPlayer.currentHearts += increasenum;
+    var numhearts = basePlayer.currentHearts + increasenum;
+    basePlayer.currentHearts += increasenum;
     createHearts(numhearts);
 }
 
 function healHearts(heal){
-    if (currentPlayer.currentHearts >= currentPlayer.maxHearts){
+    if (basePlayer.currentHearts >= basePlayer.maxHearts){
         console.log("At max hearts!");
         
     } else {
-        currentPlayer.currentHearts += 1;
-        createHearts(currentPlayer.currentHearts);
+        basePlayer.currentHearts += 1;
+        createHearts(basePlayer.currentHearts);
     }
     
-    console.log(currentPlayer.currentHearts);
+    console.log(basePlayer.currentHearts);
 }
 
 function dmgHearts(dmg){
     var numhearts = hearts.countLiving();
     
-    if (currentPlayer.currentHearts <= 1){
+    if (basePlayer.currentHearts <= 1){
         hearts.removeChildAt(numhearts - 1);
         
         heartText = game.add.text(64,64,"You are dead.", { fontSize: '72px', fill: '#000' });
@@ -271,7 +307,7 @@ function dmgHearts(dmg){
         hearts.removeChildAt(numhearts - 1);
     }
 
-    currentPlayer.currentHearts -= 1;
+    basePlayer.currentHearts -= 1;
     
-    console.log(currentPlayer.currentHearts);
+    console.log(basePlayer.currentHearts);
 }

@@ -1,7 +1,7 @@
 var demo = {};
-var levelOneTiles, currentPlayer, map, gdslime; 
-
-var money = 0, moneyText, addedAudio = false;
+var levelOneTiles, map; 
+var money = 0, moneyText;
+addedAudio = false;
 var spawn = 0, spawndirection = -1;
 var tileLength = 16;
 
