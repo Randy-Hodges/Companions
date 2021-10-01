@@ -76,7 +76,6 @@ demo.level1.prototype = {
 
         // Player init
         currentPlayer = new Player(game, spawnpoint[0]*tileLength, spawnpoint[1]*tileLength);
-        // game.stage.addChild(currentPlayer);
         game.add.existing(currentPlayer);
         game.camera.follow(currentPlayer);
 
