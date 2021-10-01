@@ -6,7 +6,7 @@ demo.level0.prototype = {
         loadItems();
         loadEnemies();
         game.load.tilemap('level0', "assets/tilemaps/basic_tilemap_027.json", null, Phaser.Tilemap.TILED_JSON);
-        game.load.image('Magic_Cliffs16', "assets/tiles/Magic-Cliffs-Environment/PNG/tileset.png");
+        game.load.image('Magic_Cliffs16', "assets/tiles/village/Map Tileset.png");
         game.load.image('nes-color-palette', "assets/tiles/nes-color-palette.jpg");
         
         game.load.audio('village', "assets/audio/music/Treasure Town.mp3");
@@ -33,11 +33,11 @@ demo.level0.prototype = {
 
         // Tilemap behind
         var map = game.add.tilemap('level0');
-        map.addTilesetImage('Magic_Cliffs16','Magic_Cliffs16'); //make sure the tileset name is the same as the tileset name used in Tiled
-        map.addTilesetImage('Magic_Cliffs16_2','Magic_Cliffs16'); //make sure the tileset name is the same as the tileset name used in Tiled
+        map.addTilesetImage('Map Tileset','Map Tileset'); //make sure the tileset name is the same as the tileset name used in Tiled
+        map.addTilesetImage('Map Tileset','Map Tileset'); //make sure the tileset name is the same as the tileset name used in Tiled
         map.addTilesetImage('nes-color-palette','nes-color-palette'); //make sure the tileset name is the same as the tileset name used in Tiled
         map.createLayer('caveBackground');  
-        levelOneTiles = map.createLayer('mainGrass');  // layer name is the same as used in Tiled
+        levelZeroTiles = map.createLayer('mainGrass');  // layer name is the same as used in Tiled
         map.setCollisionByExclusion(magicCliffsNoCollide, true, 'mainGrass');
         // Game borders based on tilemap
         game.world.setBounds(0, 0, map.layer.widthInPixels, map.layer.heightInPixels);
@@ -92,8 +92,8 @@ demo.level0.prototype = {
     },
     update: function(){
         // Collision
-        game.physics.arcade.collide(currentPlayer, levelOneTiles);
-        //game.physics.arcade.collide(enemyGroup, levelOneTiles);
+        game.physics.arcade.collide(currentPlayer, levelZeroTiles);
+        //game.physics.arcade.collide(enemyGroup, levelZeroTiles);
         game.physics.arcade.overlap(currentPlayer, coin_group, function(player, coin){coin.kill(); coinCollect.play(); money+=1;});
         game.physics.arcade.overlap(currentPlayer, heart_group, function(player, heart){heart.kill(); healHearts(1); /*heartCollect.play();*/});
 
