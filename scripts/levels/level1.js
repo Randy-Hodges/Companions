@@ -7,6 +7,7 @@ demo.level1.prototype = {
         loadPlayer();
         loadItems();
         loadEnemies();
+        loadHeadshots();
         game.load.tilemap('level1', "assets/tilemaps/basic_tilemap_027.json", null, Phaser.Tilemap.TILED_JSON);
         game.load.image('Magic_Cliffs16', "assets/tiles/Magic-Cliffs-Environment/PNG/tileset.png");
         game.load.image('nes-color-palette', "assets/tiles/nes-color-palette.jpg");
@@ -66,9 +67,6 @@ demo.level1.prototype = {
         enemyGroup = game.add.group();
         map.setLayer('enemies');
         map.forEach(function(tile){addEnemyFromTilemap(tile)},1,0,0,map.width,map.height);
-        // gdslime = new GDSlime(game, 25*tileLength, 35*tileLength);
-        // game.add.existing(gdslime);
-        // enemyGroup.add(gdslime);
         
         // Warp points (doing it with coins that aren't physically loaded in the game)
         warp1 = new Coin(game, spawnpoint1[0]*tileLength, spawnpoint1[1]*tileLength);
@@ -90,6 +88,8 @@ demo.level1.prototype = {
         heartText = game.add.text(8,8,"Hearts: ", { fontSize: '18px', fill: '#fff' });
         heartText.fixedToCamera = true;
         createHearts(currentPlayer.currentHearts);
+
+        generateText(text, 'ghostHeadshot')        
         
     },
     update: function(){

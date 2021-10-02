@@ -69,7 +69,6 @@ Player = function(game, x = gameWidth/2, y = gameHeight/2){
     playerJumpButton =  game.input.keyboard.addKey(Phaser.Keyboard.W);
     playerJumpButton.onDown.add(
         function(){
-            console.log('jump')
             // give player ability to jump when touching ground
             if (currentPlayer.body.blocked.down && currentPlayer.jumpStorage == 0){
                 currentPlayer.jumpStorage += 1;
@@ -189,7 +188,7 @@ Player.prototype.update = function() {
         }
         // idle
         if (this.body.velocity.x == 0) {
-            this.animations.play('idle side', loop=true);
+            this.animations.play('idle side', textLoop=true);
         }
     }
     // ----- VERTICAL MOVEMENT -----

@@ -14,7 +14,7 @@ magicCliffsNoCollide = [0,1768,1769,1801,1802,1803,1804,1805,1806,661,1831,1832,
     1405,1579,1638,1350,1293,1294,1353,1412,1470,1527,1528,1581,1584,1640,1636,1637,1348,1349,1585,1639,1642];
 
 function loadPlayer(){
-    game.load.spritesheet('player', "assets/sprites/characters/RPG Character/main_character_all.png", 64, 64); // Important for Player Init
+    game.load.spritesheet('player', "assets/sprites/characters/RPG Character/main_character_all.png", 64, 64);
 }
 
 function loadItems(){
@@ -26,6 +26,11 @@ function loadItems(){
 function loadEnemies(){
     game.load.spritesheet('greenDocileSlime', "assets/sprites/enemies/blue slime/slime-Sheet-green.png", 32, 25);
     game.load.spritesheet('greenAngrySlime', "assets/sprites/enemies/blue slime/slime-Sheet-green-yellowEyes.png", 32, 25);
+}
+
+function loadHeadshots(){
+    game.load.image('ghostHeadshot', "assets/sprites/characters/headshots/Ghost1.png");
+    game.load.image('playerHeadshot', "assets/sprites/characters/headshots/Player1.png");
 }
 
 function updateMoney(){
@@ -40,6 +45,7 @@ function changeLevel(i, levelNum){
     game.state.start('level' + levelNum);
     backtrack.resume();
 }
+
 
 function addEnemyFromTilemap(tile){
     if (tile.index == 2346){

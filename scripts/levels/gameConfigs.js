@@ -2,6 +2,9 @@ function loadGameConfigs(){
     game.scale.pageAlignHorizontally = true;
     game.scale.pageAlignVertically = true;
     game.scale.refresh();
+    textOffsetX = 100;
+    textWidth = game.width - textOffsetX;
+    textHeight = game.height/5;
 }
     
 function createGameConfigs(){
