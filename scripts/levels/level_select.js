@@ -18,15 +18,7 @@ var localStorageName = "levelselect";
 // level we are currently playing
 var level;
 
-var game;
 
-window.onload = function() {
-    // creating a 320x480 pixels game and executing PlayGame state 	
-    game = new Phaser.Game(320, 480, Phaser.AUTO, "");
-    game.state.add("PlayGame", playGame);
-    game.state.add("PlayLevel", playLevel);
-    game.state.start("PlayGame");
-}
 
 level_select.playGame = function(){};
 level_select.playGame.prototype = {
