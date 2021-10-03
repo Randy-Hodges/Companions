@@ -37,7 +37,11 @@ demo.level0.prototype = {
         map.addTilesetImage('nes-color-palette','nes-color-palette'); //make sure the tileset name is the same as the tileset name used in Tiled
         map.createLayer('villageBackground');  
         levelZeroTiles = map.createLayer('mainGrass');  // layer name is the same as used in Tiled
-        map.setCollisionByExclusion(villageNoCollide, true, 'mainGrass');
+        shopDoor = map.createLayer('shopDoor');
+        healDoor = map.createLayer('healDoor');
+        companionDoor = map.createLayer('companionDoor');
+        front = map.createLayer('front');  // layer name is the same as used in Tiled
+        map.setCollisionByExclusion(villageNoCollide, true, levelZeroTiles);
         // Game borders based on tilemap
         game.world.setBounds(0, 0, map.layer.widthInPixels, map.layer.heightInPixels);
         

@@ -1,4 +1,5 @@
 var demo = {};
+var levelZeroTiles, map;
 var levelOneTiles, map; 
 var money = 0, moneyText;
 addedAudio = false;
@@ -12,6 +13,8 @@ magicCliffsNoCollide = [0,1768,1769,1801,1802,1803,1804,1805,1806,661,1831,1832,
     359,369,379,416,417,608,609,1337,1343,641,645,655,656,666,667,671,672,673,676,677,679,680,682,683,1401,699,731,734,735,737,
     738,740,741,757,789,815,847,873,905,931,963,989,661,1821,1520,1570,1571,1572,410,411,412,295,297,1455,1457,1587,1597,354,1514,
     1405,1579,1638,1350,1293,1294,1353,1412,1470,1527,1528,1581,1584,1640,1636,1637,1348,1349,1585,1639,1642];
+
+villageNoCollide = [0, 2512];
 
 function loadPlayer(){
     game.load.spritesheet('player', "assets/sprites/characters/RPG Character/main_character_all.png", 64, 64); // Important for Player Init
