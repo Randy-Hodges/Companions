@@ -4,9 +4,9 @@ demo.level0.prototype = {
         loadGameConfigs();
         loadPlayer();
         loadItems();
-        loadEnemies();
-        game.load.tilemap('level0', "assets/tilemaps/basic_tilemap_027.json", null, Phaser.Tilemap.TILED_JSON);
-        game.load.image('Magic_Cliffs16', "assets/tiles/village/Map Tileset.png");
+        //loadEnemies();
+        game.load.tilemap('level0', "assets/tilemaps/village_tilemap.json", null, Phaser.Tilemap.TILED_JSON);
+        game.load.image('Map Tileset', "assets/tiles/village/Map Tileset.png");
         game.load.image('nes-color-palette', "assets/tiles/nes-color-palette.jpg");
         
         game.load.audio('village', "assets/audio/music/Treasure Town.mp3");
@@ -34,11 +34,10 @@ demo.level0.prototype = {
         // Tilemap behind
         var map = game.add.tilemap('level0');
         map.addTilesetImage('Map Tileset','Map Tileset'); //make sure the tileset name is the same as the tileset name used in Tiled
-        map.addTilesetImage('Map Tileset','Map Tileset'); //make sure the tileset name is the same as the tileset name used in Tiled
         map.addTilesetImage('nes-color-palette','nes-color-palette'); //make sure the tileset name is the same as the tileset name used in Tiled
-        map.createLayer('caveBackground');  
+        map.createLayer('villageBackground');  
         levelZeroTiles = map.createLayer('mainGrass');  // layer name is the same as used in Tiled
-        map.setCollisionByExclusion(magicCliffsNoCollide, true, 'mainGrass');
+        map.setCollisionByExclusion(villageNoCollide, true, 'mainGrass');
         // Game borders based on tilemap
         game.world.setBounds(0, 0, map.layer.widthInPixels, map.layer.heightInPixels);
         
@@ -98,7 +97,7 @@ demo.level0.prototype = {
         game.physics.arcade.overlap(currentPlayer, heart_group, function(player, heart){heart.kill(); healHearts(1); /*heartCollect.play();*/});
 
         // Warping
-        //game.physics.arcade.collide(currentPlayer, warp1, function(player, coin){spawn = 1; spawndirection = 1; console.log(currentPlayer); changeLevel(0,"1_1");});
+        //game.physics.arcade.collide(currentPlayer, warp1, function(player, coin){spawn = 1; spawndirection = 1; console.log(currentPlayer); changeLevel(0,"0");});
         //game.physics.arcade.collide(currentPlayer, warp2, function(player, coin){spawn = 2; spawndirection = -1; changeLevel(0,"1_1");});
         updateMoney();
     },

@@ -100,9 +100,12 @@ demo.level1.prototype = {
         game.physics.arcade.overlap(currentPlayer, heart_group, function(player, heart){heart.kill(); healHearts(1); /*heartCollect.play();*/});
 
         // Warping
-        game.physics.arcade.collide(currentPlayer, warp1, function(player, coin){spawn = 1; spawndirection = 1; console.log(currentPlayer); changeLevel(0,"1_1");});
+        //game.physics.arcade.collide(currentPlayer, warp1, function(player, coin){spawn = 1; spawndirection = 1; console.log(currentPlayer); changeLevel(0,"1_1");});
         game.physics.arcade.collide(currentPlayer, warp2, function(player, coin){spawn = 2; spawndirection = -1; changeLevel(0,"1_1");});
         updateMoney();
+        
+        // Level 0 Warp Test
+        game.physics.arcade.collide(currentPlayer, warp1, function(player, coin){spawn = 1; spawndirection = 1; console.log(currentPlayer); changeLevel(0,"0");});
     },
     render: function(){
         //console.log('rendering');
