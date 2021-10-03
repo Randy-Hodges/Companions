@@ -70,7 +70,7 @@ demo.level1_2.prototype = {
         //game.physics.arcade.overlap(currentPlayer, coin_group, function(player, coin){coin.kill(); coinCollect.play(); money+=1;});
 
         // Warping
-        game.physics.arcade.collide(currentPlayer, warp1, function(player, coin){spawn = 1; spawndirection = 1; changeLevel(0,"1_1");});
+        game.physics.arcade.collide(currentPlayer, warp1, function(player, coin){spawn = 1; spawndirection = 1; changeLevel(0,"1-1");});
         game.physics.arcade.collide(currentPlayer, warp2, function(player, coin){spawn = 2; spawndirection = 1; changeLevel(0,"0");});
         updateMoney();
     },
@@ -83,12 +83,12 @@ demo.level1_2.prototype = {
         //SpawnPoints are in units of tiles
         spawnpoint1 = [10, 13];
         spawnpoint2 = [96, 25];
-        if (spawn == 1){
+        if (spawn == 2){
             spawnpoint = spawnpoint1.slice();
             spawnpoint[0] += 2;
         }
         
-        if (spawn == 2){
+        if (spawn == 1){
             spawnpoint = spawnpoint2.slice();
             //spawnpoint[0] += 2;
         }
