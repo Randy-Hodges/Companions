@@ -8,7 +8,7 @@ demo.level1.prototype = {
         loadItems();
         loadEnemies();
         loadHeadshots();
-        game.load.tilemap('level1', "assets/tilemaps/basic_tilemap_027.json", null, Phaser.Tilemap.TILED_JSON);
+        game.load.tilemap('level1-0', "assets/tilemaps/level 1/level1-0.json", null, Phaser.Tilemap.TILED_JSON);
         game.load.image('Magic_Cliffs16', "assets/tiles/Magic-Cliffs-Environment/PNG/tileset.png");
         game.load.image('nes-color-palette', "assets/tiles/nes-color-palette.jpg");
         
@@ -35,7 +35,7 @@ demo.level1.prototype = {
         this.createSpawnPoints();
 
         // Tilemap behind
-        var map = game.add.tilemap('level1');
+        var map = game.add.tilemap('level1-0');
         map.addTilesetImage('Magic_Cliffs16','Magic_Cliffs16'); //make sure the tileset name is the same as the tileset name used in Tiled
         map.addTilesetImage('Magic_Cliffs16_2','Magic_Cliffs16'); //make sure the tileset name is the same as the tileset name used in Tiled
         map.addTilesetImage('nes-color-palette','nes-color-palette'); //make sure the tileset name is the same as the tileset name used in Tiled

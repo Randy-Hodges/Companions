@@ -26,7 +26,6 @@ function generateText(text, sprite){
     var headshot;
     placeHeadshot(sprite);
     spellOutText(text);
-    
 }
 
 function placeHeadshot(sprite){
