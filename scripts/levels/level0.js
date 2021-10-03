@@ -79,6 +79,8 @@ demo.level0.prototype = {
         currentPlayer = new Player(game, spawnpoint[0]*tileLength, spawnpoint[1]*tileLength);
         game.add.existing(currentPlayer);
         game.camera.follow(currentPlayer);
+        
+        // Companion init
 
         // Tilemap Infront
         map.createLayer('front');

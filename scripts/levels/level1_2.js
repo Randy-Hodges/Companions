@@ -44,6 +44,7 @@ demo.level1_2.prototype = {
         
         // Warp points (doing it with coins bc I'm pressed for time)
         warp1 = new Coin(game, spawnpoint1[0]*tileLength, spawnpoint1[1]*tileLength);
+        warp2 = new Coin(game, spawnpoint2[0]*tileLength, spawnpoint2[1]*tileLength);
 
         // Enemies
         enemyGroup = game.add.group();
@@ -70,6 +71,7 @@ demo.level1_2.prototype = {
 
         // Warping
         game.physics.arcade.collide(currentPlayer, warp1, function(player, coin){spawn = 1; spawndirection = 1; changeLevel(0,"1_1");});
+        game.physics.arcade.collide(currentPlayer, warp2, function(player, coin){spawn = 2; spawndirection = 1; changeLevel(0,"0");});
         updateMoney();
     },
     render: function(){
@@ -80,9 +82,15 @@ demo.level1_2.prototype = {
     createSpawnPoints: function(){
         //SpawnPoints are in units of tiles
         spawnpoint1 = [10, 13];
-        if (spawn == 2){
+        spawnpoint2 = [96, 25];
+        if (spawn == 1){
             spawnpoint = spawnpoint1.slice();
             spawnpoint[0] += 2;
+        }
+        
+        if (spawn == 2){
+            spawnpoint = spawnpoint2.slice();
+            //spawnpoint[0] += 2;
         }
     }
 };
