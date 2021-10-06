@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.5" tiledversion="1.7.2" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="1">
- <tileset firstgid="1" source="overworld/Background/Overworld_Cliff.tsx"/>
- <tileset firstgid="64" source="overworld/Background/Overworld_AssortedGround.tsx"/>
- <tileset firstgid="69" source="overworld/Background/Overworld_TexturedGrass.tsx"/>
- <tileset firstgid="75" source="overworld/Buildings/Overworld_RedTaverns.tsx"/>
- <tileset firstgid="87" source="overworld/Buildings/Overworld_RedMarket.tsx"/>
- <tileset firstgid="99" source="overworld/Nature/Overworld_Trees.tsx"/>
+ <tileset firstgid="1" source="Background/Overworld_Cliff.tsx"/>
+ <tileset firstgid="64" source="Background/Overworld_AssortedGround.tsx"/>
+ <tileset firstgid="69" source="Background/Overworld_TexturedGrass.tsx"/>
+ <tileset firstgid="75" source="Buildings/Overworld_RedTaverns.tsx"/>
+ <tileset firstgid="87" source="Buildings/Overworld_RedMarket.tsx"/>
+ <tileset firstgid="99" source="Nature/Overworld_Trees.tsx"/>
  <layer id="6" name="LevelTiles" width="50" height="50">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
