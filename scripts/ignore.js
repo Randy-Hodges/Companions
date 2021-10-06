@@ -50,3 +50,17 @@ class Player extends Phaser.Sprite{
     //     },
     //     update: function(){}
     //}
+
+
+    // //ledge tracking sprite (not used)
+    // enfrente = game.add.sprite(0,0);
+    // enfrente.scale.setTo(scale, scale)
+    // game.physics.enable(enfrente);
+    // enfrente.body.allowGravity = false;
+    // enfrente.body.setSize(18,11, bodyOffsetX + this.faceDirection*10,0); // redundant bc it's recalculated in update
+    // this.enfrente = enfrente;
+    // this.addChild(enfrente);
+    
+    
+        // // Ledge Detection
+        // slime.enfrente.body.setSize(18,11, - 9 + slime.faceDirection*20,1);

@@ -7,6 +7,7 @@ Slime = function(game, x, y, spritesheetStrID){
     scale = 1.3;  
     this.scale.setTo(-scale,scale);
     this.faceDirection = 1;
+    slime = this;
 
     // add animations
     this.animations.add('idle', [0,1,2,3]);
@@ -14,58 +15,46 @@ Slime = function(game, x, y, spritesheetStrID){
     this.animations.add('attacking', [8,9,10,11,12]);
     this.animations.add('hurt', [13,14,15,16])
     this.animations.add('dying', [1,17,18,19,20], frameRate = 10);
-    dying = this.animations.getAnimation('dying');
-    dying.killOnComplete = true;
-    this.stopAnimations = false;
+    this.animations.getAnimation('dying').onComplete.add(function(slime) {slime.destroy()}, this);
+    this.animationPriorities = {idle: 0, moving: 1, attacking: 2, hurt: 3, dying: 4}
+    this.curAnimationPriority = 1;
 
     // physics
     game.physics.enable(this);
-    bodyOffsetX = 7;
-    bodyOffsetY = 14;
-    this.body.setSize(18,11,bodyOffsetX,bodyOffsetY);
-    this.movement_speed = 60;
-    this.body.velocity.x = this.movement_speed;
-    this.body.maxVelocity.x = this.movement_speed;
+    hitboxOffsetX = 7;
+    hitboxOffsetY = 14;
+    this.body.setSize(18, 11, hitboxOffsetX, hitboxOffsetY);
+    this.baseMovementSpeed = 60;
+    this.movementSpeed = 60;
+    this.body.velocity.x = this.movementSpeed;
+    this.body.maxVelocity.x = this.movementSpeed*20;
 
     //damage player
     this.damage = {none: false, left: true, right: true, up: false, down: true};
 
-    //ledge tracking sprite (not used)
-    enfrente = game.add.sprite(0,0);
-    enfrente.scale.setTo(scale, scale)
-    game.physics.enable(enfrente);
-    enfrente.body.allowGravity = false;
-    enfrente.body.setSize(18,11, bodyOffsetX + this.faceDirection*10,0); // redundant bc it's recalculated in update
-    this.enfrente = enfrente;
-    this.addChild(enfrente);
+    // Miscellaneous (might break into own sections in the future)
     this.timeLastSwitch = game.time.now;
     levelOneTilesTiles = levelOneTiles.getTiles(0,0,game.world.bounds.width, game.world.bounds.height)
-    }
-
-
-
+}
 
 Slime.prototype = Object.create(Phaser.Sprite.prototype);
 Slime.prototype.constructor = Slime;
 
 
 // (Automatically called by World.update)
-Slime.prototype.update = function() {
-    if (!this.exists){
-        return;
-    }
-    // Ledge Detection
-    this.enfrente.body.setSize(18,11, - 9 + this.faceDirection*20,1);
+Slime.prototype.update = function(slime = this) {
+
     // offset to get correct tile of slime
     faceconstant = 0;
-    if (this.faceDirection == 1){
-        faceconstant = this.faceDirection*25;
+    if (slime.faceDirection == 1){
+        faceconstant = slime.faceDirection*25;
     }
+    //Don't fall off ledges
     // if they are on a no-collision tile and haven't switched direction in a while, switch direction
-    if (!magicCliffsNoCollide.includes(levelOneTilesTiles[levelOneTiles.getTileY(this.body.position.y)*game.world.bounds.width/tileLength + levelOneTiles.getTileX(this.body.position.x + faceconstant)].index) //32 is body width
-        && game.time.now - this.timeLastSwitch > 200){
+    if (!magicCliffsNoCollide.includes(levelOneTilesTiles[levelOneTiles.getTileY(slime.body.position.y)*game.world.bounds.width/tileLength + levelOneTiles.getTileX(slime.body.position.x + faceconstant)].index) //32 is body width
+        && game.time.now - slime.timeLastSwitch > 200){
             // console.log('switching');    
-            switchDirectionSlime(this);
+            switchDirectionSlime(slime);
     }
     
 
@@ -73,26 +62,38 @@ Slime.prototype.update = function() {
     if (enemyGroup){
         game.physics.arcade.collide(enemyGroup, enemyGroup, function(enemy1, enemy2){switchDirectionSlime(enemy1); switchDirectionSlime(enemy2)});
     }
-    if (this.body.blocked.right || this.body.blocked.left){
-        switchDirectionSlime(this);
+    if ((slime.body.blocked.right || slime.body.blocked.left)){
+        switchDirectionSlime(slime);
     }
-    this.body.velocity.x = this.movement_speed;
-    if (!this.stopAnimations){
-        this.animations.play('moving', 10, true);
+    slime.body.velocity.x = slime.movementSpeed;
+    if (slime.curAnimationPriority == slime.animationPriorities.moving){
+        slime.animations.play('moving', 10, true);
+    }
+    else if (slime.curAnimationPriority == slime.animationPriorities.attacking){
+        slime.animations.play('attacking', 10, true);
+    }
+    else if (slime.curAnimationPriority == slime.animationPriorities.hurt){
+        slime.animations.play('hurt', 10, true);
+    }
+    else if (slime.curAnimationPriority == slime.animationPriorities.dying){
+        slime.animations.play('dying', 10, true);
+    }
+    else {
+        console.log("current animation priority [", slime.curAnimationPriority, "] is not linked to an animation")
     }
 };
 
-Slime.prototype.die = function() {
-    this.body.enable = false;
-    this.stopAnimations = true;
-    this.animations.play('dying');
+Slime.prototype.die = function(slime = this) {
+    slime.body.enable = false;
+    slime.curAnimationPriority = slime.animationPriorities.dying;
+    slime.animations.play('dying');
 }
 
 
 function switchDirectionSlime(slime) {
     slime.timeLastSwitch = game.time.now;
     slime.faceDirection *= -1;
-    slime.movement_speed *= -1;
+    slime.movementSpeed *= -1;
     slime.scale.x *= -1;
 }
 
