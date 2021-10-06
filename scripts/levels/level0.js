@@ -3,6 +3,7 @@ demo.level0.prototype = {
     preload: function(){
         loadGameConfigs();
         loadPlayer();
+        loadCompanion();
         loadItems();
         //loadEnemies();
         game.load.tilemap('level0', "assets/tilemaps/village_tilemap.json", null, Phaser.Tilemap.TILED_JSON);
@@ -74,14 +75,16 @@ demo.level0.prototype = {
         // Warp points (doing it with coins that aren't physically loaded in the game)
         //warp1 = new Coin(game, spawnpoint1[0]*tileLength, spawnpoint1[1]*tileLength);
         //warp2 = new Coin(game, spawnpoint2[0]*tileLength, spawnpoint2[1]*tileLength);
-
+        
+        // Companion Init
+        currentCompanion = new Companion(game, spawnpoint[0]*tileLength, spawnpoint[1]*tileLength);
+        game.add.existing(currentCompanion);
+        
         // Player init
         currentPlayer = new Player(game, spawnpoint[0]*tileLength, spawnpoint[1]*tileLength);
         game.add.existing(currentPlayer);
         game.camera.follow(currentPlayer);
         
-        // Companion init
-
         // Tilemap Infront
         map.createLayer('front');
 

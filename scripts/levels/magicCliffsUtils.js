@@ -20,6 +20,11 @@ function loadPlayer(){
     game.load.spritesheet('player', "assets/sprites/characters/RPG Character/main_character_all.png", 64, 64);
 }
 
+function loadCompanion(){
+    game.load.spritesheet('piggy', "assets/sprites/companions/piggy_animation.png", 30, 30);
+    game.load.spritesheet('piggy idle', "assets/sprites/companions/piggy_animation.png", 30, 30);
+}
+
 function loadItems(){
     game.load.spritesheet('coin', "assets/sprites/items/money/MonedaD.png", 16, 16); 
     game.load.audio('coin collect', "assets/audio/soundeffects/Collect Coin Sound Effect.mp3");
