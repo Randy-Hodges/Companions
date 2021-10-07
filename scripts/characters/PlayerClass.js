@@ -11,6 +11,12 @@ BasePlayer = function(){
     this.maxHearts = 5;
     this.currentHearts = 5;
     
+    // companions
+    this.currentCompanion1 = -1;
+    this.currentCompanion2 = -1;
+    
+    // equipment
+    
     /* #region Physics */
     this.accelx = 750;
     this.gravityY = 500;
@@ -309,4 +315,26 @@ function dmgHearts(dmg){
     basePlayer.currentHearts -= 1;
     
     console.log(basePlayer.currentHearts);
+}
+
+// Companion Functions - Equip Companions
+function companionSwitch(slot, num){
+    if (slot == 1){
+        basePlayer.currentCompanion1 = num;
+    } else {
+        basePlayer.currentCompanion2 = num;
+    }
+}
+
+// Companion Functions - Powerups
+function increaseMaxHearts(num){
+    basePlayer.maxHearts = basePlayer.maxHearts + num;
+}
+
+function doubleJump(){
+    //basePlayer.jumpMax = 2
+}
+
+function enableFire(){
+    //basePlayer.fireEnable = True
 }
