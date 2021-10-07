@@ -33,7 +33,7 @@ function loadItems(){
 
 function loadEnemies(){
     game.load.spritesheet('greenDocileSlime', "assets/sprites/enemies/blue slime/slime-Sheet-green.png", 32, 25);
-    game.load.spritesheet('blueAngrySlime', "assets/sprites/enemies/blue slime/slime-Sheet.png", 32, 25);
+    game.load.spritesheet('redAngrySlime', "assets/sprites/enemies/blue slime/slime-Sheet-red.png", 32, 25);
 }
 
 function loadHeadshots(){
@@ -62,7 +62,7 @@ function addEnemyFromTilemap(tile){
         enemyGroup.add(slime);
     }
     if (tile.index == 2338){
-        slime = new blueAngrySlime(game, tile.x*tileLength, tile.y*tileLength,'blueAngrySlime');
+        slime = new redAngrySlime(game, tile.x*tileLength, tile.y*tileLength,'redAngrySlime');
         game.add.existing(slime);
         enemyGroup.add(slime);
     }
