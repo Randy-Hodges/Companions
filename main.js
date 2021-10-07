@@ -3,7 +3,7 @@ var gameWidth = 700, gameHeight = 480;
 var game = new Phaser.Game(gameWidth, gameHeight, Phaser.CANVAS);
 
 // level select
-game.state.add("Map", demo.levelSelect);
+game.state.add("Map", demo.overworldMap);
 game.state.start("Map");
 
 game.state.add('level0', demo.level0);
