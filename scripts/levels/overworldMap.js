@@ -2,7 +2,8 @@ demo.overworldMap = function(){};
 demo.overworldMap.prototype = {
     preload: function(){
         loadGameConfigs();
-        
+
+        // loading in assets
         game.load.tilemap('overworldMap', "assets/tilemaps/overworld/overworld.json", null, Phaser.Tilemap.TILED_JSON);
         game.load.image('RedMarket', "assets/overworld_map/Buildings/Red/RedMarket.png");
         game.load.image('RedTaverns', "assets/overworld_map/Buildings/Red/RedTaverns.png");
@@ -11,14 +12,14 @@ demo.overworldMap.prototype = {
         game.load.image('Cliff', "assets/overworld_map/Ground/Cliff.png");
         game.load.image('AssortedGround', "assets/overworld_map/Ground/Grass.png");
         
-        game.load.audio('backtrack', "assets/audio/music/Blizzard Island.mp3");
+        game.load.audio('backtrack', "assets/audio/music/PMD Remix/Personality Test.mp3");
 
     },
 
-    create: function(){
+    create: function(){     
         // configs
         createGameConfigs();
-       
+        
         // music
         if (!addedAudio){
             backtrack = game.add.audio('backtrack');
@@ -29,16 +30,15 @@ demo.overworldMap.prototype = {
 
         // Tilemap behind
         var map = game.add.tilemap('overworldMap');
-        map.addTilesetImage('RedMarket','RedMarket'); // make sure the tileset name is the same as the tileset name used in Tiled
-        map.addTilesetImage('RedTaverns','RedTaverns');
-        map.addTilesetImage('TexturedGrass','TexturedGrass');
-        map.addTilesetImage('Trees','Trees');
-        map.addTilesetImage('Cliff','Cliff');
-        map.addTilesetImage('AssortedGround','AssortedGround');
+        map.addTilesetImage('Overworld_RedMarket','RedMarket'); // make sure the tileset name is the same as the tileset name used in Tiled
+        map.addTilesetImage('Overworld_RedTaverns','RedTaverns');
+        map.addTilesetImage('Overworld_TexturedGrass','TexturedGrass');
+        map.addTilesetImage('Overworld_Trees','Trees');
+        map.addTilesetImage('Overworld_cliff','Cliff');
+        map.addTilesetImage('Overworld_AssortedGround','AssortedGround');
+
         map.createLayer('Background');  
-        levelOneTiles = map.createLayer('mainGrass');  // layer name is the same as used in Tiled
-        // Game borders based on tilemap
-        game.world.setBounds(0, 0, map.layer.widthInPixels, map.layer.heightInPixels);
+        map.createLayer('Landscape');
 
         // Add cloud layer code
         
@@ -47,7 +47,7 @@ demo.overworldMap.prototype = {
     update: function(){
         // level select
         addLevelSpawns()
-        
+
     }
 }
 
