@@ -64,10 +64,15 @@ function addEnemyFromTilemap(tile){
         game.add.existing(slime);
         enemyGroup.add(slime);
     }
+    // if (tile.index == 2338){
+    //     slime = new redAngrySlime(game, tile.x*tileLength, tile.y*tileLength,'redAngrySlime');
+    //     game.add.existing(slime);
+    //     enemyGroup.add(slime);
+    // }
     if (tile.index == 2338){
-        slime = new redAngrySlime(game, tile.x*tileLength, tile.y*tileLength,'redAngrySlime');
-        game.add.existing(slime);
-        enemyGroup.add(slime);
+        bat = new Bat(game, tile.x*tileLength, tile.y*tileLength,'bat');
+        game.add.existing(bat);
+        enemyGroup.add(bat);
     }
 }
 

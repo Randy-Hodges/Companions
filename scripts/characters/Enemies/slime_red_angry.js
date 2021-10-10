@@ -18,6 +18,7 @@ redAngrySlime.prototype.update = function() {
         if (this.faceDirection * (this.body.position.x - currentPlayer.body.position.x) > 0){
             switchDirectionSlime(this);
         }
+        // Fast speed
         this.movementSpeed = 2.5 * this.baseMovementSpeed * this.faceDirection;
         // play attacking animation
         if (this.curAnimationPriority <= this.animationPriorities.attacking){
@@ -26,6 +27,7 @@ redAngrySlime.prototype.update = function() {
         console.log('close');
     }
     else{
+        // Normal Speed
         this.movementSpeed = this.baseMovementSpeed * this.faceDirection;
         // play walking animation
         if (this.curAnimationPriority <= this.animationPriorities.attacking){
