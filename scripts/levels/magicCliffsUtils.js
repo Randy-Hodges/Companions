@@ -36,6 +36,7 @@ function loadItems(){
 function loadEnemies(){
     game.load.spritesheet('greenDocileSlime', "assets/sprites/enemies/blue slime/slime-Sheet-green.png", 32, 25);
     game.load.spritesheet('redAngrySlime', "assets/sprites/enemies/blue slime/slime-Sheet-red.png", 32, 25);
+    game.load.spritesheet('bat', "assets/sprites/enemies/Bat/bat-sheet.png", 32, 32);
 }
 
 function loadHeadshots(){

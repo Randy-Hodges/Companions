@@ -70,6 +70,8 @@ Slime.prototype.update = function(slime = this) {
         switchDirectionSlime(slime);
     }
     slime.body.velocity.x = slime.movementSpeed;
+
+    // Animations
     if (slime.curAnimationPriority == slime.animationPriorities.moving){
         slime.animations.play('moving', 10, true);
     }
@@ -83,7 +85,7 @@ Slime.prototype.update = function(slime = this) {
         slime.animations.play('dying', 10, true);
     }
     else {
-        console.log("current animation priority [", slime.curAnimationPriority, "] is not linked to an animation")
+        console.log("Current animation priority [", slime.curAnimationPriority, "] is not linked to an animation")
     }
 };
 
