@@ -18,16 +18,16 @@ Bat = function(game, x, y, spritesheetStrID){
 
     // physics
     game.physics.enable(this);
-    hitboxOffsetX = 7;
-    hitboxOffsetY = 14;
-    this.body.setSize(18, 11, hitboxOffsetX, hitboxOffsetY);
+    hitboxOffsetX = 9;
+    hitboxOffsetY = 7;
+    this.body.setSize(13, 18, hitboxOffsetX, hitboxOffsetY);
     this.baseMovementSpeed = 60;
     this.movementSpeedX = 60;
     this.movementSpeedY = 12;
     this.body.gravity.y = -400; // counteracts global gravity
 
-    //damage player
-    this.damage = {none: false, left: true, right: true, up: true, down: true};
+    // damage player
+    this.damage = {none: false, left: true, right: true, up: false, down: true};
 
     this.timeLastSwitchX = 0;
     this.timeLastSwitchY = 0;
@@ -41,7 +41,7 @@ Bat.prototype.constructor = Bat;
 // (Automatically called by World.update)
 Bat.prototype.update = function(bat = this) {
     // If bat close to player
-    if (game.physics.arcade.distanceBetween(bat, currentPlayer) < 90){
+    if (game.physics.arcade.distanceBetween(bat, currentPlayer) < 130){
         if (bat.curAnimation < bat.anims.hit){
             // Move to player
             game.physics.arcade.moveToObject(bat, currentPlayer, 80);
@@ -78,7 +78,7 @@ Bat.prototype.update = function(bat = this) {
 };
 
 Bat.prototype.die = function(bat = this){
-    console.log('hit')
+    console.log('hit bat')
     bat.body.enable = false;
     bat.curAnimation = bat.anims.hit;
     bat.animations.play('hit', 5);
@@ -95,7 +95,6 @@ Bat.prototype.roam = function(bat = this){
         bat.roamFirstCall = false;
         bat.body.velocity.x = bat.movementSpeed;
         bat.switchFaceDirection();
-        console.log('roam start')
     }
     // Roaming in X direction
     if (game.time.now - bat.timeLastSwitchX > 2000){

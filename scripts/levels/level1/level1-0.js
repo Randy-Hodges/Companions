@@ -109,7 +109,7 @@ demo.level1.prototype = {
     render: function(){
         //console.log('rendering');
     //    game.debug.body(gdslime.enfrente);
-    //    game.debug.body(gdslime);
+    //    game.debug.body(bat);
        //game.debug.spriteInfo(player);
     },
     createSpawnPoints: function(){
