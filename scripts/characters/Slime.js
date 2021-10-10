@@ -51,8 +51,12 @@ Slime.prototype.update = function(slime = this) {
     }
     //Don't fall off ledges
     // if they are on a no-collision tile and haven't switched direction in a while, switch direction
-    if (!magicCliffsNoCollide.includes(levelOneTilesTiles[levelOneTiles.getTileY(slime.body.position.y)*game.world.bounds.width/tileLength + levelOneTiles.getTileX(slime.body.position.x + faceconstant)].index) //32 is body width
-        && game.time.now - slime.timeLastSwitch > 200){
+    // Tile index in front of slime
+    tileIdx = levelOneTilesTiles[levelOneTiles.getTileY(slime.body.position.y)*game.world.bounds.width/tileLength + levelOneTiles.getTileX(slime.body.position.x + faceconstant)].index
+    if (!magicCliffsNoCollide.includes(tileIdx) && 
+        !(String(tileIdx) in exclusionLayer) && 
+        tileIdx != 0 &&
+        game.time.now - slime.timeLastSwitch > 200){
             // console.log('switching');    
             switchDirectionSlime(slime);
     }

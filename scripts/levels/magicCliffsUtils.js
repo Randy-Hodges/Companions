@@ -58,7 +58,7 @@ function changeLevel(i, levelNum){
 
 
 function addEnemyFromTilemap(tile){
-    if (tile.index == 2346){
+    if (tile.index == 2346 || tile.index == 1194){
         slime = new Slime(game, tile.x*tileLength, tile.y*tileLength,'greenDocileSlime');
         game.add.existing(slime);
         enemyGroup.add(slime);
@@ -70,8 +70,10 @@ function addEnemyFromTilemap(tile){
     }
 }
 
-function removeExcludeCollision(tile){
-    if (tile.index){
-        continue;
+function excludeCollision(tile){
+    // console.log(map.currentLayer);
+    // console.log(tile.index)
+    if (!(tile.index in exclusionLayer)){
+        exclusionLayer[tile.index] = tile.index;
     }
 }
