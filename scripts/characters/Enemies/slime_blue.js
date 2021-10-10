@@ -1,15 +1,12 @@
-blueAngrySlime = function(game,x,y){
-    Slime.call(this, game, x, y, 'blueAngrySlime');
+blueSlime = function(game,x,y){
+    Slime.call(this, game, x, y, 'blueSlime');
 }
 
-blueAngrySlime.prototype = Object.create(Slime.prototype);
-Object.defineProperty(blueAngrySlime.prototype, 'constructor', {
-    value: blueAngrySlime,
-    enumerable: false, // so that it does not appear in 'for in' loop
-    writable: true });
+blueSlime.prototype = Object.create(Slime.prototype);
+blueSlime.prototype.constructor = blueSlime;
 
 // (Automatically called by World.update)
-blueAngrySlime.prototype.update = function() {
+blueSlime.prototype.update = function() {
     Slime.prototype.update(this); // Update like a normal slime
 
     // Add blue-Angry specific properties

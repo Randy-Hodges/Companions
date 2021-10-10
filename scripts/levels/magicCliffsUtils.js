@@ -35,7 +35,8 @@ function loadItems(){
 
 function loadEnemies(){
     game.load.spritesheet('greenDocileSlime', "assets/sprites/enemies/blue slime/slime-Sheet-green.png", 32, 25);
-    game.load.spritesheet('redAngrySlime', "assets/sprites/enemies/blue slime/slime-Sheet-red.png", 32, 25);
+    game.load.spritesheet('redSlime', "assets/sprites/enemies/blue slime/slime-Sheet-red.png", 32, 25);
+    game.load.spritesheet('blueSlime', "assets/sprites/enemies/blue slime/slime-Sheet-blue.png", 32, 25);
     game.load.spritesheet('bat', "assets/sprites/enemies/Bat/bat-sheet.png", 32, 32);
 }
 
@@ -64,11 +65,16 @@ function addEnemyFromTilemap(tile){
         game.add.existing(slime);
         enemyGroup.add(slime);
     }
-    // if (tile.index == 2338){
-    //     slime = new redAngrySlime(game, tile.x*tileLength, tile.y*tileLength,'redAngrySlime');
-    //     game.add.existing(slime);
-    //     enemyGroup.add(slime);
-    // }
+    if (tile.index == 2342){
+        slime = new redSlime(game, tile.x*tileLength, tile.y*tileLength,'redSlime');
+        game.add.existing(slime);
+        enemyGroup.add(slime);
+    }
+    if (tile.index == 2338){
+        slime = new blueSlime(game, tile.x*tileLength, tile.y*tileLength,'blueSlime');
+        game.add.existing(slime);
+        enemyGroup.add(slime);
+    }
     if (tile.index == 2338){
         bat = new Bat(game, tile.x*tileLength, tile.y*tileLength,'bat');
         game.add.existing(bat);
