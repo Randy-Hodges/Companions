@@ -41,19 +41,24 @@ demo.overworldMap.prototype = {
         map.addTilesetImage('Overworld_AssortedGround','AssortedGround');
 
         map.createLayer('Background');  
-        map.createLayer('Landscape');
+        // map.createLayer('Landscape');
 
-        //  Start with a small layer only 400x200 and increase it by 100px
-        //  each time we click
-        var layer = map.createLayer('Background');
+        var layer = map.createLayer('Landscape');
         layer.scale.set(1);
         layer.resizeWorld();
 
-        // create view stuff
+        // create view stuff, start at village on map
+        game.camera.x = 80;
+        game.camera.y = 1000;
         cursors = game.input.keyboard.createCursorKeys();
-        game.input.onDown.add(resize(), this);
+        // game.input.onDown.add(resize(), this);
 
-        // Add cloud layer code
+        // level select UI
+        levelSelect = game.add.text(8,8,"Use WASD to move around the map. \nPress 'C' to go to Level 1.", { fontSize: '18px', fill: '#fff' });
+        levelSelect.fixedToCamera = true;
+
+
+        // Eventually add cloud layer code
         
     },
     
@@ -63,6 +68,8 @@ demo.overworldMap.prototype = {
 
         // update view
         updateView()
+
+        // Eventually add cloud layer update code
     
     }
 }
@@ -73,9 +80,9 @@ function addKeyCallback(key, fn, args) {
 
 function addLevelSpawns() {
     // scene change for village
-    addKeyCallback(Phaser.Keyboard.V, changeLevel, 0);
+    // addKeyCallback(Phaser.Keyboard.V, changeLevel, '0'); // uncomment when bug is fixed
     // scene change for level 1
-    addKeyCallback(Phaser.Keyboard.C, changeLevel, 1); 
+    addKeyCallback(Phaser.Keyboard.C, changeLevel, '1-0'); 
 };
 
 function updateView() {
@@ -97,22 +104,22 @@ function updateView() {
     }
 }
 
-function resize() {
-    // layer.offset.x += 50;
+// function resize() {
+//     // layer.offset.x += 50;
 
-    if (layer.displayWidth !== undefined)
-    {
-        var w = layer.displayWidth + 100;
-        var h = layer.displayHeight + 100;
-        layer.resize(w, h);
-    }
-    else
-    {
-        if (layer.width < 800)
-        {
-            var w = layer.width + 100;
-            var h = layer.height + 100;
-            layer.resize(w, h);
-        }
-    }
-};
+//     if (layer.displayWidth !== undefined)
+//     {
+//         var w = layer.displayWidth + 100;
+//         var h = layer.displayHeight + 100;
+//         layer.resize(w, h);
+//     }
+//     else
+//     {
+//         if (layer.width < 800)
+//         {
+//             var w = layer.width + 100;
+//             var h = layer.height + 100;
+//             layer.resize(w, h);
+//         }
+//     }
+// };
