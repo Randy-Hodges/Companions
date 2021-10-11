@@ -73,8 +73,8 @@ demo.level0.prototype = {
         // enemyGroup.add(gdslime);
         
         // Warp points (doing it with coins that aren't physically loaded in the game)
-        //warp1 = new Coin(game, spawnpoint1[0]*tileLength, spawnpoint1[1]*tileLength);
-        //warp2 = new Coin(game, spawnpoint2[0]*tileLength, spawnpoint2[1]*tileLength);
+        warp1 = new Coin(game, spawnpoint1[0]*tileLength, spawnpoint1[1]*tileLength);
+        // warp2 = new Coin(game, spawnpoint2[0]*tileLength, spawnpoint2[1]*tileLength);
         
         // Companion Init
         currentCompanion1 = new Companion(game, spawnpoint[0]*tileLength, spawnpoint[1]*tileLength);
@@ -106,9 +106,11 @@ demo.level0.prototype = {
         game.physics.arcade.overlap(currentPlayer, heart_group, function(player, heart){heart.kill(); healHearts(1); /*heartCollect.play();*/});
 
         // Warping
-        //game.physics.arcade.collide(currentPlayer, warp1, function(player, coin){spawn = 1; spawndirection = 1; console.log(currentPlayer); changeLevel(0,"0");});
+        game.physics.arcade.collide(currentPlayer, warp1, function(player, coin){spawn = 2; spawndirection = 1; changeToMap(0)});
         //game.physics.arcade.collide(currentPlayer, warp2, function(player, coin){spawn = 2; spawndirection = -1; changeLevel(0,"1_1");});
+
         updateMoney();
+
     },
     render: function(){
         //console.log('rendering');
@@ -117,16 +119,17 @@ demo.level0.prototype = {
        //game.debug.spriteInfo(player);
     },
     createSpawnPoints: function(){
-        spawnpoint0 = [25, 35]
-        //spawnpoint1 = [0,7];
-        //spawnpoint2 = [229,13];
+        spawnpoint0 = [25, 35];
         if (spawn == 0){
             spawnpoint = spawnpoint0.slice();
-        }
-        //if (spawn == 2){
-        //    spawnpoint = spawnpoint1.slice();
-        //    spawnpoint[0] += 2;
-        //}
+        };
+
+        spawnpoint1 = [69, 39];
+        if (spawn == 2){
+            spawnpoint = spawnpoint1.slice();
+        };
+
+        //spawnpoint2 = [229,13];
         //if (spawn == 1){
         //    spawnpoint = spawnpoint2.slice();
         //    spawnpoint[0] -= 2;

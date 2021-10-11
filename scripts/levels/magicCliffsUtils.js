@@ -58,6 +58,13 @@ function changeLevel(i, levelNum){
     backtrack.resume();
 }
 
+function changeToMap(i) {
+    backtrack.pause();
+    console.log('change to map');
+    game.state.start('Map');
+    backtrack.resume();
+}
+
 
 function addEnemyFromTilemap(tile){
     if (tile.index == 2346 || tile.index == 1194){
