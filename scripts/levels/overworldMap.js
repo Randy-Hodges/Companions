@@ -77,7 +77,7 @@ function addKeyCallback(key, fn, args) {
 
 function addLevelSpawns() {
     // scene change for village
-    // addKeyCallback(Phaser.Keyboard.V, changeLevel, '0'); // uncomment when bug is fixed
+    addKeyCallback(Phaser.Keyboard.V, changeLevel, '0');
     // scene change for level 1
     addKeyCallback(Phaser.Keyboard.C, changeLevel, '1-0'); 
 };

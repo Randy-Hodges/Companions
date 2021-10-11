@@ -74,6 +74,8 @@ demo.level0.prototype = {
         
         // Warp points (doing it with coins that aren't physically loaded in the game)
         warp1 = new Coin(game, spawnpoint1[0]*tileLength, spawnpoint1[1]*tileLength);
+        game.add.existing(warp1) // remove this when map warp is fully updated
+
         // warp2 = new Coin(game, spawnpoint2[0]*tileLength, spawnpoint2[1]*tileLength);
         
         // Companion Init
@@ -107,7 +109,7 @@ demo.level0.prototype = {
 
         // Warping
         game.physics.arcade.collide(currentPlayer, warp1, function(player, coin){spawn = 2; spawndirection = 1; changeToMap(0)});
-        //game.physics.arcade.collide(currentPlayer, warp2, function(player, coin){spawn = 2; spawndirection = -1; changeLevel(0,"1_1");});
+        // game.physics.arcade.collide(currentPlayer, warp2, function(player, coin){spawn = 1; spawndirection = -1; changeLevel(0,"1_1");});
 
         updateMoney();
 
@@ -124,15 +126,15 @@ demo.level0.prototype = {
             spawnpoint = spawnpoint0.slice();
         };
 
-        spawnpoint1 = [69, 39];
+        spawnpoint1 = [69, 36]; // for the right side of village screen 
         if (spawn == 2){
             spawnpoint = spawnpoint1.slice();
+            spawnpoint[0] -= 2;
         };
 
-        //spawnpoint2 = [229,13];
-        //if (spawn == 1){
-        //    spawnpoint = spawnpoint2.slice();
-        //    spawnpoint[0] -= 2;
-        //}
+        spawnpoint2 = [25, 35];
+        if (spawn == 1){
+           spawnpoint = spawnpoint2.slice();
+        }
     }
 }
