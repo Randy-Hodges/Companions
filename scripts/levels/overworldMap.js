@@ -23,11 +23,12 @@ demo.overworldMap.prototype = {
         createGameConfigs();
         
         // music
-        if (!addedAudio){
+        if (!addedAudio || music_identifier != 0){
             backtrack = game.add.audio('backtrack');
             backtrack.play();
             backtrack.volume = .1;
             addedAudio = true;
+            music_identifier = 0;
         }
 
         // Tilemap
