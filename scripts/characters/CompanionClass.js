@@ -42,13 +42,13 @@ Companion.prototype.update = function() {
     game.physics.arcade.moveToObject(this, currentPlayer, 60, 1000);
     
     // left ----Animation----
-    if (this.body.acceleration.x < 0){
-        this.scale.x = Math.abs(this.scale.x);
+    if (this.body.velocity.x < 0){
+        this.scale.setTo(.6, .6);
         this.faceDirection = -1;
     }
     // right
-    else if (this.body.acceleration.x > 0){
-        this.scale.x = -Math.abs(this.scale.x);
+    else if (this.body.velocity.x > 0){
+        this.scale.setTo(-.6, .6);
         this.faceDirection = 1;
     }
     
