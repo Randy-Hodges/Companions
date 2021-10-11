@@ -103,7 +103,7 @@ function updateView() {
     {
         game.camera.x += 4;
     }
-}
+};
 
 // function resize() {
 //     // layer.offset.x += 50;
