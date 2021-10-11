@@ -1,4 +1,3 @@
-var cursors;
 
 demo.overworldMap = function(){};
 demo.overworldMap.prototype = {
@@ -50,8 +49,6 @@ demo.overworldMap.prototype = {
         // create view stuff, start at village on map
         game.camera.x = 80;
         game.camera.y = 1000;
-        cursors = game.input.keyboard.createCursorKeys();
-        // game.input.onDown.add(resize(), this);
 
         // level select UI
         levelSelect = game.add.text(8,8,"Use WASD to move around the map. \nPress 'C' to go to Level 1.", { fontSize: '18px', fill: '#fff' });
@@ -86,19 +83,23 @@ function addLevelSpawns() {
 };
 
 function updateView() {
-    if (cursors.up.isDown)
+    // map update controls
+    customKeys = new CustomKeys();
+    // game.input.onDown.add(resize(), this);
+    
+    if (customKeys.isDown('W'))
     {
         game.camera.y -= 4;
     }
-    else if (cursors.down.isDown)
+    else if (customKeys.isDown('S'))
     {
         game.camera.y += 4;
     }
-    if (cursors.left.isDown)
+    if (customKeys.isDown('A'))
     {
         game.camera.x -= 4;
     }
-    else if (cursors.right.isDown)
+    else if (customKeys.isDown('D'))
     {
         game.camera.x += 4;
     }
