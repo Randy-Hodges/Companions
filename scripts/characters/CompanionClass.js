@@ -38,7 +38,18 @@ Companion.prototype.constructor = Companion;
 Companion.prototype.update = function() {
     
     this.animations.play('piggy idle');
-    PlayerClass.increaseMaxHearts(1);
+    //PlayerClass.increaseMaxHearts(1);
     game.physics.arcade.moveToObject(this, currentPlayer, 60, 1000);
+    
+    // left ----Animation----
+    if (this.body.acceleration.x < 0){
+        this.scale.x = Math.abs(this.scale.x);
+        this.faceDirection = -1;
+    }
+    // right
+    else if (this.body.acceleration.x > 0){
+        this.scale.x = -Math.abs(this.scale.x);
+        this.faceDirection = 1;
+    }
     
 };
