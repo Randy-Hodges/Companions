@@ -1,5 +1,4 @@
-var currentCompanion;
-var companionType = "";
+var currentCompanion1, currentCompanion2;
 
 /*
 Intended to be used to store the data of the current Companion. Ideally everything would be in one class or there would be 
@@ -16,6 +15,7 @@ Companion = function(game, x = gameWidth/2, y = gameHeight/2){
 
     // add animations
     this.animations.add('piggy idle', [0, 1, 2, 3], frameRate=5, true);
+    this.animations.add('frog idle', [0, 1, 2, 3], frameRate=5, true);
     this.stopAnimations = false;
     
     /* #region Physics */
@@ -38,6 +38,18 @@ Companion.prototype.constructor = Companion;
 Companion.prototype.update = function() {
     
     this.animations.play('piggy idle');
+    //PlayerClass.increaseMaxHearts(1);
     game.physics.arcade.moveToObject(this, currentPlayer, 60, 1000);
+    
+    // left ----Animation----
+    if (this.body.velocity.x < 0){
+        this.scale.setTo(.6, .6);
+        this.faceDirection = -1;
+    }
+    // right
+    else if (this.body.velocity.x > 0){
+        this.scale.setTo(-.6, .6);
+        this.faceDirection = 1;
+    }
     
 };

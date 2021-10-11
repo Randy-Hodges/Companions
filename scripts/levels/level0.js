@@ -77,8 +77,8 @@ demo.level0.prototype = {
         //warp2 = new Coin(game, spawnpoint2[0]*tileLength, spawnpoint2[1]*tileLength);
         
         // Companion Init
-        currentCompanion = new Companion(game, spawnpoint[0]*tileLength, spawnpoint[1]*tileLength);
-        game.add.existing(currentCompanion);
+        currentCompanion1 = new Companion(game, spawnpoint[0]*tileLength, spawnpoint[1]*tileLength);
+        game.add.existing(currentCompanion1);
         
         // Player init
         currentPlayer = new Player(game, spawnpoint[0]*tileLength, spawnpoint[1]*tileLength);
