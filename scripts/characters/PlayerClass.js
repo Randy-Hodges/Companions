@@ -329,6 +329,7 @@ function companionSwitch(slot, num){
 // Companion Functions - Powerups
 function increaseMaxHearts(num){
     basePlayer.maxHearts = basePlayer.maxHearts + num;
+    //console.log(basePlayer.maxHearts);
 }
 
 function doubleJump(){

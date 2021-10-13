@@ -25,6 +25,8 @@ function loadPlayer(){
 function loadCompanion(){
     game.load.spritesheet('piggy', "assets/sprites/companions/piggy_animation.png", 30, 30);
     game.load.spritesheet('piggy idle', "assets/sprites/companions/piggy_animation.png", 30, 30);
+    game.load.spritesheet('froggy', "assets/sprites/companions/froggy_animation.png", 27, 30);
+    game.load.spritesheet('froggy idle', "assets/sprites/companions/froggy_animation.png", 27, 30);
 }
 
 function loadItems(){
