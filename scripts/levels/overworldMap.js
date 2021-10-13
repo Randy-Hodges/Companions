@@ -14,7 +14,7 @@ demo.overworldMap.prototype = {
         game.load.image('AssortedGround', "assets/overworld_map/Ground/Grass.png");
         
         // change this later
-        game.load.audio('backtrack', "assets/audio/music/PMD Remix/Personality Test.mp3");
+        game.load.audio('mapMusic', "assets/audio/music/PMD Remix/Personality Test.mp3");
 
     },
 
@@ -23,8 +23,8 @@ demo.overworldMap.prototype = {
         createGameConfigs();
         
         // music
-        if (!addedAudio || music_identifier != 0){
-            backtrack = game.add.audio('backtrack');
+        if (!addedAudio){
+            backtrack = game.add.audio('mapMusic');
             backtrack.play();
             backtrack.volume = .1;
             addedAudio = true;
@@ -80,7 +80,7 @@ function addLevelSpawns() {
     // scene change for village
     addKeyCallback(Phaser.Keyboard.V, changeLevel, '0');
     // scene change for level 1
-    addKeyCallback(Phaser.Keyboard.C, changeLevel, '1-0'); 
+    addKeyCallback(Phaser.Keyboard.C, function(){backtrack.destroy();  addedAudio = false; changeLevel(this, '1-0'); }); 
 };
 
 function updateView() {

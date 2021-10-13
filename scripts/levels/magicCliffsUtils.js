@@ -35,7 +35,7 @@ function loadItems(){
 }
 
 function loadEnemies(){
-    game.load.spritesheet('greenDocileSlime', "assets/sprites/enemies/blue slime/slime-Sheet-green.png", 32, 25);
+    game.load.spritesheet('greenSlime', "assets/sprites/enemies/blue slime/slime-Sheet-green.png", 32, 25);
     game.load.spritesheet('redSlime', "assets/sprites/enemies/blue slime/slime-Sheet-red.png", 32, 25);
     game.load.spritesheet('blueSlime', "assets/sprites/enemies/blue slime/slime-Sheet-blue.png", 32, 25);
     game.load.spritesheet('bat', "assets/sprites/enemies/Bat/bat-sheet.png", 32, 32);
@@ -69,7 +69,7 @@ function changeToMap(i) {
 
 function addEnemyFromTilemap(tile){
     if (tile.index == 2346 || tile.index == 1194){
-        slime = new Slime(game, tile.x*tileLength, tile.y*tileLength,'greenDocileSlime');
+        slime = new Slime(game, tile.x*tileLength, tile.y*tileLength,'greenSlime');
         game.add.existing(slime);
         enemyGroup.add(slime);
     }
