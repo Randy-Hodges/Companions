@@ -28,7 +28,6 @@ demo.overworldMap.prototype = {
             backtrack.play();
             backtrack.volume = .1;
             addedAudio = true;
-            music_identifier = 0;
         }
 
         // Tilemap

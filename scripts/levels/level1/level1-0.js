@@ -19,12 +19,11 @@ demo.level1.prototype = {
         createGameConfigs();
 
         // music
-        if (!addedAudio || music_identifier != 1){
+        if (!addedAudio){
             backtrack = game.add.audio('backtrack');
             backtrack.play();
             backtrack.volume = .1;
             addedAudio = true;
-            music_identifier = 1;
         }
 
         // sound effects
