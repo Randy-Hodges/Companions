@@ -3,7 +3,7 @@ var playerJumpButton, currentPlayer, basePlayer;
 /*
 Intended to be used to store the data of the current Player. Ideally everything would be in one class or there would be 
 some kind of inheritance, but this is what I'm doing to work around Phaser Sprites. If this was python, I probably could
-have figured out how to do this better.
+have figured out how to do more efficiently, but hey this works.
 */
 BasePlayer = function(){ 
 
@@ -329,6 +329,7 @@ function companionSwitch(slot, num){
 // Companion Functions - Powerups
 function increaseMaxHearts(num){
     basePlayer.maxHearts = basePlayer.maxHearts + num;
+    //console.log(basePlayer.maxHearts);
 }
 
 function doubleJump(){

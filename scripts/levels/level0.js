@@ -76,10 +76,6 @@ demo.level0.prototype = {
         //warp1 = new Coin(game, spawnpoint1[0]*tileLength, spawnpoint1[1]*tileLength);
         //warp2 = new Coin(game, spawnpoint2[0]*tileLength, spawnpoint2[1]*tileLength);
         
-        // Companion Init
-        currentCompanion1 = new Companion(game, spawnpoint[0]*tileLength, spawnpoint[1]*tileLength);
-        game.add.existing(currentCompanion1);
-        
         // Player init
         currentPlayer = new Player(game, spawnpoint[0]*tileLength, spawnpoint[1]*tileLength);
         game.add.existing(currentPlayer);
@@ -96,6 +92,13 @@ demo.level0.prototype = {
         heartText = game.add.text(8,8,"Hearts: ", { fontSize: '18px', fill: '#fff' });
         heartText.fixedToCamera = true;
         createHearts(currentPlayer.currentHearts);
+        
+        // Companion Init
+        currentCompanion1 = new CompanionPig(game, spawnpoint[0]*tileLength, spawnpoint[1]*tileLength);
+        currentCompanion2 = new CompanionFrog(game, spawnpoint[0]*tileLength, spawnpoint[1]*tileLength);
+        
+        game.add.existing(currentCompanion1);
+        game.add.existing(currentCompanion2);
         
     },
     update: function(){

@@ -14,6 +14,8 @@ magicCliffsNoCollide = [0,1768,1769,1801,1802,1803,1804,1805,1806,661,1831,1832,
     738,740,741,757,789,815,847,873,905,931,963,989,661,1821,1520,1570,1571,1572,410,411,412,295,297,1455,1457,1587,1597,354,1514,
     1405,1579,1638,1350,1293,1294,1353,1412,1470,1527,1528,1581,1584,1640,1636,1637,1348,1349,1585,1639,1642];
 
+exclusionLayer = {}
+
 villageNoCollide = [0, 2512];
 
 function loadPlayer(){
@@ -23,6 +25,8 @@ function loadPlayer(){
 function loadCompanion(){
     game.load.spritesheet('piggy', "assets/sprites/companions/piggy_animation.png", 30, 30);
     game.load.spritesheet('piggy idle', "assets/sprites/companions/piggy_animation.png", 30, 30);
+    game.load.spritesheet('froggy', "assets/sprites/companions/froggy_animation.png", 27, 30);
+    game.load.spritesheet('froggy idle', "assets/sprites/companions/froggy_animation.png", 27, 30);
 }
 
 function loadItems(){
@@ -33,7 +37,9 @@ function loadItems(){
 
 function loadEnemies(){
     game.load.spritesheet('greenDocileSlime', "assets/sprites/enemies/blue slime/slime-Sheet-green.png", 32, 25);
-    game.load.spritesheet('greenAngrySlime', "assets/sprites/enemies/blue slime/slime-Sheet-green-yellowEyes.png", 32, 25);
+    game.load.spritesheet('redSlime', "assets/sprites/enemies/blue slime/slime-Sheet-red.png", 32, 25);
+    game.load.spritesheet('blueSlime', "assets/sprites/enemies/blue slime/slime-Sheet-blue.png", 32, 25);
+    game.load.spritesheet('bat', "assets/sprites/enemies/Bat/bat-sheet.png", 32, 32);
 }
 
 function loadHeadshots(){
@@ -56,9 +62,32 @@ function changeLevel(i, levelNum){
 
 
 function addEnemyFromTilemap(tile){
-    if (tile.index == 2346){
+    if (tile.index == 2346 || tile.index == 1194){
         slime = new Slime(game, tile.x*tileLength, tile.y*tileLength,'greenDocileSlime');
         game.add.existing(slime);
         enemyGroup.add(slime);
+    }
+    if (tile.index == 2342){
+        slime = new redSlime(game, tile.x*tileLength, tile.y*tileLength,'redSlime');
+        game.add.existing(slime);
+        enemyGroup.add(slime);
+    }
+    if (tile.index == 2338){
+        slime = new blueSlime(game, tile.x*tileLength, tile.y*tileLength,'blueSlime');
+        game.add.existing(slime);
+        enemyGroup.add(slime);
+    }
+    if (tile.index == 2338){
+        bat = new Bat(game, tile.x*tileLength, tile.y*tileLength,'bat');
+        game.add.existing(bat);
+        enemyGroup.add(bat);
+    }
+}
+
+function excludeCollision(tile){
+    // console.log(map.currentLayer);
+    // console.log(tile.index)
+    if (!(tile.index in exclusionLayer)){
+        exclusionLayer[tile.index] = tile.index;
     }
 }
