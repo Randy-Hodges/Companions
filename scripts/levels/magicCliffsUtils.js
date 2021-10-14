@@ -2,7 +2,7 @@ var demo = {};
 var levelZeroTiles, map;
 var levelOneTiles, map; 
 var money = 0, moneyText;
-addedAudio = false;
+var addedAudio = false;
 var spawn = 0, spawndirection = -1;
 var tileLength = 16;
 
@@ -52,17 +52,13 @@ function updateMoney(){
 }
 
 function changeLevel(i, levelNum){
-    backtrack.pause();
     console.log('level change to: ' + levelNum);
     game.state.start('level' + levelNum);
-    backtrack.resume();
 }
 
 function changeToMap(i) {
-    backtrack.pause();
     console.log('change to map');
     game.state.start('Map');
-    backtrack.resume();
 }
 
 
