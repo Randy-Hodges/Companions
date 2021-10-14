@@ -104,7 +104,7 @@ demo.level1.prototype = {
         updateMoney();
         
         // Level 0 Warp Test
-        game.physics.arcade.collide(currentPlayer, warp1, function(player, coin){spawn = 1; spawndirection = 1; console.log(currentPlayer); changeLevel(0,"0");});
+        game.physics.arcade.collide(currentPlayer, warp1, function(player, coin){backtrack.destroy(); addedAudio = false; spawn = 1; spawndirection = 1; console.log(currentPlayer); changeLevel(0,"0");});
     },
     render: function(){
         //console.log('rendering');

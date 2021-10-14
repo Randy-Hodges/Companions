@@ -77,9 +77,9 @@ function addKeyCallback(key, fn, args) {
 
 function addLevelSpawns() {
     // scene change for village
-    addKeyCallback(Phaser.Keyboard.V, changeLevel, '0');
+    addKeyCallback(Phaser.Keyboard.V, function(){backtrack.destroy(); addedAudio = false; changeLevel(this, '0');});
     // scene change for level 1
-    addKeyCallback(Phaser.Keyboard.C, function(){backtrack.destroy();  addedAudio = false; changeLevel(this, '1-0'); }); 
+    addKeyCallback(Phaser.Keyboard.C, function(){backtrack.destroy(); addedAudio = false; changeLevel(this, '1-0');}); 
 };
 
 function updateView() {

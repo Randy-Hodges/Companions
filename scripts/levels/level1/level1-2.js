@@ -71,7 +71,7 @@ demo.level1_2.prototype = {
 
         // Warping
         game.physics.arcade.collide(currentPlayer, warp1, function(player, coin){spawn = 1; spawndirection = 1; changeLevel(0,"1-1");});
-        game.physics.arcade.collide(currentPlayer, warp2, function(player, coin){spawn = 2; spawndirection = 1; changeLevel(0,"0");});
+        game.physics.arcade.collide(currentPlayer, warp2, function(player, coin){backtrack.destroy(); addedAudio = false; spawn = 2; spawndirection = 1; changeLevel(0,"0");});
         updateMoney();
     },
     render: function(){
