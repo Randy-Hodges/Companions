@@ -6,12 +6,17 @@ some kind of inheritance, but this is what I'm doing to work around Phaser Sprit
 have figured out how to do this better.
 */
 
-Companion = function(game, x = gameWidth/2, y = gameHeight/2, spritesheetStrID){ 
+Companion = function(game, spritesheetStrID, x = gameWidth/2, y = gameHeight/2, followOn = false, isEqiupped = false){ 
     
     // instantiate Sprite object
     Phaser.Sprite.call(this, game, x, y, spritesheetStrID);
     this.anchor.setTo(.5,.5);   
     this.scale.setTo(.6,.6);
+    
+    // Sprite Variables
+    this.followOn = followOn;
+    this.isEqiupped = isEqiupped;
+    this.followObject;
 
     // animations
     this.stopAnimations = false;
@@ -19,6 +24,7 @@ Companion = function(game, x = gameWidth/2, y = gameHeight/2, spritesheetStrID){
     /* #region Physics */
     this.accelx = basePlayer.accelx;
     game.physics.enable(this);
+    this.body.allowGravity = false;
     this.body.setSize(0,0);
     this.body.drag.x = 800;
     this.body.maxVelocity.x = 150;
@@ -31,9 +37,15 @@ Companion.prototype.constructor = Companion;
 
 // (Automatically called by World.update)
 Companion.prototype.update = function(companion = this) {
-
-    game.physics.arcade.moveToObject(currentCompanion1, currentPlayer, 60, 1000);
-    game.physics.arcade.moveToObject(currentCompanion2, currentCompanion1, 60, 1000);
+    
+    // Follow Logic
+    if (companion.followOn == true){
+        game.physics.arcade.moveToObject(companion, companion.followObject, 60, 1000);
+    }
+    
+    if (companion.followOn == false){
+        console.log('Equipped to off.');
+    }
     
     // left ----Animation----
     if (companion.body.velocity.x < 0){

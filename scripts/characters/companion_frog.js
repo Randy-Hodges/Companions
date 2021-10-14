@@ -1,7 +1,7 @@
 // frog
 
-CompanionFrog = function(game,x,y){
-    Companion.call(this, game, x, y, 'froggy');
+CompanionFrog = function(game,x,y,followOn,isEqiupped){
+    Companion.call(this, game, 'froggy', x, y, followOn, isEqiupped);
     
     //animation
     this.animations.add('froggy idle', [0, 1, 2, 3], frameRate=5, true);
@@ -10,6 +10,8 @@ CompanionFrog = function(game,x,y){
     this.body.drag.x = 700;
     this.body.maxVelocity.x = 100;
     this.body.maxVelocity.y = 250;
+    
+    //increaseMaxJumps(1);
 }
 
 CompanionFrog.prototype = Object.create(Companion.prototype);
@@ -19,6 +21,4 @@ CompanionFrog.prototype.constructor = CompanionFrog;
 CompanionFrog.prototype.update = function() {
     Companion.prototype.update(this); // Update like a companion
     this.animations.play('froggy idle');
-    //PlayerClass.increaseMaxJumps(1);
-    //game.physics.arcade.moveToObject(this, currentCompanion1, 60, 1000);
 }

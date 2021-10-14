@@ -46,15 +46,6 @@ demo.level0.prototype = {
         // Game borders based on tilemap
         game.world.setBounds(0, 0, map.layer.widthInPixels, map.layer.heightInPixels);
         
-        // Coins
-        //coin_group = game.add.group();
-        //coin_positions = [[30,35],[185,19],[202,9],[116,18],[14,16]] // in units of tiles
-        //coin_positions.forEach(coin_pos => {
-        //    coin = new Coin(game, coin_pos[0]*tileLength, coin_pos[1]*tileLength);
-        //    game.add.existing(coin);
-        //    coin_group.add(coin);
-        //});
-        
         // Medi - Hearts
         //heart_group = game.add.group();
         //heart_positions = [[29,35],[184,19],[201,9],[115,18],[15,16]] // in units of tiles
@@ -92,13 +83,24 @@ demo.level0.prototype = {
         heartText = game.add.text(8,8,"Hearts: ", { fontSize: '18px', fill: '#fff' });
         heartText.fixedToCamera = true;
         createHearts(currentPlayer.currentHearts);
-        
+            
         // Companion Init
-        currentCompanion1 = new CompanionPig(game, spawnpoint[0]*tileLength, spawnpoint[1]*tileLength);
-        currentCompanion2 = new CompanionFrog(game, spawnpoint[0]*tileLength, spawnpoint[1]*tileLength);
+        pig = new CompanionPig(game, 25*tileLength, 35*tileLength, false, false);
+        frog = new CompanionFrog(game, 23*tileLength, 35*tileLength, false, false);
+        //dragon = new CompanionDragon(game, 23*tileLength, 35*tileLength, false, false);
+        //axolotl = new CompanionAxoltol(game, 23*tileLength, 35*tileLength, false, false);
         
-        game.add.existing(currentCompanion1);
-        game.add.existing(currentCompanion2);
+        // Equipped
+        basePlayer.companionSlot1 = pig;
+        basePlayer.companionSlot2 = frog;
+        
+        if (basePlayer.companionSlot1 != 'undefined'){
+            game.add.existing(basePlayer.companionSlot1);
+        }
+        
+        if (basePlayer.companionSlot2 != 'undefined'){
+            game.add.existing(basePlayer.companionSlot2);
+        }
         
     },
     update: function(){

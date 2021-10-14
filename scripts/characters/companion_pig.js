@@ -1,10 +1,7 @@
 // pig
 
-CompanionPig = function(game,x,y){
-    Companion.call(this, game, x, y, 'piggy');
-    
-    // instantiate Sprite object
-    Phaser.Sprite.call(this, game, x, y, 'piggy');
+CompanionPig = function(game,x,y,followOn,isEqiupped){
+    Companion.call(this, game, 'piggy', x, y, followOn, isEqiupped);
     
     //animation
     this.animations.add('piggy idle', [0, 1, 2, 3], frameRate=5, true);
@@ -24,5 +21,4 @@ CompanionPig.prototype.constructor = CompanionPig;
 CompanionPig.prototype.update = function() {
     Companion.prototype.update(this); // Update like a companion
     this.animations.play('piggy idle');
-    //game.physics.arcade.moveToObject(this, currentCompanion1, 60, 1000);
 }

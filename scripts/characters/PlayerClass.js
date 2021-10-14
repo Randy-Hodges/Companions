@@ -12,9 +12,9 @@ BasePlayer = function(){
     this.currentHearts = 5;
     
     // companions
-    this.currentCompanion1 = -1;
-    this.currentCompanion2 = -1;
-    
+    this.companionSlot1;
+    this.companionSlot2;
+
     // equipment
     
     /* #region Physics */
@@ -219,10 +219,27 @@ Player.prototype.update = function() {
         }
     }
 
-   // Invulnerability on hit
-   if (this.invulnerable && game.time.now - this.invulnerableTime > this.iFrames){
+    // Invulnerability on hit
+    if (this.invulnerable && game.time.now - this.invulnerableTime > this.iFrames){
        this.invulnerable = false;
-   }
+    }
+    
+    //game.physics.arcade.overlap(currentPlayer, pig, function(player, companion){coin.kill(); coinCollect.play(); money+=1;});
+    
+    // Equip to Slot 1
+    if (customKeys.isDown("Q")){
+        basePlayer.companionSlot1.followOn = true;
+        basePlayer.companionSlot1.followObject = currentPlayer;
+        console.log('Equipped to companionSlot1.');
+    }
+    
+    // Equip to Slot 2
+    if (customKeys.isDown("E")){
+        basePlayer.companionSlot2.followOn = true;
+        basePlayer.companionSlot2.followObject = basePlayer.companionSlot1;
+        console.log('Equipped to companionSlot2.');
+    }
+    
 };
 
 Player.prototype.changePosition = function() {
@@ -232,7 +249,6 @@ Player.prototype.changePosition = function() {
     // this.body.position.x = x;
     // this.body.position.y = y;
 }
-
 
 function playerDamageKnockback(player, enemy){
     knockbackVel = 200;
@@ -315,15 +331,6 @@ function dmgHearts(dmg){
     basePlayer.currentHearts -= 1;
     
     console.log(basePlayer.currentHearts);
-}
-
-// Companion Functions - Equip Companions
-function companionSwitch(slot, num){
-    if (slot == 1){
-        basePlayer.currentCompanion1 = num;
-    } else {
-        basePlayer.currentCompanion2 = num;
-    }
 }
 
 // Companion Functions - Powerups
