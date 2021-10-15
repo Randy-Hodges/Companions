@@ -46,6 +46,10 @@ demo.level0.prototype = {
         // Game borders based on tilemap
         game.world.setBounds(0, 0, map.layer.widthInPixels, map.layer.heightInPixels);
         
+        // Text Instructions
+        equipText1 = game.add.text(6*tileLength, 30*tileLength,"Press Q to Equip.", { fontSize: '14px', fill: '#000' });
+        equipText2 = game.add.text(6*tileLength, 31*tileLength,"Press E to Unequip.", { fontSize: '14px', fill: '#000' });
+        
         // Medi - Hearts
         //heart_group = game.add.group();
         //heart_positions = [[29,35],[184,19],[201,9],[115,18],[15,16]] // in units of tiles
@@ -54,14 +58,6 @@ demo.level0.prototype = {
         //    game.add.existing(heart);
         //    heart_group.add(heart);
         //});
-
-        // Enemies
-        //enemyGroup = game.add.group();
-        //map.setLayer('enemies');
-        //map.forEach(function(tile){addEnemyFromTilemap(tile)},1,0,0,map.width,map.height);
-        // gdslime = new GDSlime(game, 25*tileLength, 35*tileLength);
-        // game.add.existing(gdslime);
-        // enemyGroup.add(gdslime);
         
         // Warp points (doing it with coins that aren't physically loaded in the game)
         //warp1 = new Coin(game, spawnpoint1[0]*tileLength, spawnpoint1[1]*tileLength);
@@ -93,23 +89,13 @@ demo.level0.prototype = {
         game.add.existing(pig);
         game.add.existing(frog);
         
-        // Equipped      
-        if (basePlayer.companionSlot1 != 'undefined'){
-            //game.add.existing(basePlayer.companionSlot1);
-        }
-        
-        if (basePlayer.companionSlot2 != 'undefined'){
-            //game.add.existing(basePlayer.companionSlot2);
-        }
-        
     },
     update: function(){
         // Collision
         game.physics.arcade.collide(currentPlayer, levelZeroTiles);
         game.physics.arcade.overlap(currentPlayer, coin_group, function(player, coin){coin.kill(); coinCollect.play(); money+=1;});
-        game.physics.arcade.overlap(currentPlayer, heart_group, function(player, heart){heart.kill(); healHearts(1); /*heartCollect.play();*/});
         
-        // Companions Overlap
+        // Companions Overlap     
         if (checkOverlap(currentPlayer, pig)){
             overlappedCompanion = pig;
             //console.log('pig overlap');

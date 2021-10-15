@@ -228,24 +228,55 @@ Player.prototype.update = function() {
     // Companions
     if (overlappedCompanion != 'undefined'){   
         console.log('Companion is defined.')
-        // Equip to Slot 1
+        
+        // Equip Companions
         if (customKeys.isDown("Q")){
-            basePlayer.companionSlot1 = overlappedCompanion;
-            basePlayer.companionSlot1.followOn = true;
-            basePlayer.companionSlot1.followObject = currentPlayer;
-            console.log('Equipped to companionSlot1.');
-            console.log(overlappedCompanion);
+            
+            // Equip to Slot 1
+            if (basePlayer.companionSlot1 == null || basePlayer.companionSlot1 == 'empty'){
+                basePlayer.companionSlot1 = overlappedCompanion;
+                basePlayer.companionSlot1.followOn = true;
+                basePlayer.companionSlot1.followObject = currentPlayer;
+                //console.log('Equipped to companionSlot1.');
+                //console.log(overlappedCompanion);  
+                
+                if (basePlayer.companionSlot2 != null){
+                    basePlayer.companionSlot2.followObject = basePlayer.companionSlot1;
+                }
+            
+            // Equip to Slot 2
+            } else { 
+                if (basePlayer.companionSlot2 == null && overlappedCompanion != basePlayer.companionSlot1){
+                    basePlayer.companionSlot2 = overlappedCompanion;
+                    basePlayer.companionSlot2.followOn = true;
+                    basePlayer.companionSlot2.followObject = basePlayer.companionSlot1;
+                    //console.log('Equipped to companionSlot2.');
+                    //console.log(overlappedCompanion);
+                }
+            }
         }
-
-        // Equip to Slot 2
+        
+        // Unequip Companions
         if (customKeys.isDown("E")){
-            basePlayer.companionSlot2 = overlappedCompanion;
-            basePlayer.companionSlot2.followOn = true;
-            basePlayer.companionSlot2.followObject = basePlayer.companionSlot1;
-            console.log('Equipped to companionSlot2.');
-            console.log(overlappedCompanion);
-        }
+            
+            // Unequip Slot 1
+            if (basePlayer.companionSlot1 == overlappedCompanion){
+                basePlayer.companionSlot1.followOn = false;
+                basePlayer.companionSlot1 = 'empty';
+                
+                if (basePlayer.companionSlot2 != null){
+                    basePlayer.companionSlot2.followObject = currentPlayer;
+                }
+            } 
+            
+            // Unequip Slot 2
+            if (basePlayer.companionSlot2 == overlappedCompanion){
+                basePlayer.companionSlot2.followOn = false;
+                basePlayer.companionSlot2 = 'empty';
+            }
+        }  
     }
+    
     
 };
 
