@@ -1,4 +1,5 @@
 var playerJumpButton, currentPlayer, basePlayer;
+var overlappedCompanion = 'undefined';
 
 /*
 Intended to be used to store the data of the current Player. Ideally everything would be in one class or there would be 
@@ -224,20 +225,26 @@ Player.prototype.update = function() {
        this.invulnerable = false;
     }
     
-    //game.physics.arcade.overlap(currentPlayer, pig, function(player, companion){coin.kill(); coinCollect.play(); money+=1;});
-    
-    // Equip to Slot 1
-    if (customKeys.isDown("Q")){
-        basePlayer.companionSlot1.followOn = true;
-        basePlayer.companionSlot1.followObject = currentPlayer;
-        console.log('Equipped to companionSlot1.');
-    }
-    
-    // Equip to Slot 2
-    if (customKeys.isDown("E")){
-        basePlayer.companionSlot2.followOn = true;
-        basePlayer.companionSlot2.followObject = basePlayer.companionSlot1;
-        console.log('Equipped to companionSlot2.');
+    // Companions
+    if (overlappedCompanion != 'undefined'){   
+        console.log('Companion is defined.')
+        // Equip to Slot 1
+        if (customKeys.isDown("Q")){
+            basePlayer.companionSlot1 = overlappedCompanion;
+            basePlayer.companionSlot1.followOn = true;
+            basePlayer.companionSlot1.followObject = currentPlayer;
+            console.log('Equipped to companionSlot1.');
+            console.log(overlappedCompanion);
+        }
+
+        // Equip to Slot 2
+        if (customKeys.isDown("E")){
+            basePlayer.companionSlot2 = overlappedCompanion;
+            basePlayer.companionSlot2.followOn = true;
+            basePlayer.companionSlot2.followObject = basePlayer.companionSlot1;
+            console.log('Equipped to companionSlot2.');
+            console.log(overlappedCompanion);
+        }
     }
     
 };
@@ -345,4 +352,14 @@ function doubleJump(){
 
 function enableFire(){
     //basePlayer.fireEnable = True
+}
+
+// Overlap
+function checkOverlap(spriteA, spriteB) {
+
+    var boundsA = spriteA.getBounds();
+    var boundsB = spriteB.getBounds();
+
+    return Phaser.Rectangle.intersects(boundsA, boundsB);
+
 }

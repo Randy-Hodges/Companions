@@ -90,25 +90,37 @@ demo.level0.prototype = {
         //dragon = new CompanionDragon(game, 23*tileLength, 35*tileLength, false, false);
         //axolotl = new CompanionAxoltol(game, 23*tileLength, 35*tileLength, false, false);
         
-        // Equipped
-        basePlayer.companionSlot1 = pig;
-        basePlayer.companionSlot2 = frog;
+        game.add.existing(pig);
+        game.add.existing(frog);
         
+        // Equipped      
         if (basePlayer.companionSlot1 != 'undefined'){
-            game.add.existing(basePlayer.companionSlot1);
+            //game.add.existing(basePlayer.companionSlot1);
         }
         
         if (basePlayer.companionSlot2 != 'undefined'){
-            game.add.existing(basePlayer.companionSlot2);
+            //game.add.existing(basePlayer.companionSlot2);
         }
         
     },
     update: function(){
         // Collision
         game.physics.arcade.collide(currentPlayer, levelZeroTiles);
-        //game.physics.arcade.collide(enemyGroup, levelZeroTiles);
         game.physics.arcade.overlap(currentPlayer, coin_group, function(player, coin){coin.kill(); coinCollect.play(); money+=1;});
         game.physics.arcade.overlap(currentPlayer, heart_group, function(player, heart){heart.kill(); healHearts(1); /*heartCollect.play();*/});
+        
+        // Companions Overlap
+        if (checkOverlap(currentPlayer, pig)){
+            overlappedCompanion = pig;
+            //console.log('pig overlap');
+        
+        } else if (checkOverlap(currentPlayer, frog)){
+            overlappedCompanion = frog;
+            //console.log('frog overlap');
+            
+        } else {
+            overlappedCompanion = 'undefined';
+        }
 
         // Warping
         //game.physics.arcade.collide(currentPlayer, warp1, function(player, coin){spawn = 1; spawndirection = 1; console.log(currentPlayer); changeLevel(0,"0");});

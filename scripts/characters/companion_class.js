@@ -25,7 +25,7 @@ Companion = function(game, spritesheetStrID, x = gameWidth/2, y = gameHeight/2, 
     this.accelx = basePlayer.accelx;
     game.physics.enable(this);
     this.body.allowGravity = false;
-    this.body.setSize(0,0);
+    this.body.setSize(32,32);
     this.body.drag.x = 800;
     this.body.maxVelocity.x = 150;
     this.body.maxVelocity.y = 300;
@@ -44,7 +44,7 @@ Companion.prototype.update = function(companion = this) {
     }
     
     if (companion.followOn == false){
-        console.log('Equipped to off.');
+        //console.log('Equipped to off.');
     }
     
     // left ----Animation----
