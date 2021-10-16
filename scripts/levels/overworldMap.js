@@ -14,6 +14,7 @@ demo.overworldMap.prototype = {
         game.load.image('Cliff', "assets/overworld_map/Ground/Cliff.png");
         game.load.image('AssortedGround', "assets/overworld_map/Ground/Grass.png");
         game.load.image('Cloud', "assets/tiles/painted style/PNG/Mountains/Layer 1 cloud anim1.png");
+        game.load.image('Cloud2', "assets/tiles/painted style/PNG/Mountains/Layer 3 cloud anim1.png");
         
         // change this later
         game.load.audio('mapMusic', "assets/audio/music/PMD Remix/Personality Test.mp3");
@@ -40,28 +41,32 @@ demo.overworldMap.prototype = {
         map.addTilesetImage('Overworld_Trees','Trees');
         map.addTilesetImage('Overworld_cliff','Cliff');
         map.addTilesetImage('Overworld_AssortedGround','AssortedGround');
+        map.addTilesetImage('Layer 1 cloud anim1','Cloud');
+        map.addTilesetImage('Layer 3 cloud anim1','Cloud2');
 
-        map.createLayer('Background');  
-        // map.createLayer('Landscape');
+        map.createLayer('Water');   
+        map.createLayer('Background');
+        map.createLayer('Cloud Layer 1');
+        map.createLayer('Cloud Layer 2');  
 
         var layer = map.createLayer('Landscape');
         layer.scale.set(1);
         layer.resizeWorld();
 
         // create view stuff, start at village on map
-        game.camera.x = 80;
-        game.camera.y = 1000;
+        game.camera.x = 225;
+        game.camera.y = 675;
 
         // level select UI
         levelSelect = game.add.text(8,8,"Use WASD to move around the map. \nPress 'C' to go to Level 1. \nPress 'V' to go to the Village.", { fontSize: '12px', fill: '#fff' });
         levelSelect.fixedToCamera = true;
 
-        // cloud layers
-        cloud = game.add.sprite(300, 600, 'Cloud');
-        cloud.anchor.set(0.5);
+        // add moving cloud layers
+        cloud1 = game.add.sprite(500, 800, 'Cloud');
+        cloud1.anchor.set(0.5);
 
-        // game.add.tween(cloud).to({ y: 200 }, 500, "Sine.easeInOut", true, 0, -1, true);
-        // game.add.tween(cloud).to({ x: 232 }, 3000, "Sine.easeInOut", true, 0, -1, true);
+        // example cloud movement (will be updated and be place in the update function eventually)
+        game.add.tween(cloud1).to({ x: -100 }, 4000, Phaser.Easing.Out, true);
         
     },
     
@@ -72,7 +77,7 @@ demo.overworldMap.prototype = {
         // update view
         updateView()
 
-        // Eventually add cloud layer update code
+        // cloud layer update
     
     }
 }
