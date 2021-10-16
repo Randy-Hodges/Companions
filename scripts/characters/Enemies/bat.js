@@ -1,6 +1,6 @@
 var bat;
 Bat = function(game, x, y, spritesheetStrID){        
-    // instantiate Sprite object
+    // Instantiate Sprite object
     Phaser.Sprite.call(this, game, x, y, spritesheetStrID);
     this.anchor.setTo(.5,.5); 
     scale = 1.3;  
@@ -8,7 +8,7 @@ Bat = function(game, x, y, spritesheetStrID){
     this.faceDirection = 1;
     bat = this;
 
-    // add animations
+    // Add animations
     this.animations.add('flying', [0,1,2,3,4,5,6]);
     this.animations.add('attacking', [7,8,9,10,11,12,13,14,15,16]);
     this.animations.add('hit', [17,18,19]);
@@ -16,7 +16,7 @@ Bat = function(game, x, y, spritesheetStrID){
     this.anims = {flying: 0, attacking: 1, hit: 2}
     this.curAnimation = 0;
 
-    // physics
+    // Physics
     game.physics.enable(this);
     hitboxOffsetX = 9;
     hitboxOffsetY = 7;
@@ -26,9 +26,10 @@ Bat = function(game, x, y, spritesheetStrID){
     this.movementSpeedY = 12;
     this.body.gravity.y = -400; // counteracts global gravity
 
-    // damage player
+    // Damage player
     this.damage = {none: false, left: true, right: true, up: false, down: true};
 
+    // Switching Direction
     this.timeLastSwitchX = 0;
     this.timeLastSwitchY = 0;
     this.roamFirstCall = true;
@@ -36,7 +37,6 @@ Bat = function(game, x, y, spritesheetStrID){
 
 Bat.prototype = Object.create(Phaser.Sprite.prototype);
 Bat.prototype.constructor = Bat;
-
 
 // (Automatically called by World.update)
 Bat.prototype.update = function(bat = this) {
@@ -91,6 +91,7 @@ Bat.prototype.switchFaceDirection = function(bat = this){
 }
 
 Bat.prototype.roam = function(bat = this){
+    // Roaming starts
     if (bat.roamFirstCall){
         bat.roamFirstCall = false;
         bat.body.velocity.x = bat.movementSpeed;

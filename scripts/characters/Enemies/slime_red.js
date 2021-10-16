@@ -21,7 +21,6 @@ redSlime.prototype.update = function() {
         if (this.curAnimationPriority <= this.animationPriorities.attacking){
             this.curAnimationPriority = this.animationPriorities.attacking;
         }
-        console.log('close');
     }
     else{
         // Normal Speed

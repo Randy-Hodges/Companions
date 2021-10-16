@@ -1,11 +1,5 @@
 var currentCompanion1, currentCompanion2;
 
-/*
-Intended to be used to store the data of the current Companion. Ideally everything would be in one class or there would be 
-some kind of inheritance, but this is what I'm doing to work around Phaser Sprites. If this was python, I probably could
-have figured out how to do this better.
-*/
-
 Companion = function(game, x = gameWidth/2, y = gameHeight/2){ 
     
     // instantiate Sprite object
@@ -26,7 +20,7 @@ Companion = function(game, x = gameWidth/2, y = gameHeight/2){
     this.body.maxVelocity.x = 150;
     this.body.maxVelocity.y = 300;
     
-    this.faceDirection = 1; // x Direction player is facing. 1 or -1
+    this.faceDirection = 1; // x Direction companion is facing. 1 or -1
  
 }
 
