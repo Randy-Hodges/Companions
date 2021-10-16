@@ -32,7 +32,7 @@ BasePlayer = function(){
     /* #endregion */
 }
 
-basePlayer = new BasePlayer()
+basePlayer = new BasePlayer();
 
 Player = function(game, x = gameWidth/2, y = gameHeight/2){ 
     // *INSTANTIATE AN ENEMY GROUP BEFORE THE PLAYER IN THE CODE FOR COLLISIONS WITH ENEMIES

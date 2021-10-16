@@ -92,3 +92,15 @@ function excludeCollision(tile){
         exclusionLayer[tile.index] = tile.index;
     }
 }
+
+function createGroups(){
+    if (typeof coinGroup == 'undefined'){
+        coinGroup = game.add.group();
+    }
+    if (typeof heartGroup == 'undefined'){
+        heartGroup = game.add.group();
+    }
+    if (typeof enemyGroup == 'undefined'){
+        enemyGroup = game.add.group();
+    }
+}
