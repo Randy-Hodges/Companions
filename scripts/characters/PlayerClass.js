@@ -265,6 +265,7 @@ Player.prototype.update = function() {
                 basePlayer.companionSlot1 = 'empty';
                 
                 if (basePlayer.companionSlot2 != null){
+                    basePlayer.companionSlot2.followOn = true;
                     basePlayer.companionSlot2.followObject = currentPlayer;
                 }
             } 

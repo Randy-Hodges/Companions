@@ -44,6 +44,8 @@ Companion.prototype.update = function(companion = this) {
     }
     
     if (companion.followOn == false){
+        companion.body.velocity.x = 0;
+        companion.body.velocity.y = 0;
         //console.log('Equipped to off.');
     }
     
