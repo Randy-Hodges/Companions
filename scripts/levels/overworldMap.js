@@ -1,3 +1,4 @@
+var cloud;
 
 demo.overworldMap = function(){};
 demo.overworldMap.prototype = {
@@ -12,6 +13,7 @@ demo.overworldMap.prototype = {
         game.load.image('Trees', "assets/overworld_map/Nature/Trees.png");
         game.load.image('Cliff', "assets/overworld_map/Ground/Cliff.png");
         game.load.image('AssortedGround', "assets/overworld_map/Ground/Grass.png");
+        game.load.image('Cloud', "assets/tiles/painted style/PNG/Mountains/Layer 1 cloud anim1.png");
         
         // change this later
         game.load.audio('mapMusic', "assets/audio/music/PMD Remix/Personality Test.mp3");
@@ -51,11 +53,15 @@ demo.overworldMap.prototype = {
         game.camera.y = 1000;
 
         // level select UI
-        levelSelect = game.add.text(8,8,"Use WASD to move around the map. \nPress 'C' to go to Level 1.", { fontSize: '18px', fill: '#fff' });
+        levelSelect = game.add.text(8,8,"Use WASD to move around the map. \nPress 'C' to go to Level 1. \nPress 'V' to go to the Village.", { fontSize: '12px', fill: '#fff' });
         levelSelect.fixedToCamera = true;
 
+        // cloud layers
+        cloud = game.add.sprite(300, 600, 'Cloud');
+        cloud.anchor.set(0.5);
 
-        // Eventually add cloud layer code
+        // game.add.tween(cloud).to({ y: 200 }, 500, "Sine.easeInOut", true, 0, -1, true);
+        // game.add.tween(cloud).to({ x: 232 }, 3000, "Sine.easeInOut", true, 0, -1, true);
         
     },
     
