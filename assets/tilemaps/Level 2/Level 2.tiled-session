@@ -1,0 +1,33 @@
+{
+    "activeFile": "level2-0.json",
+    "expandedProjectPaths": [
+    ],
+    "fileStates": {
+        "": {
+            "scaleInDock": 1
+        },
+        "level2-0.json": {
+            "scale": 0.5,
+            "selectedLayer": 3,
+            "viewCenter": {
+                "x": 443,
+                "y": 668
+            }
+        },
+        "level2-0.json#Magic_Cliffs16": {
+            "scaleInDock": 1
+        },
+        "level2-0.json#nes-color-palette": {
+            "scaleInDock": 1
+        }
+    },
+    "last.exportedFilePath": "C:/Users/randy/OneDrive/Documents/GitHub/ZooCollect/assets/tilemaps/Level 2",
+    "map.lastUsedExportFilter": "JSON map files (*.json)",
+    "openFiles": [
+        "level2-0.json"
+    ],
+    "project": "Level 2.tiled-project",
+    "recentFiles": [
+        "level2-0.json"
+    ]
+}

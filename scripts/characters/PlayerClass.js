@@ -1,5 +1,37 @@
-var playerJumpButton, currentPlayer;
+var playerJumpButton, currentPlayer, basePlayer;
+var overlappedCompanion = 'undefined';
 
+/*
+Intended to be used to store the data of the current Player. Ideally everything would be in one class or there would be 
+some kind of inheritance, but this is what I'm doing to work around Phaser Sprites. If this was python, I probably could
+have figured out how to do more efficiently, but hey this works.
+*/
+BasePlayer = function(){ 
+
+    // hearts - HP
+    this.maxHearts = 5;
+    this.currentHearts = 5;
+    
+    // companions
+    this.companionSlot1;
+    this.companionSlot2;
+
+    // equipment
+    
+    // Physics
+    this.accelx = 750;
+    this.gravityY = 500;
+    this.dragX = 800;
+    this.maxVelX = 180;
+    this.maxVelY = 400;
+        
+    this.jumpAccel = -3070;
+    this.jumpInputTime = 120 //ms
+    this.jumpStorage = 0; // should be initialized to 0, can increase for dev purposes
+    
+}
+
+basePlayer = new BasePlayer();
 
 Player = function(game, x = gameWidth/2, y = gameHeight/2){ 
     // *INSTANTIATE AN ENEMY GROUP BEFORE THE PLAYER IN THE CODE FOR COLLISIONS WITH ENEMIES
@@ -9,9 +41,9 @@ Player = function(game, x = gameWidth/2, y = gameHeight/2){
     this.anchor.setTo(.5,.5);   
     this.scale.setTo(spawndirection, 1);
 
-    // hearts
-    this.maxHearts = 3;
-    this.currentHearts = 3;
+    // hearts - HP
+    this.maxHearts = basePlayer.maxHearts;
+    this.currentHearts = basePlayer.currentHearts;
 
     // add animations
     this.animations.add('idle side', [11,12,13,14,15], frameRate=10);
@@ -21,22 +53,22 @@ Player = function(game, x = gameWidth/2, y = gameHeight/2){
     this.animations.add('slash down', [0,1,2], frameRate = 10);
     this.stopAnimations = false;
     
-    // physics
-    this.accelx = 750;
+    // #region Physics
+    this.accelx = basePlayer.accelx;
     game.physics.enable(this);
     this.body.setSize(9,28,28,20); // Creating hitbox. first two params are size of body, second two are offset of body
-    this.body.gravity.y = 500;
-    this.body.drag.x = 800;
-    this.body.maxVelocity.x = 180;
-    this.body.maxVelocity.y = 400;
+    this.body.gravity.y = basePlayer.gravityY;
+    this.body.drag.x = basePlayer.dragX;
+    this.body.maxVelocity.x = basePlayer.maxVelX;
+    this.body.maxVelocity.y = basePlayer.maxVelY;
     this.body.collideWorldBounds = true;
     
-    this.faceDirection = 1;
+    this.faceDirection = 1; // x Direction player is facing. 1 or -1
 
-    /* #region jumping */
-    this.jumpAccel = -3070;
-    this.jumpInputTime = 120 //ms
-    this.jumpStorage = 0; // should be initialized to 0, can increase for dev purposes
+    // #region jumping
+    this.jumpAccel = basePlayer.jumpAccel;
+    this.jumpInputTime = basePlayer.jumpInputTime; //ms
+    this.jumpStorage = basePlayer.jumpStorage; // should be initialized to 0, can increase for dev purposes
     this.currentlyJumping = false;
     currentPlayer = this;
     playerJumpButton =  game.input.keyboard.addKey(Phaser.Keyboard.W);
@@ -59,9 +91,9 @@ Player = function(game, x = gameWidth/2, y = gameHeight/2){
             currentPlayer.currentlyJumping = false;
             currentPlayer.body.acceleration.y = 0;
         })
-        /* #endregion */
+        // #endregion
         
-    /* #region ----- SLASHING ----- */
+    // #region ----- SLASHING ----- 
     // Animations
     slashSide = this.animations.getAnimation('slash side');
     slashSide.onStart.add(function(){
@@ -105,14 +137,14 @@ Player = function(game, x = gameWidth/2, y = gameHeight/2){
                 }
             }
         });
-        /* #endregion */
+        // #endregion */
+        
+        // #endregion */
 
-    // custom variables
+    // Invulnerability
     this.invulnerableTime = game.time.now;
     this.invulnerable = false;
-    this.iFrames = 2000 //actually in milliseconds, not frames
-
-    
+    this.iFrames = 2000 //actually in milliseconds, not frames    
 }
 
 
@@ -121,6 +153,8 @@ Player.prototype.constructor = Player;
 
 // (Automatically called by World.update)
 Player.prototype.update = function() {
+    game.physics.enable(this);
+    game.physics.enable(slash);
     
     this.slash.body.setSize(20,35,-10 + this.faceDirection*15,0);
     if (this.isSlashing){
@@ -128,7 +162,7 @@ Player.prototype.update = function() {
         
     }
 
-    /* #region Keyboard Input */
+    // #region Keyboard Input */
     customKeys = new CustomKeys();
     // ----- LATERAL MOVEMENT -----
     // Left (Movement)
@@ -159,7 +193,7 @@ Player.prototype.update = function() {
         }
         // idle
         if (this.body.velocity.x == 0) {
-            this.animations.play('idle side', loop=true);
+            this.animations.play('idle side', textLoop=true);
         }
     }
     // ----- VERTICAL MOVEMENT -----
@@ -169,7 +203,7 @@ Player.prototype.update = function() {
         currentPlayer.body.acceleration.y = 0;
     }
     
-    /* #endregion */
+    // #endregion */
 
     if (enemyGroup || bossFight){
         if (!this.invulnerable){
@@ -178,17 +212,71 @@ Player.prototype.update = function() {
                 if (damageKnockbackApplied){
                     player.invulnerable = true;
                     player.invulnerableTime = game.time.now;  
-                    //dmgHearts(1);
                     console.log("got hit")
                 }
             });
         }
     }
 
-   // Invulnerability on hit
-   if (this.invulnerable && game.time.now - this.invulnerableTime > this.iFrames){
+    // Invulnerability on hit
+    if (this.invulnerable && game.time.now - this.invulnerableTime > this.iFrames){
        this.invulnerable = false;
-   }
+    }
+    
+    // Companions
+    if (overlappedCompanion != 'undefined'){   
+        console.log('Companion is defined.')
+        
+        // Equip Companions
+        if (customKeys.isDown("Q")){
+            
+            // Equip to Slot 1
+            if (basePlayer.companionSlot1 == null || basePlayer.companionSlot1 == 'empty'){
+                basePlayer.companionSlot1 = overlappedCompanion;
+                basePlayer.companionSlot1.followOn = true;
+                basePlayer.companionSlot1.followObject = currentPlayer;
+                //console.log('Equipped to companionSlot1.');
+                //console.log(overlappedCompanion);  
+                
+                if (basePlayer.companionSlot2 != null){
+                    basePlayer.companionSlot2.followObject = basePlayer.companionSlot1;
+                }
+            
+            // Equip to Slot 2
+            } else { 
+                if (basePlayer.companionSlot2 == null && overlappedCompanion != basePlayer.companionSlot1){
+                    basePlayer.companionSlot2 = overlappedCompanion;
+                    basePlayer.companionSlot2.followOn = true;
+                    basePlayer.companionSlot2.followObject = basePlayer.companionSlot1;
+                    //console.log('Equipped to companionSlot2.');
+                    //console.log(overlappedCompanion);
+                }
+            }
+        }
+        
+        // Unequip Companions
+        if (customKeys.isDown("E")){
+            
+            // Unequip Slot 1
+            if (basePlayer.companionSlot1 == overlappedCompanion){
+                basePlayer.companionSlot1.followOn = false;
+                basePlayer.companionSlot1 = 'empty';
+                
+                if (basePlayer.companionSlot2 != null){
+                    basePlayer.companionSlot2.followOn = true;
+                    basePlayer.companionSlot2.followObject = currentPlayer;
+                }
+            } 
+            
+            // Unequip Slot 2
+            if (basePlayer.companionSlot2 == overlappedCompanion){
+                basePlayer.companionSlot2.followOn = false;
+                basePlayer.companionSlot2 = 'empty';
+            }
+        }  
+    }
+    
+    
 };
 
 function playerDamageKnockback(player, enemy){
@@ -221,46 +309,71 @@ function playerDamageKnockback(player, enemy){
         }
     }
     return damageKnockbackApplied
-    // distance = game.physics.arcade.distanceBetween(player,enemy);
-    // console.log(distance)
 }
 
 // Health Functions
 function createHearts(numhearts){
     hearts = game.add.group();
     hearts.fixedToCamera = true;
-    
     for (var i = 0; i < numhearts; i += 1){
         var heart = hearts.create(i*20 + 80, 13, 'heart');
-        
     }
-    
 }
 
-function healHearts(numhearts, heal){
-    hearts.set(0,"checkVisible", true);
-    
-    for (var i = 0; i < heal; i += 1){
-        var heart = hearts.create(i*20 + 80, 13, 'heart');
-        
+function increaseMaxHearts(increasenum){
+    var numhearts = basePlayer.currentHearts + increasenum;
+    basePlayer.currentHearts += increasenum;
+    createHearts(numhearts);
+}
+
+function healHearts(heal){
+    if (basePlayer.currentHearts >= basePlayer.maxHearts){
+        console.log("At max hearts!");
+    } 
+    else {
+        basePlayer.currentHearts += 1;
+        createHearts(basePlayer.currentHearts);
     }
+    console.log(basePlayer.currentHearts);
 }
 
 function dmgHearts(dmg){
     var numhearts = hearts.countLiving();
-    
-    if (numhearts <= 1){
+    // Death
+    if (basePlayer.currentHearts <= 1){
         hearts.removeChildAt(numhearts - 1);
-        
         heartText = game.add.text(64,64,"You are dead.", { fontSize: '72px', fill: '#000' });
         heartText.fixedToCamera = true;
-        
         changeLevel(0,"0");
-    } else {
+    } 
+    // Remove one heart
+    else {
         hearts.removeChildAt(numhearts - 1);
     }
+    basePlayer.currentHearts -= 1;
+    console.log(basePlayer.currentHearts);
+}
 
-    currentPlayer.currentHearts -= 1;
-    
-    console.log(numhearts);
+// Companion Functions - Powerups
+function increaseMaxHearts(num){
+    basePlayer.maxHearts = basePlayer.maxHearts + num;
+    //console.log(basePlayer.maxHearts);
+}
+
+function doubleJump(){
+    //basePlayer.jumpMax = 2
+}
+
+function enableFire(){
+    //basePlayer.fireEnable = True
+}
+
+// Overlap
+function checkOverlap(spriteA, spriteB) {
+
+    var boundsA = spriteA.getBounds();
+    var boundsB = spriteB.getBounds();
+
+    return Phaser.Rectangle.intersects(boundsA, boundsB);
+
 }
