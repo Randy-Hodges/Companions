@@ -1,4 +1,5 @@
 var playerJumpButton, currentPlayer, basePlayer;
+var overlappedCompanion = 'undefined';
 
 /*
 Intended to be used to store the data of the current Player. Ideally everything would be in one class or there would be 
@@ -12,9 +13,9 @@ BasePlayer = function(){
     this.currentHearts = 5;
     
     // companions
-    this.currentCompanion1 = -1;
-    this.currentCompanion2 = -1;
-    
+    this.companionSlot1;
+    this.companionSlot2;
+
     // equipment
     
     // Physics
@@ -217,12 +218,66 @@ Player.prototype.update = function() {
         }
     }
 
-   // Invulnerability on hit
-   if (this.invulnerable && game.time.now - this.invulnerableTime > this.iFrames){
+    // Invulnerability on hit
+    if (this.invulnerable && game.time.now - this.invulnerableTime > this.iFrames){
        this.invulnerable = false;
-   }
+    }
+    
+    // Companions
+    if (overlappedCompanion != 'undefined'){   
+        console.log('Companion is defined.')
+        
+        // Equip Companions
+        if (customKeys.isDown("Q")){
+            
+            // Equip to Slot 1
+            if (basePlayer.companionSlot1 == null || basePlayer.companionSlot1 == 'empty'){
+                basePlayer.companionSlot1 = overlappedCompanion;
+                basePlayer.companionSlot1.followOn = true;
+                basePlayer.companionSlot1.followObject = currentPlayer;
+                //console.log('Equipped to companionSlot1.');
+                //console.log(overlappedCompanion);  
+                
+                if (basePlayer.companionSlot2 != null){
+                    basePlayer.companionSlot2.followObject = basePlayer.companionSlot1;
+                }
+            
+            // Equip to Slot 2
+            } else { 
+                if (basePlayer.companionSlot2 == null && overlappedCompanion != basePlayer.companionSlot1){
+                    basePlayer.companionSlot2 = overlappedCompanion;
+                    basePlayer.companionSlot2.followOn = true;
+                    basePlayer.companionSlot2.followObject = basePlayer.companionSlot1;
+                    //console.log('Equipped to companionSlot2.');
+                    //console.log(overlappedCompanion);
+                }
+            }
+        }
+        
+        // Unequip Companions
+        if (customKeys.isDown("E")){
+            
+            // Unequip Slot 1
+            if (basePlayer.companionSlot1 == overlappedCompanion){
+                basePlayer.companionSlot1.followOn = false;
+                basePlayer.companionSlot1 = 'empty';
+                
+                if (basePlayer.companionSlot2 != null){
+                    basePlayer.companionSlot2.followOn = true;
+                    basePlayer.companionSlot2.followObject = currentPlayer;
+                }
+            } 
+            
+            // Unequip Slot 2
+            if (basePlayer.companionSlot2 == overlappedCompanion){
+                basePlayer.companionSlot2.followOn = false;
+                basePlayer.companionSlot2 = 'empty';
+            }
+        }  
+    }
+    
+    
 };
-
 
 function playerDamageKnockback(player, enemy){
     knockbackVel = 200;
@@ -299,18 +354,10 @@ function dmgHearts(dmg){
     console.log(basePlayer.currentHearts);
 }
 
-// Companion Functions - Equip Companions
-function companionSwitch(slot, num){
-    if (slot == 1){
-        basePlayer.currentCompanion1 = num;
-    } else {
-        basePlayer.currentCompanion2 = num;
-    }
-}
-
 // Companion Functions - Powerups
 function increaseMaxHearts(num){
     basePlayer.maxHearts = basePlayer.maxHearts + num;
+    //console.log(basePlayer.maxHearts);
 }
 
 function doubleJump(){
@@ -319,4 +366,14 @@ function doubleJump(){
 
 function enableFire(){
     //basePlayer.fireEnable = True
+}
+
+// Overlap
+function checkOverlap(spriteA, spriteB) {
+
+    var boundsA = spriteA.getBounds();
+    var boundsB = spriteB.getBounds();
+
+    return Phaser.Rectangle.intersects(boundsA, boundsB);
+
 }

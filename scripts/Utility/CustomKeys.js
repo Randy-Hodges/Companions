@@ -4,6 +4,8 @@ class CustomKeys{
         this.A = Phaser.Keyboard.A;
         this.S = Phaser.Keyboard.S;
         this.D = Phaser.Keyboard.D;
+        this.Q = Phaser.Keyboard.Q;
+        this.E = Phaser.Keyboard.E;
         this.Space = Phaser.Keyboard.SPACEBAR;
         this.space = Phaser.Keyboard.SPACEBAR;
     }

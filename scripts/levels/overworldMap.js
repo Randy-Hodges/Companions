@@ -43,7 +43,6 @@ demo.overworldMap.prototype = {
         map.addTilesetImage('Overworld_AssortedGround','AssortedGround');
         map.addTilesetImage('Layer 1 cloud anim1','Cloud');
         map.addTilesetImage('Layer 3 cloud anim1','Cloud2');
-
         map.createLayer('Water');   
         map.createLayer('Background');
         map.createLayer('Cloud Layer 1');

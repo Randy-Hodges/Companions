@@ -26,6 +26,8 @@ function loadPlayer(){
 function loadCompanion(){
     game.load.spritesheet('piggy', "assets/sprites/companions/piggy_animation.png", 30, 30);
     game.load.spritesheet('piggy idle', "assets/sprites/companions/piggy_animation.png", 30, 30);
+    game.load.spritesheet('froggy', "assets/sprites/companions/froggy_animation.png", 27, 30);
+    game.load.spritesheet('froggy idle', "assets/sprites/companions/froggy_animation.png", 27, 30);
 }
 
 function loadItems(){
@@ -69,11 +71,13 @@ function addEnemyFromTilemap(tile){
         game.add.existing(slime);
         enemyGroup.add(slime);
     }
+	
     if (tile.index == 2342){
         slime = new redSlime(game, tile.x*tileLength, tile.y*tileLength,'redSlime');
         game.add.existing(slime);
         enemyGroup.add(slime);
     }
+
     if (tile.index == 2338){
         slime = new blueSlime(game, tile.x*tileLength, tile.y*tileLength,'blueSlime');
         game.add.existing(slime);
