@@ -10,14 +10,11 @@ Coin = function(game, x, y){
 
     // physics
     game.physics.enable(this);
-    this.body.acceleration.y = -400; // counteracts gravity
-
+    this.body.acceleration.y = -globalGravity; // counteracts gravity
 }
-
 
 Coin.prototype = Object.create(Phaser.Sprite.prototype);
 Coin.prototype.constructor = Coin;
-
 
 // (Automatically called by World.update)
 Coin.prototype.update = function() {

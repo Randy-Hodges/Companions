@@ -45,7 +45,10 @@ demo.level0.prototype = {
         map.setCollisionByExclusion(villageNoCollide, true, levelZeroTiles);
         // Game borders based on tilemap
         game.world.setBounds(0, 0, map.layer.widthInPixels, map.layer.heightInPixels);
-        
+
+
+        createGroups();
+
         // Text Instructions
         equipText1 = game.add.text(6*tileLength, 30*tileLength,"Press Q to Equip.", { fontSize: '14px', fill: '#000' });
         equipText2 = game.add.text(6*tileLength, 31*tileLength,"Press E to Unequip.", { fontSize: '14px', fill: '#000' });
@@ -60,8 +63,10 @@ demo.level0.prototype = {
         //});
         
         // Warp points (doing it with coins that aren't physically loaded in the game)
-        //warp1 = new Coin(game, spawnpoint1[0]*tileLength, spawnpoint1[1]*tileLength);
-        //warp2 = new Coin(game, spawnpoint2[0]*tileLength, spawnpoint2[1]*tileLength);
+        warp1 = new Coin(game, spawnpoint1[0]*tileLength, spawnpoint1[1]*tileLength);
+        game.add.existing(warp1) // remove this when map warp is fully updated
+
+        // warp2 = new Coin(game, spawnpoint2[0]*tileLength, spawnpoint2[1]*tileLength);
         
         // Player init
         currentPlayer = new Player(game, spawnpoint[0]*tileLength, spawnpoint[1]*tileLength);
@@ -108,10 +113,16 @@ demo.level0.prototype = {
             overlappedCompanion = 'undefined';
         }
 
+        //game.physics.arcade.collide(enemyGroup, levelZeroTiles);
+        game.physics.arcade.overlap(currentPlayer, coinGroup, function(player, coin){coin.kill(); coinCollect.play(); money+=1;});
+        game.physics.arcade.overlap(currentPlayer, heartGroup, function(player, heart){heart.kill(); healHearts(1); /*heartCollect.play();*/});
+
         // Warping
-        //game.physics.arcade.collide(currentPlayer, warp1, function(player, coin){spawn = 1; spawndirection = 1; console.log(currentPlayer); changeLevel(0,"0");});
-        //game.physics.arcade.collide(currentPlayer, warp2, function(player, coin){spawn = 2; spawndirection = -1; changeLevel(0,"1_1");});
+        game.physics.arcade.collide(currentPlayer, warp1, function(player, coin){backtrack.destroy(); addedAudio = false; spawn = 2; spawndirection = 1; changeToMap(0)});
+        // game.physics.arcade.collide(currentPlayer, warp2, function(player, coin){spawn = 1; spawndirection = -1; changeLevel(0,"1_1");});
+
         updateMoney();
+
     },
     render: function(){
         //console.log('rendering');
@@ -120,19 +131,20 @@ demo.level0.prototype = {
        //game.debug.spriteInfo(player);
     },
     createSpawnPoints: function(){
-        spawnpoint0 = [25, 35]
-        //spawnpoint1 = [0,7];
-        //spawnpoint2 = [229,13];
+        spawnpoint0 = [25, 35];
         if (spawn == 0){
             spawnpoint = spawnpoint0.slice();
+        };
+
+        spawnpoint1 = [69, 36]; // for the right side of village screen 
+        if (spawn == 2){
+            spawnpoint = spawnpoint1.slice();
+            spawnpoint[0] -= 2;
+        };
+
+        spawnpoint2 = [25, 35];
+        if (spawn == 1){
+           spawnpoint = spawnpoint2.slice();
         }
-        //if (spawn == 2){
-        //    spawnpoint = spawnpoint1.slice();
-        //    spawnpoint[0] += 2;
-        //}
-        //if (spawn == 1){
-        //    spawnpoint = spawnpoint2.slice();
-        //    spawnpoint[0] -= 2;
-        //}
     }
 }

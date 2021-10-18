@@ -18,22 +18,20 @@ BasePlayer = function(){
 
     // equipment
     
-    /* #region Physics */
+    // Physics
     this.accelx = 750;
     this.gravityY = 500;
     this.dragX = 800;
     this.maxVelX = 180;
     this.maxVelY = 400;
         
-    /* #region jumping */
     this.jumpAccel = -3070;
     this.jumpInputTime = 120 //ms
     this.jumpStorage = 0; // should be initialized to 0, can increase for dev purposes
     
-    /* #endregion */
 }
 
-basePlayer = new BasePlayer()
+basePlayer = new BasePlayer();
 
 Player = function(game, x = gameWidth/2, y = gameHeight/2){ 
     // *INSTANTIATE AN ENEMY GROUP BEFORE THE PLAYER IN THE CODE FOR COLLISIONS WITH ENEMIES
@@ -55,7 +53,7 @@ Player = function(game, x = gameWidth/2, y = gameHeight/2){
     this.animations.add('slash down', [0,1,2], frameRate = 10);
     this.stopAnimations = false;
     
-    /* #region Physics */
+    // #region Physics
     this.accelx = basePlayer.accelx;
     game.physics.enable(this);
     this.body.setSize(9,28,28,20); // Creating hitbox. first two params are size of body, second two are offset of body
@@ -67,7 +65,7 @@ Player = function(game, x = gameWidth/2, y = gameHeight/2){
     
     this.faceDirection = 1; // x Direction player is facing. 1 or -1
 
-    /* #region jumping */
+    // #region jumping
     this.jumpAccel = basePlayer.jumpAccel;
     this.jumpInputTime = basePlayer.jumpInputTime; //ms
     this.jumpStorage = basePlayer.jumpStorage; // should be initialized to 0, can increase for dev purposes
@@ -93,9 +91,9 @@ Player = function(game, x = gameWidth/2, y = gameHeight/2){
             currentPlayer.currentlyJumping = false;
             currentPlayer.body.acceleration.y = 0;
         })
-        /* #endregion */
+        // #endregion
         
-    /* #region ----- SLASHING ----- */
+    // #region ----- SLASHING ----- 
     // Animations
     slashSide = this.animations.getAnimation('slash side');
     slashSide.onStart.add(function(){
@@ -139,9 +137,9 @@ Player = function(game, x = gameWidth/2, y = gameHeight/2){
                 }
             }
         });
-        /* #endregion */
+        // #endregion */
         
-        /* #endregion */
+        // #endregion */
 
     // Invulnerability
     this.invulnerableTime = game.time.now;
@@ -164,7 +162,7 @@ Player.prototype.update = function() {
         
     }
 
-    /* #region Keyboard Input */
+    // #region Keyboard Input */
     customKeys = new CustomKeys();
     // ----- LATERAL MOVEMENT -----
     // Left (Movement)
@@ -205,7 +203,7 @@ Player.prototype.update = function() {
         currentPlayer.body.acceleration.y = 0;
     }
     
-    /* #endregion */
+    // #endregion */
 
     if (enemyGroup || bossFight){
         if (!this.invulnerable){
@@ -281,14 +279,6 @@ Player.prototype.update = function() {
     
 };
 
-Player.prototype.changePosition = function() {
-    x = 400;
-    y = 400;
-    Phaser.Sprite.call(this, game, x, y, 'player');
-    // this.body.position.x = x;
-    // this.body.position.y = y;
-}
-
 function playerDamageKnockback(player, enemy){
     knockbackVel = 200;
     damageKnockbackApplied = false;
@@ -319,20 +309,15 @@ function playerDamageKnockback(player, enemy){
         }
     }
     return damageKnockbackApplied
-    // distance = game.physics.arcade.distanceBetween(player,enemy);
-    // console.log(distance)
 }
 
 // Health Functions
 function createHearts(numhearts){
     hearts = game.add.group();
     hearts.fixedToCamera = true;
-    
     for (var i = 0; i < numhearts; i += 1){
         var heart = hearts.create(i*20 + 80, 13, 'heart');
-        
     }
-    
 }
 
 function increaseMaxHearts(increasenum){
@@ -344,31 +329,28 @@ function increaseMaxHearts(increasenum){
 function healHearts(heal){
     if (basePlayer.currentHearts >= basePlayer.maxHearts){
         console.log("At max hearts!");
-        
-    } else {
+    } 
+    else {
         basePlayer.currentHearts += 1;
         createHearts(basePlayer.currentHearts);
     }
-    
     console.log(basePlayer.currentHearts);
 }
 
 function dmgHearts(dmg){
     var numhearts = hearts.countLiving();
-    
+    // Death
     if (basePlayer.currentHearts <= 1){
         hearts.removeChildAt(numhearts - 1);
-        
         heartText = game.add.text(64,64,"You are dead.", { fontSize: '72px', fill: '#000' });
         heartText.fixedToCamera = true;
-        
         changeLevel(0,"0");
-    } else {
+    } 
+    // Remove one heart
+    else {
         hearts.removeChildAt(numhearts - 1);
     }
-
     basePlayer.currentHearts -= 1;
-    
     console.log(basePlayer.currentHearts);
 }
 

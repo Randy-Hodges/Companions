@@ -1,5 +1,4 @@
 
-
 demo.level1 =  function(){};
 demo.level1.prototype = {
     preload: function(){
@@ -45,26 +44,18 @@ demo.level1.prototype = {
         // Game borders based on tilemap
         game.world.setBounds(0, 0, map.layer.widthInPixels, map.layer.heightInPixels);
         
-        // Coins
-        coin_group = game.add.group();
+        createGroups();
+
+        // // Coins
+        // coin_group = game.add.group();
         coin_positions = [[30,35],[185,19],[202,9],[116,18],[14,16]] // in units of tiles
         coin_positions.forEach(coin_pos => {
             coin = new Coin(game, coin_pos[0]*tileLength, coin_pos[1]*tileLength);
             game.add.existing(coin);
-            coin_group.add(coin);
-        });
-        
-        // Medi - Hearts
-        heart_group = game.add.group();
-        heart_positions = [[29,35],[184,19],[201,9],[115,18],[15,16]] // in units of tiles
-        heart_positions.forEach(heart_pos => {
-            heart = new Medi(game, heart_pos[0]*tileLength, heart_pos[1]*tileLength);
-            game.add.existing(heart);
-            heart_group.add(heart);
+            coinGroup.add(coin);
         });
 
         // Enemies
-        enemyGroup = game.add.group();
         map.setLayer('enemies');
         map.forEach(function(tile){addEnemyFromTilemap(tile)},1,0,0,map.width,map.height);
         
@@ -89,28 +80,27 @@ demo.level1.prototype = {
         heartText.fixedToCamera = true;
         createHearts(currentPlayer.currentHearts);
 
-        generateText(text, 'ghostHeadshot')        
-        
+        // generateText(text, 'ghostHeadshot')        
     },
     update: function(){
         // Collision
         game.physics.arcade.collide(currentPlayer, levelOneTiles);
         game.physics.arcade.collide(enemyGroup, levelOneTiles);
-        game.physics.arcade.overlap(currentPlayer, coin_group, function(player, coin){coin.kill(); coinCollect.play(); money+=1;});
-        game.physics.arcade.overlap(currentPlayer, heart_group, function(player, heart){heart.kill(); healHearts(1); /*heartCollect.play();*/});
+        game.physics.arcade.overlap(currentPlayer, coinGroup, function(player, coin){coin.kill(); coinCollect.play(); money+=1;});
+        game.physics.arcade.overlap(currentPlayer, heartGroup, function(player, heart){heart.kill(); healHearts(1); /*heartCollect.play();*/});
 
         // Warping
         //game.physics.arcade.collide(currentPlayer, warp1, function(player, coin){spawn = 1; spawndirection = 1; console.log(currentPlayer); changeLevel(0,"1_1");});
-        game.physics.arcade.collide(currentPlayer, warp2, function(player, coin){spawn = 2; spawndirection = -1; changeLevel(0,"1-1");});
+        game.physics.arcade.collide(currentPlayer, warp2, function(player, coin, backtrack){spawn = 2; spawndirection = -1; changeLevel(0,"1-1");});
         updateMoney();
         
         // Level 0 Warp Test
-        game.physics.arcade.collide(currentPlayer, warp1, function(player, coin){spawn = 1; spawndirection = 1; console.log(currentPlayer); changeLevel(0,"0");});
+        game.physics.arcade.collide(currentPlayer, warp1, function(player, coin){backtrack.destroy(); addedAudio = false; spawn = 1; spawndirection = 1; console.log(currentPlayer); changeLevel(0,"0");});
     },
     render: function(){
         //console.log('rendering');
     //    game.debug.body(gdslime.enfrente);
-    //    game.debug.body(gdslime);
+    //    game.debug.body(bat);
        //game.debug.spriteInfo(player);
     },
     createSpawnPoints: function(){

@@ -1,3 +1,5 @@
+globalGravity = 400;
+
 function loadGameConfigs(){
     game.scale.pageAlignHorizontally = true;
     game.scale.pageAlignVertically = true;
@@ -10,7 +12,7 @@ function loadGameConfigs(){
 function createGameConfigs(){
     // configs
     game.physics.startSystem(Phaser.Physics.ARCADE);
-    game.physics.arcade.gravity.y = 400;
+    game.physics.arcade.gravity.y = globalGravity;
     game.stage.backgroundColor = 'aeffee';
     game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
 }

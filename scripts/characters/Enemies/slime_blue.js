@@ -17,7 +17,10 @@ blueSlime.prototype.update = function() {
         if (this.curAnimationPriority <= this.animationPriorities.attacking){
             this.curAnimationPriority = this.animationPriorities.attacking;
         }
+<<<<<<< HEAD
         console.log('close');
+=======
+>>>>>>> dev
     }
     else{
         this.movementSpeed = this.baseMovementSpeed * this.faceDirection;

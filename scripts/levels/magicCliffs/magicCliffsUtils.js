@@ -2,9 +2,10 @@ var demo = {};
 var levelZeroTiles, map;
 var levelOneTiles, map; 
 var money = 0, moneyText;
-addedAudio = false;
+var addedAudio = false;
 var spawn = 0, spawndirection = -1;
 var tileLength = 16;
+var unlock = 0;
 
 magicCliffsNoCollide = [0,1768,1769,1801,1802,1803,1804,1805,1806,661,1831,1832,1833,1826,1827,646,642,644,643,1859,1891,
     1917,1221,1222,1223,1224,1225,1226,1227,1949,1297,1298,1299,1300,1302,1304,1305,1306,1307,1975,1279,1285,2007,
@@ -36,7 +37,7 @@ function loadItems(){
 }
 
 function loadEnemies(){
-    game.load.spritesheet('greenDocileSlime', "assets/sprites/enemies/blue slime/slime-Sheet-green.png", 32, 25);
+    game.load.spritesheet('greenSlime', "assets/sprites/enemies/blue slime/slime-Sheet-green.png", 32, 25);
     game.load.spritesheet('redSlime', "assets/sprites/enemies/blue slime/slime-Sheet-red.png", 32, 25);
     game.load.spritesheet('blueSlime', "assets/sprites/enemies/blue slime/slime-Sheet-blue.png", 32, 25);
     game.load.spritesheet('bat', "assets/sprites/enemies/Bat/bat-sheet.png", 32, 32);
@@ -54,24 +55,29 @@ function updateMoney(){
 }
 
 function changeLevel(i, levelNum){
-    backtrack.pause();
     console.log('level change to: ' + levelNum);
     game.state.start('level' + levelNum);
-    backtrack.resume();
+}
+
+function changeToMap(i) {
+    console.log('change to map');
+    game.state.start('Map');
 }
 
 
 function addEnemyFromTilemap(tile){
     if (tile.index == 2346 || tile.index == 1194){
-        slime = new Slime(game, tile.x*tileLength, tile.y*tileLength,'greenDocileSlime');
+        slime = new Slime(game, tile.x*tileLength, tile.y*tileLength,'greenSlime');
         game.add.existing(slime);
         enemyGroup.add(slime);
     }
+	
     if (tile.index == 2342){
         slime = new redSlime(game, tile.x*tileLength, tile.y*tileLength,'redSlime');
         game.add.existing(slime);
         enemyGroup.add(slime);
     }
+
     if (tile.index == 2338){
         slime = new blueSlime(game, tile.x*tileLength, tile.y*tileLength,'blueSlime');
         game.add.existing(slime);
@@ -89,5 +95,23 @@ function excludeCollision(tile){
     // console.log(tile.index)
     if (!(tile.index in exclusionLayer)){
         exclusionLayer[tile.index] = tile.index;
+    }
+}
+
+function createGroups(){
+    if (typeof coinGroup == 'undefined'){
+        coinGroup = game.add.group();
+    }
+    if (typeof heartGroup == 'undefined'){
+        heartGroup = game.add.group();
+    }
+    if (typeof enemyGroup == 'undefined'){
+        enemyGroup = game.add.group();
+    }
+}
+
+function levelUnlock(levelNum) {
+    if (levelNum > unlock){
+        unlock = levelNum;
     }
 }

@@ -32,11 +32,9 @@ function placeHeadshot(sprite){
     headshot = game.add.sprite(10, game.height - textHeight, sprite);
     headshot.scale.setTo(1.2, 1.2);
     headshot.fixedToCamera = true;
-    
 }
 
 function spellOutText(text, x = textOffsetX + 7, y = game.height - textHeight + 7, width = 95, fontsize = 12, speed = 0){
-    // console.log("text length: ", text.length)
     // draw initial text box
     if (firstTextBox){
         var graphics = game.add.graphics(0, game.height - textHeight);
@@ -127,10 +125,14 @@ function spellOutText(text, x = textOffsetX + 7, y = game.height - textHeight + 
         }
     }
     function findFullText(index){
+        // Find the full amount of text that goes into a text box
+        //
+        // :param index: current index of the text being read, will be the start
+        //                of the textbox being displayed. 
         // returns [Text to go into text box (str), 
         //          number of characters in that text (int), 
         //          if the end of text was reached (bool)]
-        // Find the full amount of text that goes into a text box
+
         fullText = '';
         var index2 = index;
         var curLineAmount = 0;
