@@ -76,13 +76,12 @@ demo.overworldMap.prototype = {
         levelSelect = game.add.text(8,8,"Use WASD to move around the map. \nPress 'C' to go to Level 1. \nPress 'V' to go to the Village.", { fontSize: '12px', fill: '#fff' });
         levelSelect.fixedToCamera = true;
 
-        // add moving cloud layers
-        cloud1 = game.add.sprite(500, 800, 'Cloud');
-        cloud1.anchor.set(0.5);
-
+        // cloud layer update
         // example cloud movement (will be updated and be place in the update function eventually)
-        game.add.tween(cloud1).to({ x: -100 }, 4000, Phaser.Easing.Out, true);
-        
+        if (unlock == 2){ // level 2 unlocked
+            game.add.tween(cloud1).to({ x: -100 }, 4000, Phaser.Easing.Out, true);
+        }
+
         // level select
         addLevelSpawns()
     },
@@ -91,12 +90,6 @@ demo.overworldMap.prototype = {
 
         // update view
         updateView()
-
-        // cloud layer update
-        // example cloud movement (will be updated and be place in the update function eventually)
-        if (unlock == 2){ // level 2 unlocked
-            game.add.tween(cloud1).to({ x: -100 }, 4000, Phaser.Easing.Out, true);
-        }
 
     }
 };
