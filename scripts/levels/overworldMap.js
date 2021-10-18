@@ -53,21 +53,30 @@ demo.overworldMap.prototype = {
         layer.scale.set(1);
         layer.resizeWorld();
 
-        // create view stuff, start at village on map
-        game.camera.x = 225;
-        game.camera.y = 675;
+        // create view stuff, start at village on map, change map view as more levels are unlocked
+        if (unlock == 2){ // level 2 unlocked
+            game.camera.x = 225;
+            game.camera.y = 675;
+
+            // add moving cloud layers
+            cloud1 = game.add.sprite(500, 800, 'Cloud');
+            cloud1.anchor.set(0.5);
+        } else { // start of game
+            game.camera.x = 225;
+            game.camera.y = 675;
+
+            // add moving cloud layers
+            cloud1 = game.add.sprite(500, 800, 'Cloud');
+            cloud1.anchor.set(0.5);
+
+            // add more moving cloud layers as more levels are made
+    
+        }
 
         // level select UI
         levelSelect = game.add.text(8,8,"Use WASD to move around the map. \nPress 'C' to go to Level 1. \nPress 'V' to go to the Village.", { fontSize: '12px', fill: '#fff' });
         levelSelect.fixedToCamera = true;
 
-        // add moving cloud layers
-        cloud1 = game.add.sprite(500, 800, 'Cloud');
-        cloud1.anchor.set(0.5);
-
-        // example cloud movement (will be updated and be place in the update function eventually)
-        game.add.tween(cloud1).to({ x: -100 }, 4000, Phaser.Easing.Out, true);
-        
     },
     
     update: function(){
@@ -78,9 +87,13 @@ demo.overworldMap.prototype = {
         updateView()
 
         // cloud layer update
-    
+        // example cloud movement (will be updated and be place in the update function eventually)
+        if (unlock == 2){ // level 2 unlocked
+            game.add.tween(cloud1).to({ x: -100 }, 4000, Phaser.Easing.Out, true);
+        }
+
     }
-}
+};
 
 function addKeyCallback(key, fn, args) {
     game.input.keyboard.addKey(key).onDown.add(fn, null, null, args);
