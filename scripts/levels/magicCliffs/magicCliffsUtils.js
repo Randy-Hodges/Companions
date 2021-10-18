@@ -5,6 +5,7 @@ var money = 0, moneyText;
 var addedAudio = false;
 var spawn = 0, spawndirection = -1;
 var tileLength = 16;
+var unlock = 0;
 
 magicCliffsNoCollide = [0,1768,1769,1801,1802,1803,1804,1805,1806,661,1831,1832,1833,1826,1827,646,642,644,643,1859,1891,
     1917,1221,1222,1223,1224,1225,1226,1227,1949,1297,1298,1299,1300,1302,1304,1305,1306,1307,1975,1279,1285,2007,
@@ -102,5 +103,12 @@ function createGroups(){
     }
     if (typeof enemyGroup == 'undefined'){
         enemyGroup = game.add.group();
+    }
+}
+
+function levelUnlock(levelNum) {
+    if (levelNum > unlock){
+        unlock = levelNum;
+        console.log(unlock, levelNum, unlock)
     }
 }
