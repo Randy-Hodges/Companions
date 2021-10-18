@@ -109,6 +109,5 @@ function createGroups(){
 function levelUnlock(levelNum) {
     if (levelNum > unlock){
         unlock = levelNum;
-        console.log(unlock, levelNum, unlock)
     }
 }
