@@ -80,7 +80,7 @@ demo.level1.prototype = {
         heartText.fixedToCamera = true;
         createHearts(currentPlayer.currentHearts);
 
-        // generateText(text, 'ghostHeadshot')        
+        event1_1_0();     
     },
     update: function(){
         // Collision
