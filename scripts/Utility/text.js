@@ -225,10 +225,12 @@ function nextDialogue(){
         dialogueIndex = 0;
         dialogueList = [];
         textBox.alpha = 0;
+        currentPlayer.disableMovement = false;
     }
 }
 
 function startDialogue(){
+    currentPlayer.disableMovement = true;
     generateText(dialogueList[dialogueIndex][0], dialogueList[dialogueIndex][1]);
 }
 

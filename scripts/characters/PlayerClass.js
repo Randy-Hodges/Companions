@@ -54,6 +54,7 @@ Player = function(game, x = gameWidth/2, y = gameHeight/2){
     this.stopAnimations = false;
     
     // #region Physics
+    this.disableMovement = false;
     this.accelx = basePlayer.accelx;
     game.physics.enable(this);
     this.body.setSize(9,28,28,20); // Creating hitbox. first two params are size of body, second two are offset of body
@@ -126,16 +127,18 @@ Player = function(game, x = gameWidth/2, y = gameHeight/2){
     playerSlashButton = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
     playerSlashButton.onDown.add(
         function(){
-            if (game.input.keyboard.isDown(Phaser.Keyboard.DOWN) || game.input.keyboard.isDown(Phaser.Keyboard.S)){
-                if (!currentPlayer.stopAnimations){
-                    currentPlayer.animations.play('slash down');
+            if (!currentPlayer.disableMovement){
+                if (game.input.keyboard.isDown(Phaser.Keyboard.DOWN) || game.input.keyboard.isDown(Phaser.Keyboard.S)){
+                    if (!currentPlayer.stopAnimations){
+                        currentPlayer.animations.play('slash down');
+                    }
                 }
-            }
-            else{
-                if (!currentPlayer.stopAnimations){
-                    currentPlayer.animations.play('slash side');
+                else{
+                    if (!currentPlayer.stopAnimations){
+                        currentPlayer.animations.play('slash side');
+                    }
                 }
-            }
+        }
         });
         // #endregion */
         
@@ -162,50 +165,55 @@ Player.prototype.update = function() {
         
     }
 
-    // #region Keyboard Input */
-    customKeys = new CustomKeys();
-    // ----- LATERAL MOVEMENT -----
-    // Left (Movement)
-    if (customKeys.isDown("A")){
-        this.body.acceleration.x = -this.accelx;
-    }
-    // Right
-    if (customKeys.isDown("D")){
-        this.body.acceleration.x = this.accelx;
-    }
-    // No input
-    if (customKeys.isUp("A") && customKeys.isUp("D")){
-        this.body.acceleration.x = 0;
-    }
-    framerate = Math.abs(parseInt(this.body.velocity.x/50)) + 10;
-    if (!currentPlayer.stopAnimations){
-        // left ----Animation----
-        if (this.body.acceleration.x < 0){
-            this.scale.x = Math.abs(this.scale.x);
-            this.faceDirection = -1;
-            this.animations.play('walk side', framerate);
-        }
-        // right
-        else if (this.body.acceleration.x > 0){
-            this.scale.x = -Math.abs(this.scale.x);
-            this.faceDirection = 1;
-            this.animations.play('walk side', framerate);
-        }
-        // idle
-        if (this.body.velocity.x == 0) {
-            this.animations.play('idle side', textLoop=true);
-        }
-    }
-    // ----- VERTICAL MOVEMENT -----
-    // Jumping is mostly controlled under the section 'jumping' located in the Player function.
-    if ( playerJumpButton.duration > currentPlayer.jumpInputTime){
-        currentPlayer.currentlyJumping = false;
-        currentPlayer.body.acceleration.y = 0;
-    }
-    
-    // #endregion */
+    if (!this.disableMovement){
 
-    if (enemyGroup || bossFight){
+        // #region Keyboard Input */
+        customKeys = new CustomKeys();
+        // ----- LATERAL MOVEMENT -----
+        // Left (Movement)
+        if (customKeys.isDown("A")){
+            this.body.acceleration.x = -this.accelx;
+        }
+        // Right
+        if (customKeys.isDown("D")){
+            this.body.acceleration.x = this.accelx;
+        }
+        // No input
+        if (customKeys.isUp("A") && customKeys.isUp("D")){
+            this.body.acceleration.x = 0;
+        }
+        framerate = Math.abs(parseInt(this.body.velocity.x/50)) + 10;
+        if (!currentPlayer.stopAnimations){
+            // left ----Animation----
+            if (this.body.acceleration.x < 0){
+                this.scale.x = Math.abs(this.scale.x);
+                this.faceDirection = -1;
+                this.animations.play('walk side', framerate);
+            }
+            // right
+            else if (this.body.acceleration.x > 0){
+                this.scale.x = -Math.abs(this.scale.x);
+                this.faceDirection = 1;
+                this.animations.play('walk side', framerate);
+            }
+            // idle
+            if (this.body.velocity.x == 0) {
+                this.animations.play('idle side', textLoop=true);
+            }
+        }
+        // ----- VERTICAL MOVEMENT -----
+        // Jumping is mostly controlled under the section 'jumping' located in the Player function.
+        if ( playerJumpButton.duration > currentPlayer.jumpInputTime){
+            currentPlayer.currentlyJumping = false;
+            currentPlayer.body.acceleration.y = 0;
+        }
+        // #endregion */
+    }
+    else{
+        this.animations.play('idle side', textLoop=true);
+    }
+
+    if (enemyGroup){
         if (!this.invulnerable){
             game.physics.arcade.collide(currentPlayer, enemyGroup, function(player, enemy){
                 damageKnockbackApplied = playerDamageKnockback(player, enemy)
@@ -226,10 +234,8 @@ Player.prototype.update = function() {
     // Companions
     if (overlappedCompanion != 'undefined'){   
         console.log('Companion is defined.')
-        
         // Equip Companions
         if (customKeys.isDown("Q")){
-            
             // Equip to Slot 1
             if (basePlayer.companionSlot1 == null || basePlayer.companionSlot1 == 'empty'){
                 basePlayer.companionSlot1 = overlappedCompanion;
@@ -241,7 +247,6 @@ Player.prototype.update = function() {
                 if (basePlayer.companionSlot2 != null){
                     basePlayer.companionSlot2.followObject = basePlayer.companionSlot1;
                 }
-            
             // Equip to Slot 2
             } else { 
                 if (basePlayer.companionSlot2 == null && overlappedCompanion != basePlayer.companionSlot1){
@@ -267,7 +272,6 @@ Player.prototype.update = function() {
                     basePlayer.companionSlot2.followObject = currentPlayer;
                 }
             } 
-            
             // Unequip Slot 2
             if (basePlayer.companionSlot2 == overlappedCompanion){
                 basePlayer.companionSlot2.followOn = false;
@@ -275,7 +279,6 @@ Player.prototype.update = function() {
             }
         }  
     }
-    
     
 };
 
