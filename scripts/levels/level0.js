@@ -98,7 +98,7 @@ demo.level0.prototype = {
     update: function(){
         // Collision
         game.physics.arcade.collide(currentPlayer, levelZeroTiles);
-        game.physics.arcade.overlap(currentPlayer, coin_group, function(player, coin){coin.kill(); coinCollect.play(); money+=1;});
+        game.physics.arcade.overlap(currentPlayer, coinGroup, function(player, coin){coin.kill(); coinCollect.play(); money+=1;});
         
         // Companions Overlap     
         if (checkOverlap(currentPlayer, pig)){

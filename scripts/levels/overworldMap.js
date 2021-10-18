@@ -1,7 +1,4 @@
-<<<<<<< HEAD
-=======
 var cloud;
->>>>>>> dev
 
 demo.overworldMap = function(){};
 demo.overworldMap.prototype = {
@@ -16,17 +13,11 @@ demo.overworldMap.prototype = {
         game.load.image('Trees', "assets/overworld_map/Nature/Trees.png");
         game.load.image('Cliff', "assets/overworld_map/Ground/Cliff.png");
         game.load.image('AssortedGround', "assets/overworld_map/Ground/Grass.png");
-<<<<<<< HEAD
-        
-        // change this later
-        game.load.audio('backtrack', "assets/audio/music/PMD Remix/Personality Test.mp3");
-=======
         game.load.image('Cloud', "assets/tiles/painted style/PNG/Mountains/Layer 1 cloud anim1.png");
         game.load.image('Cloud2', "assets/tiles/painted style/PNG/Mountains/Layer 3 cloud anim1.png");
         
         // change this later
         game.load.audio('mapMusic', "assets/audio/music/PMD Remix/Personality Test.mp3");
->>>>>>> dev
 
     },
 
@@ -36,11 +27,7 @@ demo.overworldMap.prototype = {
         
         // music
         if (!addedAudio){
-<<<<<<< HEAD
-            backtrack = game.add.audio('backtrack');
-=======
             backtrack = game.add.audio('mapMusic');
->>>>>>> dev
             backtrack.play();
             backtrack.volume = .1;
             addedAudio = true;
@@ -54,37 +41,17 @@ demo.overworldMap.prototype = {
         map.addTilesetImage('Overworld_Trees','Trees');
         map.addTilesetImage('Overworld_cliff','Cliff');
         map.addTilesetImage('Overworld_AssortedGround','AssortedGround');
-<<<<<<< HEAD
-
-        map.createLayer('Background');  
-        // map.createLayer('Landscape');
-=======
         map.addTilesetImage('Layer 1 cloud anim1','Cloud');
         map.addTilesetImage('Layer 3 cloud anim1','Cloud2');
-
         map.createLayer('Water');   
         map.createLayer('Background');
         map.createLayer('Cloud Layer 1');
         map.createLayer('Cloud Layer 2');  
->>>>>>> dev
 
         var layer = map.createLayer('Landscape');
         layer.scale.set(1);
         layer.resizeWorld();
 
-<<<<<<< HEAD
-        // create view stuff, start at village on map
-        game.camera.x = 80;
-        game.camera.y = 1000;
-
-        // level select UI
-        levelSelect = game.add.text(8,8,"Use WASD to move around the map. \nPress 'C' to go to Level 1.", { fontSize: '18px', fill: '#fff' });
-        levelSelect.fixedToCamera = true;
-
-
-        // Eventually add cloud layer code
-        
-=======
         // create view stuff, start at village on map, change map view as more levels are unlocked
         if (unlock == 2){ // level 2 unlocked
             game.camera.x = 225;
@@ -108,23 +75,16 @@ demo.overworldMap.prototype = {
         // level select UI
         levelSelect = game.add.text(8,8,"Use WASD to move around the map. \nPress 'C' to go to Level 1. \nPress 'V' to go to the Village.", { fontSize: '12px', fill: '#fff' });
         levelSelect.fixedToCamera = true;
-
->>>>>>> dev
+        
+        // level select
+        addLevelSpawns()
     },
     
     update: function(){
-        // level select
-        addLevelSpawns()
 
         // update view
         updateView()
 
-<<<<<<< HEAD
-        // Eventually add cloud layer update code
-    
-    }
-}
-=======
         // cloud layer update
         // example cloud movement (will be updated and be place in the update function eventually)
         if (unlock == 2){ // level 2 unlocked
@@ -133,7 +93,6 @@ demo.overworldMap.prototype = {
 
     }
 };
->>>>>>> dev
 
 function addKeyCallback(key, fn, args) {
     game.input.keyboard.addKey(key).onDown.add(fn, null, null, args);
@@ -141,15 +100,9 @@ function addKeyCallback(key, fn, args) {
 
 function addLevelSpawns() {
     // scene change for village
-<<<<<<< HEAD
-    // addKeyCallback(Phaser.Keyboard.V, changeLevel, '0'); // uncomment when bug is fixed
-    // scene change for level 1
-    addKeyCallback(Phaser.Keyboard.C, changeLevel, '1-0'); 
-=======
     addKeyCallback(Phaser.Keyboard.V, function(){backtrack.destroy(); addedAudio = false; changeLevel(this, '0');});
     // scene change for level 1
     addKeyCallback(Phaser.Keyboard.C, function(){backtrack.destroy(); addedAudio = false; changeLevel(this, '1-0');}); 
->>>>>>> dev
 };
 
 function updateView() {
@@ -173,11 +126,7 @@ function updateView() {
     {
         game.camera.x += 4;
     }
-<<<<<<< HEAD
-}
-=======
 };
->>>>>>> dev
 
 // function resize() {
 //     // layer.offset.x += 50;
