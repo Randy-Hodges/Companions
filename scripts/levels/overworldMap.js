@@ -60,6 +60,9 @@ demo.overworldMap.prototype = {
             // add moving cloud layers
             cloud1 = game.add.sprite(500, 800, 'Cloud');
             cloud1.anchor.set(0.5);
+
+            // cloud layer update
+            game.add.tween(cloud1).to({ x: -100 }, 4000, Phaser.Easing.Out, true);
         } else { // start of game
             game.camera.x = 225;
             game.camera.y = 675;
@@ -76,18 +79,11 @@ demo.overworldMap.prototype = {
         levelSelect = game.add.text(8,8,"Use WASD to move around the map. \nPress 'C' to go to Level 1. \nPress 'V' to go to the Village.", { fontSize: '12px', fill: '#fff' });
         levelSelect.fixedToCamera = true;
 
-        // cloud layer update
-        // example cloud movement (will be updated and be place in the update function eventually)
-        if (unlock == 2){ // level 2 unlocked
-            game.add.tween(cloud1).to({ x: -100 }, 4000, Phaser.Easing.Out, true);
-        }
-
         // level select
         addLevelSpawns()
     },
     
     update: function(){
-
         // update view
         updateView()
 
@@ -108,7 +104,6 @@ function addLevelSpawns() {
 function updateView() {
     // map update controls
     customKeys = new CustomKeys();
-    // game.input.onDown.add(resize(), this);
     
     if (customKeys.isDown('W'))
     {
@@ -127,23 +122,3 @@ function updateView() {
         game.camera.x += 4;
     }
 };
-
-// function resize() {
-//     // layer.offset.x += 50;
-
-//     if (layer.displayWidth !== undefined)
-//     {
-//         var w = layer.displayWidth + 100;
-//         var h = layer.displayHeight + 100;
-//         layer.resize(w, h);
-//     }
-//     else
-//     {
-//         if (layer.width < 800)
-//         {
-//             var w = layer.width + 100;
-//             var h = layer.height + 100;
-//             layer.resize(w, h);
-//         }
-//     }
-// };
