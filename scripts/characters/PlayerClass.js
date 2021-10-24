@@ -81,7 +81,7 @@ Player = function(game, x = gameWidth/2, y = gameHeight/2){
             }
             // jumping 
             if (currentPlayer.jumpStorage > 0){
-                currentPlayer.jumpStorage -= 1; // comment this line out for infinite jumps ***********************************
+                //currentPlayer.jumpStorage -= 1; // comment this line out for infinite jumps ***********************************
                 currentPlayer.currentlyJumping = true;
                 //currentPlayer.body.velocity.y = currentPlayer.jumpVel;
                 currentPlayer.body.acceleration.y = currentPlayer.jumpAccel;

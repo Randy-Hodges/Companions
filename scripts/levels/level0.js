@@ -9,6 +9,10 @@ demo.level0.prototype = {
         game.load.tilemap('level0', "assets/tilemaps/village_tilemap.json", null, Phaser.Tilemap.TILED_JSON);
         game.load.image('Map Tileset', "assets/tiles/village/Map Tileset.png");
         game.load.image('nes-color-palette', "assets/tiles/nes-color-palette.jpg");
+        game.load.image('Blank_Blue', "assets/UI/Blank_Blue.png");
+        game.load.image('Gear_LightBlue', "assets/UI/Gear_LightBlue.png");
+        game.load.image('Play_Blue', "assets/UI/Play_Blue.png");
+        game.load.image('Green', "assets/UI/Green.png");
         
         game.load.audio('village', "assets/audio/music/Treasure Town.mp3");
 
@@ -93,6 +97,41 @@ demo.level0.prototype = {
         
         game.add.existing(pig);
         game.add.existing(frog);
+        
+        // Pause Menu
+        // Create a label to use as a button
+        pause_label = game.add.sprite(gameWidth-20, 20, 'Gear_LightBlue');
+        pause_label.anchor.setTo(0.5, 0.5)
+        pause_label.fixedToCamera = true;
+        pause_label.inputEnabled = true;
+        
+        // When the pause button is pressed
+        pause_label.events.onInputUp.add(function () {
+
+            // Then add the menu
+            console.log('Paused.');
+            menu = game.add.sprite(gameWidth-20, 20, 'Play_Blue');
+            menu.anchor.setTo(0.5, 0.5);
+            menu.fixedToCamera = true;
+            //menu.scale.setTo(2);
+            
+            game.paused = true;
+
+        });
+
+        // Add a input listener that can help us return from being paused
+        game.input.onDown.add(unpause, self);
+
+        // And finally the method that handels the pause menu
+        function unpause(event){
+            // Only act if paused
+            if(game.paused){
+                // Remove the menu and the label
+                console.log('Unpaused.');
+                menu.destroy();
+                game.paused = false;
+            }
+        }
         
     },
     update: function(){
