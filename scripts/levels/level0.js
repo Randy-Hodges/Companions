@@ -113,13 +113,12 @@ demo.level0.prototype = {
         
         // And finally the method that handels the pause menu
         function pause(event){
+            game.paused = true;
+            
             // Then add the menu
             console.log('Paused.');
-            menu = game.add.text(gameWidth/2, gameHeight/2, "Paused!!!", { fontSize: '18px', fill: '#000' }); //game.add.sprite(gameWidth-20, 20, 'Play_Blue');
+            menu = game.add.text(currentPlayer.x, currentPlayer.y - 50, "Paused!!!", { fontSize: '18px', fill: '#000' }); //game.add.sprite(gameWidth-20, 20, 'Play_Blue');
             menu.anchor.setTo(0.5, 0.5);
-            menu.fixedToCamera = true;
-            
-            game.paused = true;
         }
         
         // And finally the method that handels the pause menu
