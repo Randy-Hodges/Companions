@@ -83,7 +83,7 @@ function addEnemyFromTilemap(tile){
         game.add.existing(slime);
         enemyGroup.add(slime);
     }
-    if (tile.index == 2338){
+    if (tile.index == 2362){
         bat = new Bat(game, tile.x*tileLength, tile.y*tileLength,'bat');
         game.add.existing(bat);
         enemyGroup.add(bat);

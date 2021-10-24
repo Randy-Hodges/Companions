@@ -72,7 +72,7 @@ Bat.prototype.update = function(bat = this) {
         bat.animations.play('hit', 5);
     }
     else {
-        console.log("Current animation priority [", slime.curAnimationPriority, "] is not linked to an animation")
+        console.log("Current animation priority [", bat.curAnimationPriority, "] is not linked to an animation")
     }
     
 };
