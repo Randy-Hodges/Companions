@@ -101,29 +101,30 @@ demo.level0.prototype = {
         // Pause Menu
         // Create a label to use as a button
         pause_label = game.add.sprite(gameWidth-20, 20, 'Gear_LightBlue');
-        pause_label.anchor.setTo(0.5, 0.5)
+        pause_label.anchor.setTo(0.5, 0.5);
         pause_label.fixedToCamera = true;
         pause_label.inputEnabled = true;
         
         // When the pause button is pressed
-        pause_label.events.onInputUp.add(function () {
-
-            // Then add the menu
-            console.log('Paused.');
-            menu = game.add.sprite(gameWidth-20, 20, 'Play_Blue');
-            menu.anchor.setTo(0.5, 0.5);
-            menu.fixedToCamera = true;
-            //menu.scale.setTo(2);
-            
-            game.paused = true;
-
-        });
+        pause_label.events.onInputUp.add(pause, self);
 
         // Add a input listener that can help us return from being paused
         game.input.onDown.add(unpause, self);
-
+        
+        // And finally the method that handels the pause menu
+        function pause(event){
+            // Then add the menu
+            console.log('Paused.');
+            menu = game.add.text(gameWidth/2, gameHeight/2, "Paused!!!", { fontSize: '18px', fill: '#000' }); //game.add.sprite(gameWidth-20, 20, 'Play_Blue');
+            menu.anchor.setTo(0.5, 0.5);
+            menu.fixedToCamera = true;
+            
+            game.paused = true;
+        }
+        
         // And finally the method that handels the pause menu
         function unpause(event){
+            
             // Only act if paused
             if(game.paused){
                 // Remove the menu and the label
@@ -131,6 +132,7 @@ demo.level0.prototype = {
                 menu.destroy();
                 game.paused = false;
             }
+            
         }
         
     },
