@@ -26,7 +26,7 @@ Companion = function(game, spritesheetStrID, x = gameWidth/2, y = gameHeight/2, 
     game.physics.enable(this);
     this.body.allowGravity = false;
     this.body.setSize(32,32);
-    this.body.drag.x = 800;
+    this.body.drag.x = 500;
     this.body.maxVelocity.x = 150;
     this.body.maxVelocity.y = 300;
  
@@ -40,7 +40,7 @@ Companion.prototype.update = function(companion = this) {
     
     // Follow Logic
     if (companion.followOn == true){
-        game.physics.arcade.moveToObject(companion, companion.followObject, 60, 1000);
+        game.physics.arcade.moveToObject(companion, companion.followObject, 30, 1000);
     }
     
     if (companion.followOn == false){

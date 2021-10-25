@@ -51,9 +51,6 @@ demo.level2_0.prototype = {
         currentPlayer = new Player(game, spawnpoint[0]*tileLength, spawnpoint[1]*tileLength);
         game.add.existing(currentPlayer);
         game.camera.follow(currentPlayer);
-
-        // Coins
-
         
         // Warp points (doing it with coins bc I'm pressed for time)
         warp1 = new Coin(game, spawnpoint1[0]*tileLength, spawnpoint1[1]*tileLength);
@@ -75,6 +72,9 @@ demo.level2_0.prototype = {
         heartText = game.add.text(8,8,"Hearts: ", { fontSize: '18px', fill: '#fff' });
         heartText.fixedToCamera = true;
         createHearts(basePlayer.currentHearts);
+        
+        // Pause Menu
+        loadPauseMenu();
     },
     update: function(){
         // Collision

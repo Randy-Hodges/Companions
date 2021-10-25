@@ -7,8 +7,8 @@ CompanionPig = function(game,x,y,followOn,isEqiupped){
     this.animations.add('piggy idle', [0, 1, 2, 3], frameRate=5, true);
     
     /* #region Physics */
-    this.body.maxVelocity.x = 150;
-    this.body.maxVelocity.y = 300;
+    this.body.maxVelocity.x = 300;
+    this.body.maxVelocity.y = 350;
     
     increaseMaxHearts(1); 
 }

@@ -63,6 +63,10 @@ demo.level1_2.prototype = {
         heartText = game.add.text(8,8,"Hearts: ", { fontSize: '18px', fill: '#fff' });
         heartText.fixedToCamera = true;
         createHearts(basePlayer.currentHearts);
+        
+        // Pause Menu
+        loadPauseMenu();
+        
     },
     update: function(){
         // Collision
