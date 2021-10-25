@@ -13,6 +13,11 @@ demo.overworldMap.prototype = {
         game.load.image('Trees', "assets/overworld_map/Nature/Trees.png");
         game.load.image('Cliff', "assets/overworld_map/Ground/Cliff.png");
         game.load.image('AssortedGround', "assets/overworld_map/Ground/Grass.png");
+        game.load.image('Chests', "assets/overworld_map/Miscellaneous/Chests.png");
+        game.load.image('QuestBoard', "assets/overworld_map/Miscellaneous/QuestBoard.png");
+        game.load.image('Rocks', "assets/overworld_map/Nature/Rocks.png");
+        game.load.image('StreetSigns', "assets/overworld_map/Miscellaneous/StreetSigns.png");
+        
         game.load.image('Cloud', "assets/tiles/painted style/PNG/Mountains/Layer 1 cloud anim1.png");
         game.load.image('Cloud2', "assets/tiles/painted style/PNG/Mountains/Layer 3 cloud anim1.png");
         
@@ -41,8 +46,14 @@ demo.overworldMap.prototype = {
         map.addTilesetImage('Overworld_Trees','Trees');
         map.addTilesetImage('Overworld_cliff','Cliff');
         map.addTilesetImage('Overworld_AssortedGround','AssortedGround');
+        map.addTilesetImage('Overworld_Chests','Chests');
+        map.addTilesetImage('Overworld_QuestBoard','QuestBoard');
+        map.addTilesetImage('Overworld_Rocks','Rocks');
+        map.addTilesetImage('Overworld_StreetSigns','StreetSigns');
+
         map.addTilesetImage('Layer 1 cloud anim1','Cloud');
         map.addTilesetImage('Layer 3 cloud anim1','Cloud2');
+
         map.createLayer('Water');   
         map.createLayer('Background');
         map.createLayer('Cloud Layer 1');
@@ -54,18 +65,28 @@ demo.overworldMap.prototype = {
 
         // create view stuff, start at village on map, change map view as more levels are unlocked
         if (unlock == 2){ // level 2 unlocked
-            game.camera.x = 225;
-            game.camera.y = 675;
+            game.camera.x = 100;
+            game.camera.y = 550;
 
             // add moving cloud layers
-            cloud1 = game.add.sprite(500, 800, 'Cloud');
+            cloud1 = game.add.sprite(200, 700, 'Cloud');
+            cloud1.anchor.set(0.5);
+
+            // cloud layer update
+            game.add.tween(cloud1).to({ x: -100 }, 4000, Phaser.Easing.Out, true);
+        } else if (unlock == 1){ // level 1 unlocked
+            game.camera.x = 50;
+            game.camera.y = 400;
+
+            // add moving cloud layers
+            cloud1 = game.add.sprite(200, 500, 'Cloud');
             cloud1.anchor.set(0.5);
 
             // cloud layer update
             game.add.tween(cloud1).to({ x: -100 }, 4000, Phaser.Easing.Out, true);
         } else { // start of game
-            game.camera.x = 225;
-            game.camera.y = 675;
+            game.camera.x = 300;
+            game.camera.y = 400;
 
             // add moving cloud layers
             cloud1 = game.add.sprite(500, 800, 'Cloud');
