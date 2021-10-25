@@ -5,14 +5,11 @@ demo.level0.prototype = {
         loadPlayer();
         loadCompanion();
         loadItems();
+        loadUI();
         //loadEnemies();
         game.load.tilemap('level0', "assets/tilemaps/village_tilemap.json", null, Phaser.Tilemap.TILED_JSON);
         game.load.image('Map Tileset', "assets/tiles/village/Map Tileset.png");
         game.load.image('nes-color-palette', "assets/tiles/nes-color-palette.jpg");
-        game.load.image('Blank_Blue', "assets/UI/Blank_Blue.png");
-        game.load.image('Gear_LightBlue', "assets/UI/Gear_LightBlue.png");
-        game.load.image('Play_Blue', "assets/UI/Play_Blue.png");
-        game.load.image('Green', "assets/UI/Green.png");
         
         game.load.audio('village', "assets/audio/music/Treasure Town.mp3");
 

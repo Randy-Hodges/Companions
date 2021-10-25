@@ -48,6 +48,13 @@ function loadHeadshots(){
     game.load.image('playerHeadshot', "assets/sprites/characters/headshots/Player1.png");
 }
 
+function loadUI(){
+    game.load.image('Blank_Blue', "assets/UI/Blank_Blue.png");
+    game.load.image('Gear_LightBlue', "assets/UI/Gear_LightBlue.png");
+    game.load.image('Play_Blue', "assets/UI/Play_Blue.png");
+    game.load.image('Green', "assets/UI/Green.png");
+}
+
 function updateMoney(){
     moneyText.text = "Coins: " + money;
     moneyText.text.x = 0;
