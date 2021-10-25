@@ -96,9 +96,11 @@ function addChar(){
         checkRefresh(text)
     }
     // Add character    
-    sentence.text += text[curTextIndex];
-    curTextIndex += 1;
-    curSenLen += 1;
+    if (text[curTextIndex] != undefined){
+        sentence.text += text[curTextIndex];
+        curTextIndex += 1;
+        curSenLen += 1;
+    }
     // close text box
     if (curTextIndex >= text.length){
         game.time.events.pause(textLoop);  
@@ -226,6 +228,7 @@ function nextDialogue(){
         dialogueList = [];
         textBox.alpha = 0;
         currentPlayer.disableMovement = false;
+        firstTextBox = true;
     }
 }
 

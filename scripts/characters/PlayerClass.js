@@ -72,19 +72,21 @@ Player = function(game, x = gameWidth/2, y = gameHeight/2){
     this.jumpStorage = basePlayer.jumpStorage; // should be initialized to 0, can increase for dev purposes
     this.currentlyJumping = false;
     currentPlayer = this;
-    playerJumpButton =  game.input.keyboard.addKey(Phaser.Keyboard.W);
+    playerJumpButton =  game.input.keyboard.addKey(Phaser.Keyboard.UP);
     playerJumpButton.onDown.add(
         function(){
-            // give player ability to jump when touching ground
-            if (currentPlayer.body.blocked.down && currentPlayer.jumpStorage == 0){
-                currentPlayer.jumpStorage += 1;
-            }
-            // jumping 
-            if (currentPlayer.jumpStorage > 0){
-                //currentPlayer.jumpStorage -= 1; // comment this line out for infinite jumps ***********************************
-                currentPlayer.currentlyJumping = true;
-                //currentPlayer.body.velocity.y = currentPlayer.jumpVel;
-                currentPlayer.body.acceleration.y = currentPlayer.jumpAccel;
+            if (!currentPlayer.disableMovement){
+                // give player ability to jump when touching ground
+                if (currentPlayer.body.blocked.down && currentPlayer.jumpStorage == 0){
+                    currentPlayer.jumpStorage += 1;
+                }
+                // jumping 
+                if (currentPlayer.jumpStorage > 0){
+                    //currentPlayer.jumpStorage -= 1; // comment this line out for infinite jumps ***********************************
+                    currentPlayer.currentlyJumping = true;
+                    //currentPlayer.body.velocity.y = currentPlayer.jumpVel;
+                    currentPlayer.body.acceleration.y = currentPlayer.jumpAccel;
+                }
             }
         })
     playerJumpButton.onUp.add(
@@ -171,15 +173,15 @@ Player.prototype.update = function() {
         customKeys = new CustomKeys();
         // ----- LATERAL MOVEMENT -----
         // Left (Movement)
-        if (customKeys.isDown("A")){
+        if (customKeys.isDown("left")){
             this.body.acceleration.x = -this.accelx;
         }
         // Right
-        if (customKeys.isDown("D")){
+        if (customKeys.isDown("right")){
             this.body.acceleration.x = this.accelx;
         }
         // No input
-        if (customKeys.isUp("A") && customKeys.isUp("D")){
+        if (customKeys.isUp("left") && customKeys.isUp("right")){
             this.body.acceleration.x = 0;
         }
         framerate = Math.abs(parseInt(this.body.velocity.x/50)) + 10;
