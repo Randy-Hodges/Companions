@@ -1,5 +1,3 @@
-var cloud;
-
 demo.overworldMap = function(){};
 demo.overworldMap.prototype = {
     preload: function(){
@@ -63,17 +61,18 @@ demo.overworldMap.prototype = {
         layer.scale.set(1);
         layer.resizeWorld();
 
+        var cloud1, cloud2;
         // create view stuff, start at village on map, change map view as more levels are unlocked
         if (unlock == 2){ // level 2 unlocked
             game.camera.x = 100;
             game.camera.y = 550;
 
             // add moving cloud layers
-            cloud1 = game.add.sprite(200, 700, 'Cloud');
-            cloud1.anchor.set(0.5);
+            cloud2 = game.add.sprite(200, 700, 'Cloud');
+            cloud2.anchor.set(0.5);
 
             // cloud layer update
-            game.add.tween(cloud1).to({ x: -100 }, 4000, Phaser.Easing.Out, true);
+            game.add.tween(cloud2).to({ x: -100 }, 4000, Phaser.Easing.Out, true);
         } else if (unlock == 1){ // level 1 unlocked
             game.camera.x = 50;
             game.camera.y = 400;
@@ -89,7 +88,10 @@ demo.overworldMap.prototype = {
             game.camera.y = 400;
 
             // add moving cloud layers
-            cloud1 = game.add.sprite(500, 800, 'Cloud');
+            cloud2 = game.add.sprite(200, 700, 'Cloud');
+            cloud2.anchor.set(0.5);
+
+            cloud1 = game.add.sprite(200, 500, 'Cloud');
             cloud1.anchor.set(0.5);
 
             // add more moving cloud layers as more levels are made
