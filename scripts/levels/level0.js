@@ -7,8 +7,8 @@ demo.level0.prototype = {
         loadItems();
         loadUI();
         //loadEnemies();
-        game.load.tilemap('level0', "assets/tilemaps/village_tilemap.json", null, Phaser.Tilemap.TILED_JSON);
-        game.load.image('Map Tileset', "assets/tiles/village/Map Tileset.png");
+        game.load.tilemap('level0', "assets/tilemaps/village/village_tilemap.json", null, Phaser.Tilemap.TILED_JSON);
+        game.load.image('Village Tileset', "assets/tiles/village/Village Tileset.png");
         game.load.image('nes-color-palette', "assets/tiles/nes-color-palette.jpg");
         
         game.load.audio('village', "assets/audio/music/Treasure Town.mp3");
@@ -35,7 +35,7 @@ demo.level0.prototype = {
 
         // Tilemap behind
         var map = game.add.tilemap('level0');
-        map.addTilesetImage('Map Tileset','Map Tileset'); //make sure the tileset name is the same as the tileset name used in Tiled
+        map.addTilesetImage('Village Tileset','Village Tileset'); //make sure the tileset name is the same as the tileset name used in Tiled
         map.addTilesetImage('nes-color-palette','nes-color-palette'); //make sure the tileset name is the same as the tileset name used in Tiled
         map.createLayer('villageBackground');  
         levelZeroTiles = map.createLayer('mainGrass');  // layer name is the same as used in Tiled

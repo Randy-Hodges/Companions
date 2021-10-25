@@ -115,7 +115,7 @@
         {
          "columns":58,
          "firstgid":1,
-         "image":"..\/tiles\/Magic-Cliffs-Environment\/PNG\/tileset.png",
+         "image":"..\/..\/tiles\/Magic-Cliffs-Environment\/PNG\/tileset.png",
          "imageheight":320,
          "imagewidth":928,
          "margin":0,
@@ -128,7 +128,7 @@
         {
          "columns":58,
          "firstgid":1161,
-         "image":"..\/tiles\/Magic-Cliffs-Environment\/PNG\/tileset.png",
+         "image":"..\/..\/tiles\/Magic-Cliffs-Environment\/PNG\/tileset.png",
          "imageheight":320,
          "imagewidth":928,
          "margin":0,
@@ -141,7 +141,7 @@
         {
          "columns":16,
          "firstgid":2321,
-         "image":"..\/tiles\/nes-color-palette.jpg",
+         "image":"..\/..\/tiles\/nes-color-palette.jpg",
          "imageheight":64,
          "imagewidth":256,
          "margin":0,
@@ -154,11 +154,11 @@
         {
          "columns":20,
          "firstgid":2385,
-         "image":"..\/tiles\/village\/Map Tileset.png",
+         "image":"..\/..\/tiles\/village\/Village Tileset.png",
          "imageheight":320,
          "imagewidth":320,
          "margin":0,
-         "name":"Map Tileset",
+         "name":"Village Tileset",
          "spacing":0,
          "tilecount":400,
          "tileheight":16,
