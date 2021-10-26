@@ -15,9 +15,12 @@ demo.overworldMap.prototype = {
         game.load.image('QuestBoard', "assets/overworld_map/Miscellaneous/QuestBoard.png");
         game.load.image('Rocks', "assets/overworld_map/Nature/Rocks.png");
         game.load.image('StreetSigns', "assets/overworld_map/Miscellaneous/StreetSigns.png");
+        game.load.image('Static_cloud_group', "assets/tiles/painted style/PNG/Mountains/Layer 1 cloud anim1.png");
+        game.load.image('Static_cloud_large', "assets/tiles/painted style/PNG/Mountains/Layer 3 cloud anim1.png");
+
+        game.load.image('Moving_cloud', "assets/overworld_map/Clouds/cloud1.png");
+        game.load.image('Moving_cloud2', "assets/overworld_map/Clouds/cloud2.png");
         
-        game.load.image('Cloud', "assets/tiles/painted style/PNG/Mountains/Layer 1 cloud anim1.png");
-        game.load.image('Cloud2', "assets/tiles/painted style/PNG/Mountains/Layer 3 cloud anim1.png");
         
         // change this later
         game.load.audio('mapMusic', "assets/audio/music/PMD Remix/Personality Test.mp3");
@@ -49,8 +52,8 @@ demo.overworldMap.prototype = {
         map.addTilesetImage('Overworld_Rocks','Rocks');
         map.addTilesetImage('Overworld_StreetSigns','StreetSigns');
 
-        map.addTilesetImage('Layer 1 cloud anim1','Cloud');
-        map.addTilesetImage('Layer 3 cloud anim1','Cloud2');
+        map.addTilesetImage('Layer 1 cloud anim1','Static_cloud_group');
+        map.addTilesetImage('Layer 3 cloud anim1','Static_cloud_large');
 
         map.createLayer('Water');   
         map.createLayer('Background');
@@ -61,45 +64,34 @@ demo.overworldMap.prototype = {
         layer.scale.set(1);
         layer.resizeWorld();
 
-        var cloud1, cloud2;
-        // create view stuff, start at village on map, change map view as more levels are unlocked
+        // create view, clouds, level select UI, change as more levels are unlocked
         if (unlock == 2){ // level 2 unlocked
-            game.camera.x = 100;
-            game.camera.y = 550;
+            game.camera.x = 85;
+            game.camera.y = 525;
 
-            // add moving cloud layers
-            cloud2 = game.add.sprite(200, 700, 'Cloud');
-            cloud2.anchor.set(0.5);
+            // clouds for level 2
+            level2_clouds();
 
-            // cloud layer update
-            game.add.tween(cloud2).to({ x: -100 }, 4000, Phaser.Easing.Out, true);
+            levelSelect = game.add.text(8,8,"Use WASD to move around the map. \nPress 'V' to go to the Village. \nPress 'C' to go to Level 1. \nPress 'H' to go to Level 2.", { fontSize: '11px', fill: '#fff' });
         } else if (unlock == 1){ // level 1 unlocked
-            game.camera.x = 50;
-            game.camera.y = 400;
+            game.camera.x = 25;
+            game.camera.y = 375;
 
-            // add moving cloud layers
-            cloud1 = game.add.sprite(200, 500, 'Cloud');
-            cloud1.anchor.set(0.5);
+            // clouds for level 2
+            level2_clouds();   
 
-            // cloud layer update
-            game.add.tween(cloud1).to({ x: -100 }, 4000, Phaser.Easing.Out, true);
+            levelSelect = game.add.text(8,8,"Use WASD to move around the map. \nPress 'V' to go to the Village. \nPress 'C' to go to Level 1.", { fontSize: '11px', fill: '#fff' });
         } else { // start of game
             game.camera.x = 300;
             game.camera.y = 400;
 
-            // add moving cloud layers
-            cloud2 = game.add.sprite(200, 700, 'Cloud');
-            cloud2.anchor.set(0.5);
+            // clouds for level 2
+            level2_clouds();    
 
-            cloud1 = game.add.sprite(200, 500, 'Cloud');
-            cloud1.anchor.set(0.5);
-
-            // add more moving cloud layers as more levels are made
-    
+            levelSelect = game.add.text(8,8,"Use WASD to move around the map. \nPress 'V' to go to the Village.", { fontSize: '11px', fill: '#fff'});
         }
 
         // level select UI
-        levelSelect = game.add.text(8,8,"Use WASD to move around the map. \nPress 'C' to go to Level 1. \nPress 'V' to go to the Village.", { fontSize: '12px', fill: '#fff' });
         levelSelect.fixedToCamera = true;
 
         // level select
@@ -145,3 +137,36 @@ function updateView() {
         game.camera.x += 4;
     }
 };
+
+function level2_clouds() {
+    cloud7 = game.add.sprite(275, 700, 'Moving_cloud2');
+    cloud7.anchor.set(0.5);
+    
+    cloud6 = game.add.sprite(375, 695, 'Moving_cloud');
+    cloud6.anchor.set(0.5);
+
+    cloud5 = game.add.sprite(250, 675, 'Moving_cloud2');
+    cloud5.anchor.set(0.5);
+
+    cloud4 = game.add.sprite(350, 625, 'Moving_cloud2');
+    cloud4.anchor.set(0.5);
+
+    cloud3 = game.add.sprite(315, 665, 'Moving_cloud');
+    cloud3.anchor.set(0.5);
+
+    cloud2 = game.add.sprite(300, 725, 'Moving_cloud');
+    cloud2.anchor.set(0.5);
+
+    cloud1 = game.add.sprite(375, 650, 'Moving_cloud2');
+    cloud1.anchor.set(0.5);
+
+    if (unlock == 2){
+        game.add.tween(cloud2).to({ x: 1500 }, 25000, Phaser.Easing.Out, true);
+        game.add.tween(cloud3).to({ x: -100 }, 15000, Phaser.Easing.Out, true);
+        game.add.tween(cloud4).to({ x: -100 }, 10000, Phaser.Easing.Out, true);
+        game.add.tween(cloud5).to({ x: 1500 }, 22000, Phaser.Easing.Out, true);
+        game.add.tween(cloud6).to({ x: 1500 }, 20000, Phaser.Easing.Out, true);
+        game.add.tween(cloud7).to({ x: -100 }, 7000, Phaser.Easing.Out, true);
+        game.add.tween(cloud1).to({ x: -100 }, 14000, Phaser.Easing.Out, true);
+    }
+}
