@@ -116,9 +116,3 @@ function createGroups(){
         enemyGroup = game.add.group();
     }
 }
-
-function levelUnlock(levelNum) {
-    if (levelNum > unlock){
-        unlock = levelNum;
-    }
-}

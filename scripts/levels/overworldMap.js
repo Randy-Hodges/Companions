@@ -65,7 +65,7 @@ demo.overworldMap.prototype = {
         layer.resizeWorld();
 
         // create view, clouds, level select UI, change as more levels are unlocked
-        if (unlock == 2){ // level 2 unlocked
+        if (level2Unlocked){ // level 2 unlocked
             game.camera.x = 85;
             game.camera.y = 525;
 
@@ -73,7 +73,7 @@ demo.overworldMap.prototype = {
             level2_clouds();
 
             levelSelect = game.add.text(8,8,"Use WASD to move around the map. \nPress 'V' to go to the Village. \nPress 'C' to go to Level 1. \nPress 'H' to go to Level 2.", { fontSize: '11px', fill: '#fff' });
-        } else if (unlock == 1){ // level 1 unlocked
+        } else if (level1Unlocked){ // level 1 unlocked
             game.camera.x = 25;
             game.camera.y = 375;
 
@@ -86,7 +86,7 @@ demo.overworldMap.prototype = {
             game.camera.y = 400;
 
             // clouds for level 2
-            level2_clouds();    
+            level2_clouds();
 
             levelSelect = game.add.text(8,8,"Use WASD to move around the map. \nPress 'V' to go to the Village.", { fontSize: '11px', fill: '#fff'});
         }
@@ -160,7 +160,7 @@ function level2_clouds() {
     cloud1 = game.add.sprite(375, 650, 'Moving_cloud2');
     cloud1.anchor.set(0.5);
 
-    if (unlock == 2){
+    if (level2Unlocked){
         game.add.tween(cloud2).to({ x: 1500 }, 25000, Phaser.Easing.Out, true);
         game.add.tween(cloud3).to({ x: -100 }, 15000, Phaser.Easing.Out, true);
         game.add.tween(cloud4).to({ x: -100 }, 10000, Phaser.Easing.Out, true);
