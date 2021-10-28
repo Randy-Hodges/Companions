@@ -2,7 +2,6 @@
 demo.level2_0 =  function(){};
 demo.level2_0.prototype = {
     preload: function(){
-        spawn = 1;
         loadGameConfigs();
         loadPlayer();
         loadItems();
@@ -12,7 +11,7 @@ demo.level2_0.prototype = {
         game.load.image('Magic_Cliffs16', "assets/tiles/Magic-Cliffs-Environment/PNG/tileset.png");
         game.load.image('nes-color-palette', "assets/tiles/nes-color-palette.jpg");
 
-        game.load.audio('backtrack', "assets/audio/music/Blizzard Island.mp3");
+        game.load.audio('backtrack', "assets/audio/music/Waterfall Cave.mp3");
 
     },
     create: function(){

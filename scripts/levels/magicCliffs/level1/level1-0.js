@@ -85,7 +85,10 @@ demo.level1.prototype = {
         // Pause Menu
         loadPauseMenu();
 
-        event1_1_0();     
+        // Only start intro scene if level 1 is not completed
+        if (!level1Completed) {
+            event1_1_0();  
+        }   
     },
     update: function(){
         // Collision
