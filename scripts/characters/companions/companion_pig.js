@@ -1,6 +1,6 @@
 // pig
 
-CompanionPig = function(game,x,y,followOn,isEqiupped){
+CompanionPig = function(game, spritesheetStrID, x, y, followOn, isEqiupped){
     Companion.call(this, game, 'piggy', x, y, followOn, isEqiupped);
     
     //animation

@@ -87,14 +87,16 @@ demo.level0.prototype = {
         createHearts(currentPlayer.currentHearts);
             
         // Companion Init
-        pig = new CompanionPig(game, 25*tileLength, 35*tileLength, false, false);
-        frog = new CompanionFrog(game, 23*tileLength, 35*tileLength, false, false);
-        //dragon = new CompanionDragon(game, 23*tileLength, 35*tileLength, false, false);
-        //axolotl = new CompanionAxoltol(game, 23*tileLength, 35*tileLength, false, false);
-        
+        pig = new CompanionPig(game, 'piggy', 25*tileLength, 35*tileLength, false, false);
+        frog = new CompanionFrog(game, 'froggy', 27*tileLength, 35*tileLength, false, false);
         game.add.existing(pig);
         game.add.existing(frog);
-        
+        //currentPlayer.companionSlot1 = 'piggy';
+        //currentPlayer.companionSlot2 = 'froggy';
+        //console.log(currentPlayer.companionSlot1);
+        //console.log(currentPlayer.companionSlot2);
+        createCompanion();
+
         // Pause Menu
         loadPauseMenu();
         

@@ -4,6 +4,7 @@ demo.level2_0.prototype = {
     preload: function(){
         loadGameConfigs();
         loadPlayer();
+        loadCompanion();
         loadItems();
         loadEnemies();
         loadUI();

@@ -4,6 +4,7 @@ demo.level1.prototype = {
     preload: function(){
         loadGameConfigs();
         loadPlayer();
+        loadCompanion();
         loadItems();
         loadEnemies();
         loadHeadshots();
@@ -84,6 +85,9 @@ demo.level1.prototype = {
         
         // Pause Menu
         loadPauseMenu();
+        
+        // Companions
+        createCompanion();
 
         // Only start intro scene if level 1 is not completed
         if (!level1Completed) {
