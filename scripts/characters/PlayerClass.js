@@ -354,7 +354,6 @@ function healHearts(heal){
         basePlayer.currentHearts += 1;
         createHearts(basePlayer.currentHearts);
     }
-    console.log(basePlayer.currentHearts);
 }
 
 function dmgHearts(dmg){
@@ -371,7 +370,6 @@ function dmgHearts(dmg){
         hearts.removeChildAt(numhearts - 1);
     }
     basePlayer.currentHearts -= 1;
-    console.log(basePlayer.currentHearts);
 }
 
 // Companion Functions - Powerups

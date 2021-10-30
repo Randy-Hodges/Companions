@@ -91,7 +91,6 @@ Bat.prototype.hit = function(damage, bat = this){
             bat.die();
         }
         else{
-            console.log('hit bat')
             bat.curAnimation = bat.anims.hit
             bat.animations.play('hit', 5);
         }  
@@ -99,7 +98,6 @@ Bat.prototype.hit = function(damage, bat = this){
 }
 
 Bat.prototype.die = function(bat = this){
-    console.log('bat death')
     bat.body.enable = false;
     bat.curAnimation = bat.anims.hit;
     bat.animations.play('hit', 5);
