@@ -64,7 +64,7 @@ demo.level0.prototype = {
         //});
         
         // Warp points (doing it with coins that aren't physically loaded in the game)
-        warp1 = new Warp(game, spawnpoint1[0]*tileLength, spawnpoint1[1]*tileLength, 1, -spawnpoint1[1]);
+        warp1 = new Warp(game, spawnpoint1[0]*tileLength, spawnpoint1[1]*tileLength, 1, 2);
         game.add.existing(warp1) // comment this out to make warp zone invisible
 
         // warp2 = new Coin(game, spawnpoint2[0]*tileLength, spawnpoint2[1]*tileLength);
@@ -142,7 +142,7 @@ demo.level0.prototype = {
             spawnpoint = spawnpoint0.slice();
         };
 
-        spawnpoint1 = [69, 36]; // for the right side of village screen 
+        spawnpoint1 = [69, 33]; // for the right side of village screen 
         if (spawn == 2){
             spawnpoint = spawnpoint1.slice();
             spawnpoint[0] -= 2;

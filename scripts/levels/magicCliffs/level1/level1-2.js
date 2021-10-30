@@ -49,8 +49,8 @@ demo.level1_2.prototype = {
 
 
         // Warp points (doing it with coins bc I'm pressed for time)
-        warp1 = new Coin(game, spawnpoint1[0] * tileLength, spawnpoint1[1] * tileLength);
-        warp2 = new Coin(game, spawnpoint2[0] * tileLength, spawnpoint2[1] * tileLength);
+        warp1 = new Warp(game, spawnpoint1[0]*tileLength, spawnpoint1[1]*tileLength, 1, 2);
+        warp2 = new Warp(game, spawnpoint2[0]*tileLength, spawnpoint2[1]*tileLength, 1, 2);
         game.add.existing(warp2);
 
         // Enemies
@@ -100,15 +100,15 @@ demo.level1_2.prototype = {
     },
     render: function () {
         //game.debug.body(player);
-        game.debug.spriteInfo(currentPlayer);
-        game.debug.geom(rect1, 'rgb(0,0,0)');
-        game.debug.geom(rect2, 'rgb(0,0,0)');
+        // game.debug.spriteInfo(currentPlayer);
+        // game.debug.geom(rect1, 'rgb(0,0,0)');
+        // game.debug.geom(rect2, 'rgb(0,0,0)');
     },
     createSpawnPoints: function () {
         //SpawnPoints are in units of tiles
-        spawnpoint1 = [10, 13];
-        spawnpoint2 = [105, 25];
-        if (spawn == 2) {
+        spawnpoint1 = [10, 12];
+        spawnpoint2 = [107, 22];
+        if (spawn == 2){
             spawnpoint = spawnpoint1.slice();
             spawnpoint[0] += 2;
         }

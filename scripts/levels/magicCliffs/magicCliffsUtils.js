@@ -36,6 +36,7 @@ function loadItems(){
     game.load.spritesheet('coin', "assets/sprites/items/money/MonedaD.png", 16, 16); 
     game.load.audio('coin collect', "assets/audio/soundeffects/Collect Coin Sound Effect.mp3");
     game.load.spritesheet('heart', "assets/sprites/items/Collectible/heart_tilesheet.png", 13, 13);
+    game.load.spritesheet('portal', "assets/sprites/items/PixelPortal.png")
 }
 
 function loadEnemies(){
