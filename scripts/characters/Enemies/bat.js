@@ -2,6 +2,7 @@ var bat;
 Bat = function(game, x, y, spritesheetStrID){        
     // Instantiate Sprite object
     Phaser.Sprite.call(this, game, x, y, spritesheetStrID);
+    // Scale
     this.anchor.setTo(.5,.5); 
     scale = 1.3;  
     this.scale.setTo(-scale,scale);
@@ -26,17 +27,22 @@ Bat = function(game, x, y, spritesheetStrID){
     this.baseMovementSpeed = 60;
     this.movementSpeedX = 60;
     this.movementSpeedY = 12;
-    this.body.gravity.y = -400; // counteracts global gravity
+    this.body.gravity.y = -globalGravity; // counteracts global gravity
 
-    // Damage player
+    // Dealing/receiving damage
     this.damage = {none: false, left: true, right: true, up: false, down: true};
+    this.health = 10;
+    this.currentlyHit = false;
 
     // Switching Direction
     this.timeLastSwitchX = 0;
     this.timeLastSwitchY = 0;
     this.roamFirstCall = true;
 
-    this.health = 10;
+    // Preventing bugs
+    this.autoCull = true;
+    this.outOfBoundsKill = true;
+
 }
 
 Bat.prototype = Object.create(Phaser.Sprite.prototype);
@@ -84,14 +90,17 @@ Bat.prototype.update = function(bat = this) {
 
 Bat.prototype.hit = function(damage, bat = this){
     if(!bat.currentlyHit){
+        // Take damage
         bat.health -= damage;
         bat.currentlyHit = true;
-        console.log("bat health: " + bat.health)
+        bat.body.velocity.x = 0;
+        bat.body.velocity.y = 0;
+        // Either die or get hit
         if (bat.health <= 0){
             bat.die();
         }
         else{
-            bat.curAnimation = bat.anims.hit
+            bat.curAnimation = bat.anims.hit;
             bat.animations.play('hit', 5);
         }  
     }
@@ -109,9 +118,12 @@ Bat.prototype.switchFaceDirection = function(bat = this){
         bat.faceDirection = -1;
         bat.scale.x = -Math.abs(bat.scale.x);
     }
-    else{
+    else if (bat.body.velocity.x > 0){
         bat.faceDirection = 1;
         bat.scale.x = Math.abs(bat.scale.x);
+    }
+    else{
+        // console.log('bat x velocity is 0');
     }
 }
 

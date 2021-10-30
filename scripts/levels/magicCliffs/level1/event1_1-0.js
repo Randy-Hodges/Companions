@@ -1,6 +1,8 @@
 // For dialogue, push [text, spritesheet Id] into dialogueList for each piece of dialogue
 // you want to run. Then run startDialogue()
 function event1_1_0(){
+    // Dialogue
+    var eventDialogueList = [];
     player = 'playerHeadshot';
     ghost = 'ghostHeadshot';
     text1 = ['W- Wha- ... Where am I?', player];
@@ -11,7 +13,16 @@ function event1_1_0(){
                 "like me. Anyways, good luck!", ghost];
     text4 = ["(..)", player];
     for (i = 1; i<5; i += 1){
-        dialogueList.push(eval("text" + i));
+        eventDialogueList.push(eval("text" + i));
     }
-    startDialogue();
+    
+    // Ghost
+    grandfather = new GrandfatherNPC(game, currentPlayer.body.position.x + 70, currentPlayer.body.position.y - 45, 'grandfather');
+    game.add.existing(grandfather);
+
+    var endOfDialogueFunction = function(){
+        grandfather.leave();
+    }
+    
+    startDialogue(eventDialogueList, endOfDialogueFunction);
 }

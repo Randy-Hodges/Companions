@@ -10,11 +10,15 @@ demo.level1.prototype = {
         loadHeadshots();
         loadUI();
         
+        // Level Specific
         game.load.tilemap('level1-0', "assets/tilemaps/Levels/level 1/level1-0.json", null, Phaser.Tilemap.TILED_JSON);
         game.load.image('Magic_Cliffs16', "assets/tiles/Magic-Cliffs-Environment/PNG/tileset.png");
         game.load.image('nes-color-palette', "assets/tiles/nes-color-palette.jpg");
-        
         game.load.audio('backtrack', "assets/audio/music/Blizzard Island.mp3");
+
+        // Event Specific
+        game.load.spritesheet('grandfather', "assets/sprites/enemies/Plague Doctor/plague_doctor_sheet.png", 64, 64)
+        
 
     },
     create: function(){
@@ -42,7 +46,7 @@ demo.level1.prototype = {
         map.addTilesetImage('Magic_Cliffs16_2','Magic_Cliffs16'); //make sure the tileset name is the same as the tileset name used in Tiled
         map.addTilesetImage('nes-color-palette','nes-color-palette'); //make sure the tileset name is the same as the tileset name used in Tiled
         map.createLayer('caveBackground');  
-        levelOneTiles = map.createLayer('mainGrass');  // layer name is the same as used in Tiled
+        levelTiles = map.createLayer('mainGrass');  // layer name is the same as used in Tiled
         map.setCollisionByExclusion(magicCliffsNoCollide, true, 'mainGrass');
         // Game borders based on tilemap
         game.world.setBounds(0, 0, map.layer.widthInPixels, map.layer.heightInPixels);
@@ -96,15 +100,14 @@ demo.level1.prototype = {
     },
     update: function(){
         // Collision
-        game.physics.arcade.collide(currentPlayer, levelOneTiles);
-        game.physics.arcade.collide(enemyGroup, levelOneTiles);
-        game.physics.arcade.overlap(currentPlayer, coinGroup, function(player, coin){coin.kill(); coinCollect.play(); money+=1;});
+        game.physics.arcade.collide(currentPlayer, levelTiles);
+        game.physics.arcade.collide(enemyGroup, levelTiles);
+        game.physics.arcade.overlap(currentPlayer, coinGroup, function(player, coin){coin.kill(); coinCollect.play(); money+=1; updateMoney();});
         game.physics.arcade.overlap(currentPlayer, heartGroup, function(player, heart){heart.kill(); healHearts(1); /*heartCollect.play();*/});
 
         // Warping
         //game.physics.arcade.collide(currentPlayer, warp1, function(player, coin){spawn = 1; spawndirection = 1; console.log(currentPlayer); changeLevel(0,"1_1");});
         game.physics.arcade.collide(currentPlayer, warp2, function(player, coin, backtrack){spawn = 2; spawndirection = -1; changeLevel(0,"1-1");});
-        updateMoney();
         
         // Level 0 Warp Test
         game.physics.arcade.collide(currentPlayer, warp1, function(player, coin){backtrack.destroy(); addedAudio = false; spawn = 1; spawndirection = 1; console.log(currentPlayer); changeLevel(0,"0");});

@@ -29,7 +29,7 @@ demo.level1_1.prototype = {
         map.addTilesetImage('Magic_Cliffs16_2','Magic_Cliffs16'); 
         map.addTilesetImage('nes-color-palette','nes-color-palette'); //make sure the tileset name is the same as the tileset name used in Tiled
         map.createLayer('caveBackground');  
-        levelOneTiles = map.createLayer('mainGrass');  // layer name is the same as used in Tiled
+        levelTiles = map.createLayer('mainGrass');  // layer name is the same as used in Tiled
         map.setCollisionByExclusion(magicCliffsNoCollide, true, 'mainGrass');
         // Game borders based on tilemap
         game.world.setBounds(0, 0, map.layer.widthInPixels, map.layer.heightInPixels);
@@ -74,8 +74,8 @@ demo.level1_1.prototype = {
     },
     update: function(){
         // Collision
-        game.physics.arcade.collide(currentPlayer, levelOneTiles);
-        game.physics.arcade.collide(enemyGroup, levelOneTiles);
+        game.physics.arcade.collide(currentPlayer, levelTiles);
+        game.physics.arcade.collide(enemyGroup, levelTiles);
         game.physics.arcade.overlap(currentPlayer, coin_group, function(player, coin){coin.kill(); coinCollect.play(); money+=1;});
 
         // Warping

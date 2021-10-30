@@ -1,4 +1,4 @@
-var levelOneTilesTiles;
+var levelTilesTiles;
 var i = 0;
 Slime = function (game, x, y, spritesheetStrID) {
     // instantiate Sprite object
@@ -34,16 +34,19 @@ Slime = function (game, x, y, spritesheetStrID) {
     this.body.velocity.x = this.movementSpeed;
     this.body.maxVelocity.x = this.movementSpeed * 20;
 
-    //damage player
-    this.damage = { none: false, left: true, right: true, up: false, down: true };
-
+    
     // Miscellaneous (might break into own sections in the future)
     this.timeLastSwitch = game.time.now;
-    levelOneTilesTiles = levelOneTiles.getTiles(0, 0, game.world.bounds.width, game.world.bounds.height) // I need to change names and understand how tf this is operating
-
-    //Health
+    levelTilesTiles = levelTiles.getTiles(0, 0, game.world.bounds.width, game.world.bounds.height) // I need to change names and understand how tf this is operating
+    
+    // Dealing/receiving damage
+    this.damage = { none: false, left: true, right: true, up: false, down: true };
     this.health = 5;
     this.currentlyHit = false;
+
+    // Preventing bugs
+    this.autoCull = true;
+    this.outOfBoundsKill = true;
 }
 
 Slime.prototype = Object.create(Phaser.Sprite.prototype);
@@ -61,7 +64,7 @@ Slime.prototype.update = function (slime = this) {
     //Don't fall off ledges
     // if they are on a no-collision tile and haven't switched direction in a while, switch direction
     // Tile index in front of slime
-    tileIdx = levelOneTilesTiles[levelOneTiles.getTileY(slime.body.position.y) * game.world.bounds.width / tileLength + levelOneTiles.getTileX(slime.body.position.x + faceconstant)].index
+    tileIdx = levelTilesTiles[levelTiles.getTileY(slime.body.position.y) * game.world.bounds.width / tileLength + levelTiles.getTileX(slime.body.position.x + faceconstant)].index
     if (!magicCliffsNoCollide.includes(tileIdx) &&
         !(String(tileIdx) in exclusionLayer) &&
         tileIdx != 0 &&

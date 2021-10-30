@@ -1,3 +1,7 @@
+/* Similar to text.js but attempts to use the automatic word wrapping 
+that is provided through the style attribute. NOT complete or working atm.*/
+
+
 // Text
 var textLoop;
 var sentence;
