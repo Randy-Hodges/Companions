@@ -112,8 +112,8 @@ demo.level1.prototype = {
     render: function(){
         //console.log('rendering');
     //    game.debug.body(gdslime.enfrente);
-    //    game.debug.body(bat);
-       //game.debug.spriteInfo(player);
+    //    game.debug.body(currentPlayer.slash);
+        //game.debug.spriteInfo(currentPlayer.slash);
     },
     createSpawnPoints: function(){
         spawnpoint0 = [25, 35]

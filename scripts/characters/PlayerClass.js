@@ -17,6 +17,7 @@ BasePlayer = function(){
     this.companionSlot2;
 
     // equipment
+    this.slashDamage = 5;
     
     // Physics
     this.accelx = 750;
@@ -48,9 +49,9 @@ Player = function(game, x = gameWidth/2, y = gameHeight/2){
     // add animations
     this.animations.add('idle side', [11,12,13,14,15], frameRate=10);
     this.animations.add('walk side', [16,17,18,19,20,21], frameRate=10);
-    this.frame = 11;
     this.animations.add('slash side', [8,9,10], frameRate = 10);
     this.animations.add('slash down', [0,1,2], frameRate = 10);
+    this.frame = 11;
     this.stopAnimations = false;
     
     // #region Physics
@@ -118,6 +119,7 @@ Player = function(game, x = gameWidth/2, y = gameHeight/2){
     });
     //slash mechanics
     this.isSlashing = false;
+    this.slashDamage = basePlayer.slashDamage;
     slash = game.add.sprite(0,0);
     this.slash = slash;
     slash.anchor.setTo(0,.5);
@@ -143,7 +145,6 @@ Player = function(game, x = gameWidth/2, y = gameHeight/2){
         }
         });
         // #endregion */
-        
         // #endregion */
 
     // Invulnerability
@@ -157,19 +158,18 @@ Player.prototype = Object.create(Phaser.Sprite.prototype);
 Player.prototype.constructor = Player;
 
 // (Automatically called by World.update)
-Player.prototype.update = function() {
+Player.prototype.update = function(player = this) {
     game.physics.enable(this);
     game.physics.enable(slash);
     
     this.slash.body.setSize(20,35,-10 + this.faceDirection*15,0);
     if (this.isSlashing){
-        game.physics.arcade.overlap(this.slash, enemyGroup, function(slash, enemy){enemy.die()});
-        
+        game.physics.arcade.overlap(this.slash, enemyGroup, function(slash, enemy){enemy.hit(basePlayer.slashDamage)});
+        // this.isSlashing = false;
     }
 
+    // #region Keyboard Input */
     if (!this.disableMovement){
-
-        // #region Keyboard Input */
         customKeys = new CustomKeys();
         // ----- LATERAL MOVEMENT -----
         // Left (Movement)
@@ -209,13 +209,13 @@ Player.prototype.update = function() {
             currentPlayer.currentlyJumping = false;
             currentPlayer.body.acceleration.y = 0;
         }
-        // #endregion */
     }
     else{
         this.animations.play('idle side', textLoop=true);
     }
+    // #endregion */
 
-    if (enemyGroup){
+    if (enemyGroup != undefined){
         if (!this.invulnerable){
             game.physics.arcade.collide(currentPlayer, enemyGroup, function(player, enemy){
                 damageKnockbackApplied = playerDamageKnockback(player, enemy)

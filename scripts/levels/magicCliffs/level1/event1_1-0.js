@@ -13,5 +13,5 @@ function event1_1_0(){
     for (i = 1; i<5; i += 1){
         dialogueList.push(eval("text" + i));
     }
-    startDialogue()
+    startDialogue();
 }
