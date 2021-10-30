@@ -39,7 +39,7 @@ function event2_1_0(){
     }
     
     // Ghost
-    grandfather = new GrandfatherNPC(game, currentPlayer.body.position.x - 70, currentPlayer.body.position.y - 45, 'grandfather');
+    grandfather = new GrandfatherNPC(game, 1000, 455, 'grandfather');
     grandfather.flipX();
     game.add.existing(grandfather);
 
