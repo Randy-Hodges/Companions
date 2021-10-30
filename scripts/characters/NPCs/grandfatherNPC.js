@@ -20,7 +20,7 @@ GrandfatherNPC = function(game, x, y, spritesheetStrID){
     this.timeLastSwitchX = 0;
     this.timeLastSwitchY = 0;
 
-    this.flipFaceX();
+    this.flipX();
 }
 
 GrandfatherNPC.prototype = Object.create(Phaser.Sprite.prototype);
@@ -41,7 +41,7 @@ GrandfatherNPC.prototype.hover = function(grandfather = this){
     }
 }
 
-GrandfatherNPC.prototype.flipFaceX = function(grandfather = this){
+GrandfatherNPC.prototype.flipX = function(grandfather = this){
     grandfather.scale.x *= -1;
     grandfather.faceDirection *= -1;
 }

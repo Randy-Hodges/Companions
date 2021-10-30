@@ -150,7 +150,8 @@ Player = function(game, x = gameWidth/2, y = gameHeight/2){
     // Invulnerability
     this.invulnerableTime = game.time.now;
     this.invulnerable = false;
-    this.iFrames = 2000 //actually in milliseconds, not frames    
+    this.iFrames = 2000 //actually in milliseconds, not frames  
+    
 }
 
 
@@ -159,8 +160,7 @@ Player.prototype.constructor = Player;
 
 // (Automatically called by World.update)
 Player.prototype.update = function(player = this) {
-    game.physics.enable(this);
-    game.physics.enable(slash);
+    
     
     this.slash.body.setSize(20,35,-10 + this.faceDirection*15,0);
     if (this.isSlashing){
@@ -211,7 +211,9 @@ Player.prototype.update = function(player = this) {
         }
     }
     else{
-        this.animations.play('idle side', textLoop=true);
+        this.animations.play('idle side');
+        this.body.velocity.x = 0;
+        this.body.acceleration.x = 0;
     }
     // #endregion */
 

@@ -43,7 +43,7 @@ function placeHeadshot(sprite) {
     headshot.fixedToCamera = true;
 }
 
-function spellOutText(text, x = textOffsetX + 7, y = game.height - textHeight + 7, fontsize = 12, speed = 0) {
+function spellOutText(text, x = textOffsetX + 7, y = game.height - textHeight + 3, fontsize = 12, speed = 0) {
     if (!addedTextContinueListener) {
         addedTextContinueListener = true;
         addTextContinueListener();
@@ -188,7 +188,7 @@ function checkCloseText(temptext) {
 function addTextContinueListener() {
     addedTextContinueListener = true;
     // add event listener to react to the text box
-    game.input.keyboard.addKey(Phaser.Keyboard.Z).onDown.add(
+    game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR).onDown.add(
         function () {
             if (!(dialogueList.length == 0)) {
                 if (quickFillEnabled && quickFillEnded) {

@@ -1,0 +1,95 @@
+// For dialogue, push [text, spritesheet Id] into dialogueList for each piece of dialogue
+// you want to run. Then run startDialogue()
+function event1_1_0(){
+    // Dialogue
+    var eventDialogueList = [];
+    player = 'playerHeadshot';
+    ghost = 'ghostHeadshot';
+    text1 = ['Oh hey there, you might be wondering where you are.', ghost];
+    text2 = ["You just woke up in [Place]. I suppose I should introduce myself. I am your " + 
+                "late GRANDFATHER. This world is full of interesting creatures " + 
+                "and fun ways to die. ..You should probably try to not die though. I wouldn't want you to end up " + 
+                "like me. Anyways, I have here in my notes that you should " +
+                "USE THE ARROW KEYS TO MOVE and UP ARROW TO JUMP." , ghost]
+    text3 = ["Whatever that means...", ghost];
+    for (i = 1; i<=3; i += 1){
+        eventDialogueList.push(eval("text" + i));
+    }
+    
+    // Ghost
+    grandfather = new GrandfatherNPC(game, currentPlayer.body.position.x + 70, currentPlayer.body.position.y - 45, 'grandfather');
+    game.add.existing(grandfather);
+
+    var endOfDialogueFunction = function(){
+        grandfather.leave();
+    }
+
+    startDialogue(eventDialogueList, endOfDialogueFunction);
+}
+
+function event2_1_0(){
+    // Dialogue
+    var eventDialogueList = [];
+    player = 'playerHeadshot';
+    ghost = 'ghostHeadshot';
+    text1 = ['This is an enemy. I have here in my notes that you PRESS SPACEBAR TO SLASH ATTACK. ', ghost];
+    text2 = ['Might be worth a try.', ghost];
+    for (i = 1; i<=2; i += 1){
+        eventDialogueList.push(eval("text" + i));
+    }
+    
+    // Ghost
+    grandfather = new GrandfatherNPC(game, currentPlayer.body.position.x - 70, currentPlayer.body.position.y - 45, 'grandfather');
+    grandfather.flipX();
+    game.add.existing(grandfather);
+
+    var endOfDialogueFunction = function(){
+        grandfather.leave();
+    }
+    
+    startDialogue(eventDialogueList, endOfDialogueFunction);
+}
+
+function event3_1_2(){
+    // Dialogue
+    var eventDialogueList = [];
+    player = 'playerHeadshot';
+    ghost = 'ghostHeadshot';
+    text1 = ['I have a lot of hope for you. I think there is a lot of potential in you.', ghost];
+    for (i = 1; i<=1; i += 1){
+        eventDialogueList.push(eval("text" + i));
+    }
+    
+    // Ghost
+    grandfather = new GrandfatherNPC(game, 380, 160, 'grandfather');
+    game.add.existing(grandfather);
+
+    var endOfDialogueFunction = function(){
+        grandfather.leave();
+    }
+
+    startDialogue(eventDialogueList, endOfDialogueFunction);
+}
+
+function event4_1_2(){
+    // Dialogue
+    var eventDialogueList = [];
+    player = 'playerHeadshot';
+    ghost = 'ghostHeadshot';
+    text1 = ['[Will edit this dialogue later] Aye look it is your first companion. Go ahead and free it from '+
+                'that cage. asdfasfasdfsa', ghost];
+    for (i = 1; i<=1; i += 1){
+        eventDialogueList.push(eval("text" + i));
+    }
+    
+    // Ghost
+    grandfather = new GrandfatherNPC(game, 1500, 380, 'grandfather');
+    grandfather.flipX()
+    game.add.existing(grandfather);
+
+    var endOfDialogueFunction = function(){
+        grandfather.leave();
+    }
+
+    startDialogue(eventDialogueList, endOfDialogueFunction);
+}

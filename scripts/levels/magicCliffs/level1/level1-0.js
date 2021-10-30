@@ -7,7 +7,6 @@ demo.level1.prototype = {
         loadCompanion();
         loadItems();
         loadEnemies();
-        loadHeadshots();
         loadUI();
         
         // Level Specific
@@ -15,10 +14,10 @@ demo.level1.prototype = {
         game.load.image('Magic_Cliffs16', "assets/tiles/Magic-Cliffs-Environment/PNG/tileset.png");
         game.load.image('nes-color-palette', "assets/tiles/nes-color-palette.jpg");
         game.load.audio('backtrack', "assets/audio/music/Blizzard Island.mp3");
-
-        // Event Specific
-        game.load.spritesheet('grandfather', "assets/sprites/enemies/Plague Doctor/plague_doctor_sheet.png", 64, 64)
         
+        // Event Specific
+        loadHeadshots();
+        game.load.spritesheet('grandfather', "assets/sprites/enemies/Plague Doctor/plague_doctor_sheet.png", 64, 64)
 
     },
     create: function(){
@@ -92,10 +91,12 @@ demo.level1.prototype = {
         
         // Companions
         createCompanion();
-
+        
         // Only start intro scene if level 1 is not completed
         if (!level1Completed) {
+            rect1 = new Phaser.Rectangle(1050, 0, 40, 540); // x0, y0, x1, y1
             event1_1_0();  
+            eventTrackingList = [true, false, false];
         }   
     },
     update: function(){
@@ -105,6 +106,9 @@ demo.level1.prototype = {
         game.physics.arcade.overlap(currentPlayer, coinGroup, function(player, coin){coin.kill(); coinCollect.play(); money+=1; updateMoney();});
         game.physics.arcade.overlap(currentPlayer, heartGroup, function(player, heart){heart.kill(); healHearts(1); /*heartCollect.play();*/});
 
+        // Events
+        this.collideEvents();
+
         // Warping
         //game.physics.arcade.collide(currentPlayer, warp1, function(player, coin){spawn = 1; spawndirection = 1; console.log(currentPlayer); changeLevel(0,"1_1");});
         game.physics.arcade.collide(currentPlayer, warp2, function(player, coin, backtrack){spawn = 2; spawndirection = -1; changeLevel(0,"1-1");});
@@ -113,10 +117,9 @@ demo.level1.prototype = {
         game.physics.arcade.collide(currentPlayer, warp1, function(player, coin){backtrack.destroy(); addedAudio = false; spawn = 1; spawndirection = 1; console.log(currentPlayer); changeLevel(0,"0");});
     },
     render: function(){
-        //console.log('rendering');
-    //    game.debug.body(gdslime.enfrente);
     //    game.debug.body(currentPlayer.slash);
-        //game.debug.spriteInfo(currentPlayer.slash);
+        game.debug.spriteInfo(currentPlayer);
+        // game.debug.geom(rect1, 'rgb(0,0,0)');
     },
     createSpawnPoints: function(){
         spawnpoint0 = [25, 35]
@@ -133,7 +136,20 @@ demo.level1.prototype = {
             spawnpoint = spawnpoint2.slice();
             spawnpoint[0] -= 2;
         }
+    },
+    collideEvents: function(){
+        if (!level1Completed){
+            if (eventTrackingList[1] == false){
+                if(rect1.intersects(currentPlayer.body)){
+                    console.log('woooo')
+                    event2_1_0();
+                    eventTrackingList[1] = true;
+                }
+                // game.physics.arcade.overlap(currentPlayer, line1, function(){console.log('yo'); event2_1_0();});
+            }
+        }
     }
 };
+
 
 

@@ -65,6 +65,7 @@ function updateMoney(){
 
 function changeLevel(i, levelNum){
     console.log('level change to: ' + levelNum);
+    addedTextContinueListener = false;
     game.state.start('level' + levelNum);
 }
 
