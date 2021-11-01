@@ -62,6 +62,7 @@ demo.level1.prototype = {
         });
 
         // Enemies
+        enemyGroup = game.add.group();
         map.setLayer('enemies');
         map.forEach(function(tile){addEnemyFromTilemap(tile)},1,0,0,map.width,map.height);
         

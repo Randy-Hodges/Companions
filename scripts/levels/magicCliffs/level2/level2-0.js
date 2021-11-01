@@ -48,15 +48,17 @@ demo.level2_0.prototype = {
         // Game borders based on tilemap
         game.world.setBounds(0, 0, map.layer.widthInPixels, map.layer.heightInPixels);
 
-        // createGroups();
+        createGroups();
         
         // Warp points
         warp1 = new Warp(game, spawnpoint1[0]*tileLength, spawnpoint1[1]*tileLength, 1, 2);
         warp2 = new Warp(game, spawnpoint2[0]*tileLength, spawnpoint2[1]*tileLength, 1, 2);
 
         // Enemies
+        enemyGroup = game.add.group();
         map.setLayer('enemies');
         map.forEach(function(tile){addEnemyFromTilemap(tile)},1,0,0,map.width,map.height);
+        
 
         // Player init
         currentPlayer = new Player(game, spawnpoint[0]*tileLength, spawnpoint[1]*tileLength);

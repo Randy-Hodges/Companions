@@ -76,7 +76,7 @@ function changeToMap(i) {
 
 
 function addEnemyFromTilemap(tile){
-    if (tile.index == 2346 || tile.index == 1194){
+    if (tile.index == 2346 || tile.index == 1194 || tile.index == 1186){
         slime = new Slime(game, tile.x*tileLength, tile.y*tileLength,'greenSlime');
         game.add.existing(slime);
         enemyGroup.add(slime);

@@ -66,9 +66,8 @@ Slime.prototype.update = function (slime = this) {
     // Tile index in front of slime
     tileIdx = levelTilesTiles[levelTiles.getTileY(slime.body.position.y) * game.world.bounds.width / tileLength + levelTiles.getTileX(slime.body.position.x + faceconstant)].index
     if (!magicCliffsNoCollide.includes(tileIdx) &&
-        !(String(tileIdx) in exclusionLayer) &&
-        tileIdx != 0 &&
-        game.time.now - slime.timeLastSwitch > 200
+    !(String(tileIdx) in exclusionLayer && tileIdx != -1) &&
+    game.time.now - slime.timeLastSwitch > 200
     ) {
         switchDirectionSlime(slime);
     }
