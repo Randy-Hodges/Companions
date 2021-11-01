@@ -72,7 +72,7 @@ demo.overworldMap.prototype = {
             // clouds for level 2
             level2_clouds();
 
-            levelSelect = game.add.text(8,8,"Use WASD to move around the map. \nPress 'V' to go to the Village. \nPress 'C' to go to Level 1. \nPress 'H' to go to Level 2.", { fontSize: '11px', fill: '#fff' });
+            levelSelect = game.add.text(8,8,"Use the arrow keys to move around the map. \nPress 'V' to go to the Village. \nPress 'C' to go to Level 1. \nPress 'H' to go to Level 2.", { fontSize: '11px', fill: '#fff' });
         } else if (level1Unlocked){ // level 1 unlocked
             game.camera.x = 25;
             game.camera.y = 375;
@@ -80,7 +80,7 @@ demo.overworldMap.prototype = {
             // clouds for level 2
             level2_clouds();   
 
-            levelSelect = game.add.text(8,8,"Use WASD to move around the map. \nPress 'V' to go to the Village. \nPress 'C' to go to Level 1.", { fontSize: '11px', fill: '#fff' });
+            levelSelect = game.add.text(8,8,"Use the arrow keys to move around the map. \nPress 'V' to go to the Village. \nPress 'C' to go to Level 1.", { fontSize: '11px', fill: '#fff' });
         } else { // start of game
             game.camera.x = 300;
             game.camera.y = 400;
@@ -88,7 +88,7 @@ demo.overworldMap.prototype = {
             // clouds for level 2
             level2_clouds();
 
-            levelSelect = game.add.text(8,8,"Use WASD to move around the map. \nPress 'V' to go to the Village.", { fontSize: '11px', fill: '#fff'});
+            levelSelect = game.add.text(8,8,"Use the arrow keys to move around the map. \nPress 'V' to go to the Village.", { fontSize: '11px', fill: '#fff'});
         }
 
         // level select UI
@@ -122,19 +122,19 @@ function updateView() {
     // map update controls
     customKeys = new CustomKeys();
     
-    if (customKeys.isDown('W'))
+    if (customKeys.isDown('UP'))
     {
         game.camera.y -= 4;
     }
-    else if (customKeys.isDown('S'))
+    else if (customKeys.isDown('DOWN'))
     {
         game.camera.y += 4;
     }
-    if (customKeys.isDown('A'))
+    if (customKeys.isDown('LEFT'))
     {
         game.camera.x -= 4;
     }
-    else if (customKeys.isDown('D'))
+    else if (customKeys.isDown('RIGHT'))
     {
         game.camera.x += 4;
     }
