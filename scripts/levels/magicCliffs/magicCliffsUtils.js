@@ -5,7 +5,6 @@ var money = 0, moneyText;
 var addedAudio = false;
 var spawn = 0, spawndirection = -1;
 var tileLength = 16;
-var unlock = 0;
 
 var eventTrackingList = [];
 

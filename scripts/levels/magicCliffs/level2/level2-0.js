@@ -39,7 +39,7 @@ demo.level2_0.prototype = {
         map.addTilesetImage('Magic_Cliffs16','Magic_Cliffs16'); //make sure the tileset name is the same as the tileset name used in Tiled
         map.addTilesetImage('nes-color-palette','nes-color-palette'); //make sure the tileset name is the same as the tileset name used in Tiled
         map.createLayer('caveBackground');  
-        levelOneTiles = map.createLayer('mainGrass');  // layer name is the same as used in Tiled
+        levelTiles = map.createLayer('mainGrass');  // layer name is the same as used in Tiled
         // Collision
         map.setLayer('exclude');
         map.forEach(function(tile){excludeCollision(tile)},1,0,0,map.width,map.height);
@@ -48,19 +48,20 @@ demo.level2_0.prototype = {
         // Game borders based on tilemap
         game.world.setBounds(0, 0, map.layer.widthInPixels, map.layer.heightInPixels);
 
+        // createGroups();
+        
+        // Warp points
+        warp1 = new Warp(game, spawnpoint1[0]*tileLength, spawnpoint1[1]*tileLength, 1, 2);
+        warp2 = new Warp(game, spawnpoint2[0]*tileLength, spawnpoint2[1]*tileLength, 1, 2);
+
+        // Enemies
+        map.setLayer('enemies');
+        map.forEach(function(tile){addEnemyFromTilemap(tile)},1,0,0,map.width,map.height);
+
         // Player init
         currentPlayer = new Player(game, spawnpoint[0]*tileLength, spawnpoint[1]*tileLength);
         game.add.existing(currentPlayer);
         game.camera.follow(currentPlayer);
-        
-        // Warp points (doing it with coins bc I'm pressed for time)
-        warp1 = new Coin(game, spawnpoint1[0]*tileLength, spawnpoint1[1]*tileLength);
-        warp2 = new Coin(game, spawnpoint2[0]*tileLength, spawnpoint2[1]*tileLength);
-
-        // Enemies
-        enemyGroup = game.add.group();
-        map.setLayer('enemies');
-        map.forEach(function(tile){addEnemyFromTilemap(tile)},1,0,0,map.width,map.height);
 
         // Tilemap Infront
         map.createLayer('front');
@@ -76,12 +77,16 @@ demo.level2_0.prototype = {
         
         // Pause Menu
         loadPauseMenu();
+
+        // Companions
+        createCompanion();
     },
     update: function(){
         // Collision
-        game.physics.arcade.collide(currentPlayer, levelOneTiles);
-        game.physics.arcade.collide(enemyGroup, levelOneTiles);
-        //game.physics.arcade.overlap(currentPlayer, coin_group, function(player, coin){coin.kill(); coinCollect.play(); money+=1;});
+        game.physics.arcade.collide(currentPlayer, levelTiles);
+        game.physics.arcade.collide(enemyGroup, levelTiles);
+        game.physics.arcade.overlap(currentPlayer, coinGroup, function(player, coin){coin.kill(); coinCollect.play(); money+=1; updateMoney();});
+        game.physics.arcade.overlap(currentPlayer, heartGroup, function(player, heart){heart.kill(); healHearts(1); /*heartCollect.play();*/});
 
         // Warping
         game.physics.arcade.collide(currentPlayer, warp1, function(player, coin){spawn = 1; spawndirection = 1; changeLevel(0,"1-1");});
@@ -97,12 +102,12 @@ demo.level2_0.prototype = {
         //SpawnPoints are in units of tiles
         spawnpoint1 = [4, 44];
         spawnpoint2 = [96, 25];
-        if (spawn == 1){
-            spawnpoint = spawnpoint1.slice();
+        if (spawn == 2){
+            spawnpoint = spawnpoint2.slice();
             spawnpoint[0] += 2;
         }
-        else if (spawn == 2){
-            spawnpoint = spawnpoint2.slice();
+        else { // (spawn == 1)
+            spawnpoint = spawnpoint1.slice();
             spawnpoint[0] += 2;
         }
         // else{

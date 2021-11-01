@@ -128,13 +128,13 @@ demo.level1.prototype = {
         if (spawn == 0){
             spawnpoint = spawnpoint0.slice();
         }
-        if (spawn == 2){
-            spawnpoint = spawnpoint1.slice();
-            spawnpoint[0] += 2;
-        }
-        if (spawn == 1){
+        else if (spawn == 1){
             spawnpoint = spawnpoint2.slice();
             spawnpoint[0] -= 2;
+        }
+        else { // (spawn == 2)
+            spawnpoint = spawnpoint1.slice();
+            spawnpoint[0] += 2;
         }
     },
     collideEvents: function(){
