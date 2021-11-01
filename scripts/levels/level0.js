@@ -142,7 +142,7 @@ demo.level0.prototype = {
             spawnpoint = spawnpoint0.slice();
         };
 
-        spawnpoint1 = [69, 33]; // for the right side of village screen 
+        spawnpoint1 = [61, 14]; // for the right side of village screen 
         if (spawn == 2){
             spawnpoint = spawnpoint1.slice();
             spawnpoint[0] -= 2;
