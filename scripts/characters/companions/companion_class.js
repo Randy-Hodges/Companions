@@ -41,7 +41,7 @@ Companion.prototype.update = function(companion = this) {
     
     // Follow Logic
     if (companion.followOn == true){    
-        console.log('Follows', companion.followObject);
+        //console.log('Follows', companion.followObject);
         game.physics.arcade.moveToObject(companion, companion.followObject, 30, 1000);
     }
     

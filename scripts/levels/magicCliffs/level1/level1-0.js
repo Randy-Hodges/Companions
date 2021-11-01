@@ -90,7 +90,7 @@ demo.level1.prototype = {
         loadPauseMenu();
         
         // Companions
-        createCompanion();
+        //createCompanion();
         
         // Only start intro scene if level 1 is not completed
         if (!level1Completed) {
