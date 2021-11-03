@@ -76,7 +76,7 @@ function changeToMap(i) {
 
 
 function addEnemyFromTilemap(tile){
-    if (tile.index == 2346 || tile.index == 1194 || tile.index == 1186){
+    if (tile.index == 2346 || tile.index == 1186){
         slime = new Slime(game, tile.x*tileLength, tile.y*tileLength,'greenSlime');
         game.add.existing(slime);
         enemyGroup.add(slime);
@@ -93,10 +93,18 @@ function addEnemyFromTilemap(tile){
         game.add.existing(slime);
         enemyGroup.add(slime);
     }
-    if (tile.index == 2362){
+    if (tile.index == 2362 || tile.index == 1194){
         bat = new Bat(game, tile.x*tileLength, tile.y*tileLength,'bat');
         game.add.existing(bat);
         enemyGroup.add(bat);
+    }
+}
+
+function addCoinFromTilemap(tile){
+    if (tile.index != 0 && tile.index != -1){
+        coin = new Coin(game, tile.x*tileLength, tile.y*tileLength,'coin');
+        game.add.existing(coin);
+        coinGroup.add(coin);
     }
 }
 

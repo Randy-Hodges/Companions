@@ -160,7 +160,14 @@ Player.prototype.constructor = Player;
 
 // (Automatically called by World.update)
 Player.prototype.update = function(player = this) {
-    
+    if (game.input.keyboard.isDown(Phaser.Keyboard.Z)){
+        this.body.position.y -= 3;
+        this.body.enable = false;
+
+    }
+    else{
+        this.body.enable = true;
+    }
     
     this.slash.body.setSize(20,35,-10 + this.faceDirection*15,0);
     if (this.isSlashing){
