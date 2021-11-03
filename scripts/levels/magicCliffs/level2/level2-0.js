@@ -52,8 +52,7 @@ demo.level2_0.prototype = {
         
         // Warp points
         warp1 = new Warp(game, spawnpoint1[0]*tileLength, spawnpoint1[1]*tileLength);
-        warp2 = new Warp(game, spawnpoint2[0]*tileLength, spawnpoint2[1]*tileLength, 90);
-        game.add.existing(warp1);
+        warp2 = new Warp(game, spawnpoint2[0]*tileLength, spawnpoint2[1]*tileLength, 270);
         game.add.existing(warp2);
 
         // Coins
@@ -110,7 +109,7 @@ demo.level2_0.prototype = {
     createSpawnPoints: function(){
         //SpawnPoints are in units of tiles
         spawnpoint1 = [4, 44];
-        spawnpoint2 = [123.5, 1];
+        spawnpoint2 = [119.5, 2];
         if (spawn == 2){
             spawnpoint = spawnpoint2.slice();
             spawnpoint[0] += 2;
