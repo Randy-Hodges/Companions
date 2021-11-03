@@ -5,6 +5,9 @@ Warp = function(game, x, y, x_scale = 1, y_scale = 1){
         
     this.scale.setTo(x_scale, y_scale);
 
+    // Animations
+    this.animations.add('rotate', [0,1,2]);
+
     // physics
     game.physics.enable(this);
     this.body.acceleration.y = -globalGravity; // counteracts gravity
@@ -12,3 +15,8 @@ Warp = function(game, x, y, x_scale = 1, y_scale = 1){
 
 Warp.prototype = Object.create(Phaser.Sprite.prototype);
 Warp.prototype.constructor = Warp;
+
+// (Automatically called by World.update)
+Warp.prototype.update = function() {
+    this.animations.play('rotate', 5);
+}
