@@ -67,8 +67,8 @@ demo.level1.prototype = {
         map.forEach(function(tile){addEnemyFromTilemap(tile)},1,0,0,map.width,map.height);
         
         // Warp points (doing it with coins that aren't physically loaded in the game)
-        warp1 = new Warp(game, spawnpoint1[0]*tileLength, spawnpoint1[1]*tileLength, 1, 2);
-        warp2 = new Warp(game, spawnpoint2[0]*tileLength, spawnpoint2[1]*tileLength, 1, 2);
+        warp1 = new Warp(game, spawnpoint1[0]*tileLength, spawnpoint1[1]*tileLength);
+        warp2 = new Warp(game, spawnpoint2[0]*tileLength, spawnpoint2[1]*tileLength);
 
         // Player init
         currentPlayer = new Player(game, spawnpoint[0]*tileLength, spawnpoint[1]*tileLength);

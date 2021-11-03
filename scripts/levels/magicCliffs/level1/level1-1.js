@@ -49,8 +49,8 @@ demo.level1_1.prototype = {
         });
 
         // Warp points (doing it with coins bc I'm pressed for time)
-        warp1 = new Coin(game, spawnpoint1[0]*tileLength, spawnpoint1[1]*tileLength);
-        warp2 = new Coin(game, spawnpoint2[0]*tileLength, spawnpoint2[1]*tileLength);
+        warp1 = new Warp(game, spawnpoint1[0]*tileLength, spawnpoint1[1]*tileLength);
+        warp2 = new Warp(game, spawnpoint2[0]*tileLength, spawnpoint2[1]*tileLength);
 
         // Enemies
         enemyGroup = game.add.group();

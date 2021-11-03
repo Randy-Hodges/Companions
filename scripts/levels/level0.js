@@ -64,7 +64,7 @@ demo.level0.prototype = {
         //});
         
         // Warp points (doing it with coins that aren't physically loaded in the game)
-        warp1 = new Warp(game, spawnpoint1[0]*tileLength, spawnpoint1[1]*tileLength, 1, 2);
+        warp1 = new Warp(game, spawnpoint1[0]*tileLength, spawnpoint1[1]*tileLength);
         game.add.existing(warp1) // comment this out to make warp zone invisible
 
         // warp2 = new Coin(game, spawnpoint2[0]*tileLength, spawnpoint2[1]*tileLength);
