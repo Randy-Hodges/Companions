@@ -2,6 +2,7 @@
 
 CompanionFrog = function(game, spritesheetStrID, x, y, followOn, isEqiupped){
     Companion.call(this, game, 'froggy', x, y, followOn, isEqiupped);
+    this.name = 'froggy';
     
     //animation
     this.animations.add('froggy idle', [0, 1, 2, 3], frameRate=5, true);

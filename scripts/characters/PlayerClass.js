@@ -2,9 +2,8 @@ var playerJumpButton, currentPlayer, basePlayer;
 var overlappedCompanion = 'undefined';
 
 /*
-Intended to be used to store the data of the current Player. Ideally everything would be in one class or there would be 
-some kind of inheritance, but this is what I'm doing to work around Phaser Sprites. If this was python, I probably could
-have figured out how to do more efficiently, but hey this works.
+Intended to be used to store the data of the current Player. Since Phaser automatically destroys sprite
+data between game states, the basePlayer classe was added to store important data for the player.
 */
 BasePlayer = function(){ 
 
@@ -12,10 +11,9 @@ BasePlayer = function(){
     this.maxHearts = 5;
     this.currentHearts = 5;
     
-    // companions = string
-    this.companionSlot1;
-    this.companionSlot2;
-
+    // companions (string)
+    this.companionNames = [undefined, undefined];
+    
     // equipment
     this.slashDamage = 5;
     
@@ -42,11 +40,11 @@ Player = function(game, x = gameWidth/2, y = gameHeight/2){
     this.anchor.setTo(.5,.5);   
     this.scale.setTo(spawndirection, 1);
 
-    // hearts - HP
+    // HP
     this.maxHearts = basePlayer.maxHearts;
     this.currentHearts = basePlayer.currentHearts;
 
-    // add animations
+    // Animations
     this.animations.add('idle side', [11,12,13,14,15], frameRate=10);
     this.animations.add('walk side', [16,17,18,19,20,21], frameRate=10);
     this.animations.add('slash side', [8,9,10], frameRate = 10);
@@ -151,35 +149,40 @@ Player = function(game, x = gameWidth/2, y = gameHeight/2){
     this.invulnerableTime = game.time.now;
     this.invulnerable = false;
     this.iFrames = 2000 //actually in milliseconds, not frames  
-    
-}
 
+    // Companions
+    this.companionSlots = [undefined, undefined];
+    // TODO: loop through all of these instead of manually doing it
+    this.companionSlots[0] = createEquippedCompanion(basePlayer.companionNames[0], this, this.body.position.x - 50, this.body.position.y - 50);
+    this.companionSlots[1] = createEquippedCompanion(basePlayer.companionNames[1], this.companionSlots[0], this.body.position.x - 75, this.body.position.y - 75);
+}
 
 Player.prototype = Object.create(Phaser.Sprite.prototype);
 Player.prototype.constructor = Player;
 
 // (Automatically called by World.update)
 Player.prototype.update = function(player = this) {
+
+    // Dev tool
     if (game.input.keyboard.isDown(Phaser.Keyboard.Z)){
         this.body.position.y -= 3;
         this.body.enable = false;
-
     }
     else{
         this.body.enable = true;
     }
     
+    // Slashing
     this.slash.body.setSize(20,35,-10 + this.faceDirection*15,0);
     if (this.isSlashing){
         game.physics.arcade.overlap(this.slash, enemyGroup, function(slash, enemy){enemy.hit(basePlayer.slashDamage)});
-        // this.isSlashing = false;
     }
 
     // #region Keyboard Input */
     if (!this.disableMovement){
         customKeys = new CustomKeys();
         // ----- LATERAL MOVEMENT -----
-        // Left (Movement)
+        // Left
         if (customKeys.isDown("left")){
             this.body.acceleration.x = -this.accelx;
         }
@@ -224,123 +227,77 @@ Player.prototype.update = function(player = this) {
     }
     // #endregion */
 
+    // Collision with enemies
     if (enemyGroup != undefined){
         if (!this.invulnerable){
             game.physics.arcade.collide(currentPlayer, enemyGroup, function(player, enemy){
-                damageKnockbackApplied = playerDamageKnockback(player, enemy)
-                if (damageKnockbackApplied){
-                    player.invulnerable = true;
-                    player.invulnerableTime = game.time.now;  
-                    console.log("got hit")
-                }
+                player.calcDamageKnockback(enemy);
             });
         }
     }
 
-    // Invulnerability on hit
+    // Remove invulnerability after set time
     if (this.invulnerable && game.time.now - this.invulnerableTime > this.iFrames){
        this.invulnerable = false;
     }
-    
-    // Companions
-    if (overlappedCompanion != 'undefined'){   
-        //console.log('Companion is defined.')
-        
-        // Equip Companions
-        if (customKeys.isDown("Q")){
-            console.log("Q is pressed. Overlapped companion:", overlappedCompanion.key, 'Slot 1:', basePlayer.companionSlot1, 'Slot 2:', basePlayer.companionSlot2);
-            
-            // Equip to Slot 1
-            if (basePlayer.companionSlot1 == null || basePlayer.companionSlot1 == 'empty'){
-                currentCompanion1 = overlappedCompanion;
-                basePlayer.companionSlot1 = overlappedCompanion.key;
-                
-                currentCompanion1.followOn = true;
-                currentCompanion1.followObject = currentPlayer;
-                
-                console.log('Companion equipped to Slot 1:', overlappedCompanion.key, 'Companion follow:', overlappedCompanion.followObject);  
-                
-                if (basePlayer.companionSlot2 != null && basePlayer.companionSlot2 != 'empty'){
-                    overlappedCompanion.followObject = basePlayer.companionSlot1;
-                }
-            // Equip to Slot 2
-            } else { 
-                if (basePlayer.companionSlot2 == null || basePlayer.companionSlot2 == 'empty'){
-                    if (overlappedCompanion.key != basePlayer.companionSlot1){
-                        currentCompanion2 = overlappedCompanion;
-                        basePlayer.companionSlot2 = overlappedCompanion.key;
-                    
-                        currentCompanion2.followOn = true;
-                        currentCompanion2.followObject = currentCompanion1;
-                    
-                        console.log('Companion equipped to Slot 2:', overlappedCompanion.key, 'Companion follow:', overlappedCompanion.followObject);
-                    } 
-                }
-            }
-        }
-        
-        // Unequip Companions
-        if (customKeys.isDown("E")){
-            
-            // Unequip Slot 1
-            if (currentCompanion1 == overlappedCompanion){
-                currentCompanion1.followOn = false;
-                currentCompanion1 = 'empty';
-                basePlayer.companionSlot1 = 'empty';
-                
-                console.log('Companion unequipped from Slot 1.');
-                
-                if (currentCompanion2 != null){
-                    currentCompanion2.followOn = true;
-                    currentCompanion2.followObject = currentPlayer;
-                }
-            } 
-            // Unequip Slot 2
-            if (currentCompanion2 == overlappedCompanion){
-                currentCompanion2.followOn = false;
-                currentCompanion2 = 'empty';
-                basePlayer.companionSlot2 = 'empty';
-                
-                console.log('Companion unequipped from Slot 2.');
-            }
-        }
-        
-    }
+
 };
 
-function playerDamageKnockback(player, enemy){
+Player.prototype.calcDamageKnockback = function(enemy, player = this){
     knockbackVel = 200;
     damageKnockbackApplied = false;
+
     if (player.body.touching.left){
         player.body.velocity.x = knockbackVel;
         if (enemy.damage.right){
             damageKnockbackApplied = true;
-            dmgHearts(1);
+            player.takeDamage(1);
         }
     }
     if (player.body.touching.right){
         player.body.velocity.x = -knockbackVel;
         if (enemy.damage.left){
             damageKnockbackApplied = true;
-            dmgHearts(1);
+            player.takeDamage(1);
         }
     }
     if (player.body.touching.up){
         player.body.velocity.y = knockbackVel;
         if (enemy.damage.down){
             damageKnockbackApplied = true;
+            player.takeDamage(1);
         }
     }
     if (player.body.touching.down){
         player.body.velocity.y = -knockbackVel;
         if (enemy.damage.up){
             damageKnockbackApplied = true;
+            player.takeDamage(1);
         }
     }
-    return damageKnockbackApplied
+    return damageKnockbackApplied;
 }
 
+
 // Health Functions
+Player.prototype.takeDamage = function(dmg){
+    numhearts = basePlayer.currentHearts;
+    // If Dead
+    if (numhearts <= 1){
+        hearts.removeChildAt(numhearts - 1);
+        changeLevel(0,"0");
+        basePlayer.currentHearts = basePlayer.maxHearts;
+    } 
+    // Otherwise, Remove one heart
+    else {
+        basePlayer.currentHearts -= 1;
+        hearts.removeChildAt(numhearts - 1);
+        this.invulnerable = true;
+        this.invulnerableTime = game.time.now;  
+        console.log("got hit");
+    }
+}
+
 function createHearts(numhearts){
     hearts = game.add.group();
     hearts.fixedToCamera = true;
@@ -365,42 +322,27 @@ function healHearts(heal){
     }
 }
 
-function dmgHearts(dmg){
-    var numhearts = hearts.countLiving();
-    // Death
-    if (basePlayer.currentHearts <= 1){
-        hearts.removeChildAt(numhearts - 1);
-        heartText = game.add.text(64,64,"You are dead.", { fontSize: '72px', fill: '#000' });
-        heartText.fixedToCamera = true;
-        changeLevel(0,"0");
-    } 
-    // Remove one heart
-    else {
-        hearts.removeChildAt(numhearts - 1);
-    }
-    basePlayer.currentHearts -= 1;
-}
-
 // Companion Functions - Powerups
 function increaseMaxHearts(num){
     basePlayer.maxHearts = basePlayer.maxHearts + num;
     //console.log(basePlayer.maxHearts);
 }
 
-function doubleJump(){
-    //basePlayer.jumpMax = 2
-}
+// function doubleJump(){
+//     //basePlayer.jumpMax = 2
+// }
 
-function enableFire(){
-    //basePlayer.fireEnable = True
-}
+// function enableFire(){
+//     //basePlayer.fireEnable = True
+// }
+
 
 // Overlap
-function checkOverlap(spriteA, spriteB) {
+// function checkOverlap(spriteA, spriteB) {
 
-    var boundsA = spriteA.getBounds();
-    var boundsB = spriteB.getBounds();
+//     var boundsA = spriteA.getBounds();
+//     var boundsB = spriteB.getBounds();
 
-    return Phaser.Rectangle.intersects(boundsA, boundsB);
+//     return Phaser.Rectangle.intersects(boundsA, boundsB);
 
-}
+// }

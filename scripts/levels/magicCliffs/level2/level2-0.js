@@ -53,9 +53,6 @@ demo.level2_0.prototype = {
         tilemap.createLayer('front');
 
         addUI();
-
-        // Companions
-        createCompanion();
     },
     update: function(){
         // Collision

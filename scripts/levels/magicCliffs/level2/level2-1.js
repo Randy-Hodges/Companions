@@ -53,8 +53,6 @@ demo.level2_1.prototype = {
 
         addUI();
 
-        // Companions
-        createCompanion();
     },
     update: function(){
         // Collision

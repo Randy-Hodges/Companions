@@ -55,40 +55,34 @@ demo.level0.prototype = {
         addUI();
             
         // Companion Init
-        pig = new CompanionPig(game, 'piggy', 25*tileLength, 35*tileLength, false, false);
-        frog = new CompanionFrog(game, 'froggy', 27*tileLength, 35*tileLength, false, false);
-        game.add.existing(pig);
-        game.add.existing(frog);
-        //currentPlayer.companionSlot1 = 'piggy';
-        //currentPlayer.companionSlot2 = 'froggy';
-        //console.log(currentPlayer.companionSlot1);
-        //console.log(currentPlayer.companionSlot2);
-        createCompanion();
+        companionGroup = game.add.group();
+        if (piggyUnlocked){
+            pig = new CompanionPig(game, 'piggy', 25*tileLength, 35*tileLength, false, false);
+            game.add.existing(pig);
+            companionGroup.add(pig);
+        }
+        if (froggyUnlocked){
+            frog = new CompanionFrog(game, 'froggy', 27*tileLength, 35*tileLength, false, false);
+            game.add.existing(frog);
+            companionGroup.add(frog);
+        }
+        // pig2 = new CompanionPig(game, 'piggy', 23*tileLength, 35*tileLength, false, false);
+        // game.add.existing(pig2);
+        // companionGroup.add(pig2);
         
     },
     update: function(){
         // Collision
         game.physics.arcade.collide(currentPlayer, levelTiles);
-        game.physics.arcade.overlap(currentPlayer, coinGroup, function(player, coin){coin.kill(); coinCollect.play(); money+=1;});
-        
-        // Companions Overlap     
-        if (checkOverlap(currentPlayer, pig)){
-            overlappedCompanion = pig;
-            // console.log('pig overlap');
-        
-        } else if (checkOverlap(currentPlayer, frog)){
-            overlappedCompanion = frog;
-            // console.log('frog overlap');
-            
-        } else {
-            overlappedCompanion = 'undefined';
-        }
-
-        //game.physics.arcade.collide(enemyGroup, levelZeroTiles);
+        game.physics.arcade.overlap(currentPlayer, companionGroup, function(player, companion){
+            customKeys = new CustomKeys();
+            if (customKeys.isDown("Q") && !companion.isEquipped){
+                equipCompanion(companion);
+            }
+        });
         
         // Warping
         game.physics.arcade.collide(currentPlayer, warp1, function(player, coin){backtrack.destroy(); addedAudio = false; spawn = 2; spawndirection = 1; changeToMap(0)});
-        // game.physics.arcade.collide(currentPlayer, warp2, function(player, coin){spawn = 1; spawndirection = -1; changeLevel(0,"1_1");});
     },
     render: function(){
         //console.log('rendering');

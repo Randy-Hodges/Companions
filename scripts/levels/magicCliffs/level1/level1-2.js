@@ -69,12 +69,13 @@ demo.level1_2.prototype = {
         game.physics.arcade.collide(enemyGroup, levelTiles);
 
         // Warping
-        game.physics.arcade.collide(currentPlayer, warp1, function (player, coin, backtrack) { spawn = 1; spawndirection = 1; changeLevel(0, "1-1"); });
-        game.physics.arcade.collide(currentPlayer, warp2, function (player, coin) { 
+        game.physics.arcade.collide(currentPlayer, warp1, function (player, warp, backtrack) { spawn = 1; spawndirection = 1; changeLevel(0, "1-1"); });
+        game.physics.arcade.collide(currentPlayer, warp2, function (player, warp) { 
             backtrack.destroy(); 
             addedAudio = false; 
             level2Unlocked = true; 
             level1Completed = true; 
+            piggyUnlocked = true;
             spawn = 2; spawndirection = 1; 
             changeLevel(0, "0"); 
         });

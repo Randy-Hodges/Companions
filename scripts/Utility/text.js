@@ -235,7 +235,6 @@ function nextDialogue() {
     }
     // Otherwise, reset
     else {
-        console.log("done with dialogue")
         if (dialogueEndFunction != undefined){
             dialogueEndFunction();
         }
