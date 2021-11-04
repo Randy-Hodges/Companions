@@ -1,5 +1,5 @@
 // Pause Menu
-function loadPauseMenu(){
+function addPauseMenu(){
 
         // Create a label to use as a button
         pause_label = game.add.sprite(gameWidth-20, 20, 'Gear_LightBlue');

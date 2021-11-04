@@ -24,4 +24,5 @@ Medi.prototype.constructor = Medi;
 // (Automatically called by World.update)
 Medi.prototype.update = function() {
     this.animations.play('heartbeat', 10);
+    game.physics.arcade.overlap(currentPlayer, heartGroup, function(player, heart){heart.kill(); healHearts(1); /*heartCollect.play();*/});
 }

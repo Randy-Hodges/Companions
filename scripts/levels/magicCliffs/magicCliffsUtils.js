@@ -1,12 +1,3 @@
-var demo = {};
-var levelZeroTiles, map;
-var levelTiles, map; 
-var money = 0, moneyText;
-var addedAudio = false;
-var spawn = 0, spawndirection = -1;
-var tileLength = 16;
-
-var eventTrackingList = [];
 
 magicCliffsNoCollide = [0,1768,1769,1801,1802,1803,1804,1805,1806,661,1831,1832,1833,1826,1827,646,642,644,643,1859,1891,
     1917,1221,1222,1223,1224,1225,1226,1227,1949,1297,1298,1299,1300,1302,1304,1305,1306,1307,1975,1279,1285,2007,
@@ -18,56 +9,11 @@ magicCliffsNoCollide = [0,1768,1769,1801,1802,1803,1804,1805,1806,661,1831,1832,
 
 exclusionLayer = {};
 
-villageNoCollide = [0, 2512];
-
-function loadPlayer(){
-    game.load.spritesheet('player', "assets/sprites/characters/RPG Character/main_character_all.png", 64, 64);
-}
-
-function loadCompanion(){
-    game.load.spritesheet('piggy', "assets/sprites/companions/piggy_animation.png", 30, 30);
-    game.load.spritesheet('piggy idle', "assets/sprites/companions/piggy_animation.png", 30, 30);
-    game.load.spritesheet('froggy', "assets/sprites/companions/froggy_animation.png", 27, 30);
-    game.load.spritesheet('froggy idle', "assets/sprites/companions/froggy_animation.png", 27, 30);
-}
-
-function loadItems(){
-    game.load.spritesheet('coin', "assets/sprites/items/money/MonedaD.png", 16, 16); 
-    game.load.audio('coin collect', "assets/audio/soundeffects/Collect Coin Sound Effect.mp3");
-    game.load.spritesheet('heart', "assets/sprites/items/Collectible/heart_tilesheet.png", 13, 13);
-    game.load.spritesheet('portal', "assets/sprites/items/portal/pixelportal_tilesheet.png", 16, 32)
-}
-
-function loadEnemies(){
-    game.load.spritesheet('greenSlime', "assets/sprites/enemies/blue slime/slime-Sheet-green.png", 32, 25);
-    game.load.spritesheet('redSlime', "assets/sprites/enemies/blue slime/slime-Sheet-red.png", 32, 25);
-    game.load.spritesheet('blueSlime', "assets/sprites/enemies/blue slime/slime-Sheet-blue.png", 32, 25);
-    game.load.spritesheet('bat', "assets/sprites/enemies/Bat/bat-sheet.png", 32, 32);
-}
-
 function loadHeadshots(){
     game.load.image('ghostHeadshot', "assets/sprites/characters/headshots/Ghost1.png");
     game.load.image('playerHeadshot', "assets/sprites/characters/headshots/Player1.png");
 }
 
-function loadUI(){
-    game.load.image('Blank_Blue', "assets/UI/Blank_Blue.png");
-    game.load.image('Gear_LightBlue', "assets/UI/Gear_LightBlue.png");
-    game.load.image('Play_Blue', "assets/UI/Play_Blue.png");
-    game.load.image('Green', "assets/UI/Green.png");
-}
-
-function updateMoney(){
-    moneyText.text = "Coins: " + money;
-    moneyText.text.x = 0;
-    moneyText.text.y = 0;
-}
-
-function changeLevel(i, levelNum){
-    console.log('level change to: ' + levelNum);
-    addedTextContinueListener = false;
-    game.state.start('level' + levelNum);
-}
 
 function changeToMap(i) {
     console.log('change to map');
@@ -75,7 +21,13 @@ function changeToMap(i) {
 }
 
 
-function addEnemyFromTilemap(tile){
+function addEnemiesMC(){
+    enemyGroup = game.add.group();
+    tilemap.setLayer('enemies');
+    tilemap.forEach(function(tile){addEnemyFromTilemapMC(tile)},1,0,0,tilemap.width,tilemap.height);
+}
+
+function addEnemyFromTilemapMC(tile){
     if (tile.index == 2346 || tile.index == 1186){
         slime = new Slime(game, tile.x*tileLength, tile.y*tileLength,'greenSlime');
         game.add.existing(slime);
@@ -88,31 +40,15 @@ function addEnemyFromTilemap(tile){
         enemyGroup.add(slime);
     }
 
-    if (tile.index == 2338){
+    if (tile.index == 2338 || tile.index == 1178){
         slime = new blueSlime(game, tile.x*tileLength, tile.y*tileLength,'blueSlime');
         game.add.existing(slime);
         enemyGroup.add(slime);
     }
-    if (tile.index == 2362 || tile.index == 1194){
+    if (tile.index == 2362 || tile.index == 1194 || tile.index == 2354){
         bat = new Bat(game, tile.x*tileLength, tile.y*tileLength,'bat');
         game.add.existing(bat);
         enemyGroup.add(bat);
-    }
-}
-
-function addCoinFromTilemap(tile){
-    if (tile.index != 0 && tile.index != -1){
-        coin = new Coin(game, tile.x*tileLength, tile.y*tileLength,'coin');
-        game.add.existing(coin);
-        coinGroup.add(coin);
-    }
-}
-
-function excludeCollision(tile){
-    // console.log(map.currentLayer);
-    // console.log(tile.index)
-    if (!(tile.index in exclusionLayer)){
-        exclusionLayer[tile.index] = tile.index;
     }
 }
 
