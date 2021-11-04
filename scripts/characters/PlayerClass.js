@@ -80,8 +80,13 @@ Player = function(game, x = gameWidth/2, y = gameHeight/2){
                     currentPlayer.jumpStorage += 1;
                 }
                 // jumping 
-                if (currentPlayer.jumpStorage > 0){
-                    // currentPlayer.jumpStorage -= 1; // comment this line out for infinite jumps ***********************************
+                if (devTools && currentPlayer.jumpStorage > 0){ // infinite jump, developer tool
+                    currentPlayer.currentlyJumping = true;
+                    //currentPlayer.body.velocity.y = currentPlayer.jumpVel;
+                    currentPlayer.body.acceleration.y = currentPlayer.jumpAccel;
+                }
+                else if (currentPlayer.jumpStorage > 0) { // normal jump
+                    currentPlayer.jumpStorage -= 1;
                     currentPlayer.currentlyJumping = true;
                     //currentPlayer.body.velocity.y = currentPlayer.jumpVel;
                     currentPlayer.body.acceleration.y = currentPlayer.jumpAccel;
@@ -164,7 +169,7 @@ Player.prototype.constructor = Player;
 Player.prototype.update = function(player = this) {
 
     // Dev tool
-    if (game.input.keyboard.isDown(Phaser.Keyboard.Z)){
+    if (devTools && game.input.keyboard.isDown(Phaser.Keyboard.Z)){
         this.body.position.y -= 3;
         this.body.enable = false;
     }

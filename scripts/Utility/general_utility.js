@@ -9,6 +9,7 @@ var eventTrackingList = [];
 
 var coinGroup, enemyGroup, mediGroup;
 
+var devTools = false; // Developer tools are turned on if true, otherwise, they are inactive
 
 function loadPlayer(){
     game.load.spritesheet('player', "assets/sprites/characters/RPG Character/main_character_all.png", 64, 64);
