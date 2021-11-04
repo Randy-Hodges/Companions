@@ -1,8 +1,8 @@
-// level selection menu
+// level selection menu, currently WIP
 function levelSelect(){
 
-        // Create a label to use as a button
-        pause_label = game.add.sprite(gameWidth-20, 20, 'Gear_LightBlue');
+        // Create a cursor
+        cursor = game.add.sprite(gameWidth - 20, 20, 'Cursor');
         pause_label.anchor.setTo(0.5, 0.5);
         pause_label.fixedToCamera = true;
         pause_label.inputEnabled = true;
@@ -49,3 +49,22 @@ function unpause(event){
     }
 
 }
+
+// Other stuff
+
+// const upJustPressed = Phaser.Input.Keyboard.JustDown(this.cursors.up!)
+// 		const downJustPressed = Phaser.Input.Keyboard.JustDown(this.cursors.down!)
+// 		const spaceJustPressed = Phaser.Input.Keyboard.JustDown(this.cursors.space!)
+		
+// 		if (upJustPressed)
+// 		{
+// 			this.selectNextButton(-1)
+// 		}
+// 		else if (downJustPressed)
+// 		{
+// 			this.selectNextButton(1)
+// 		}
+// 		else if (spaceJustPressed)
+// 		{
+// 			this.confirmSelection()
+// 		}

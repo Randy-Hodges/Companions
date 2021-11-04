@@ -3,7 +3,7 @@ demo.overworldMap.prototype = {
     preload: function(){
         loadGameConfigs();
 
-        // loading in assets
+        // loading in assets for map
         game.load.tilemap('overworldMap', "assets/tilemaps/overworld/overworld.json", null, Phaser.Tilemap.TILED_JSON);
         game.load.image('RedMarket', "assets/overworld_map/Buildings/Red/RedMarket.png");
         game.load.image('RedTaverns', "assets/overworld_map/Buildings/Red/RedTaverns.png");
@@ -21,7 +21,10 @@ demo.overworldMap.prototype = {
         game.load.image('Moving_cloud', "assets/overworld_map/Clouds/cloud1.png");
         game.load.image('Moving_cloud2', "assets/overworld_map/Clouds/cloud2.png");
         
-        
+        // loading in assets for level selection UI, currently a WIP
+        // game.load.image('Cursor', ""); // cursor
+        // game.load.image('UI_background', ""); // background
+
         // change this later
         game.load.audio('mapMusic', "assets/audio/music/PMD Remix/Personality Test.mp3");
 
