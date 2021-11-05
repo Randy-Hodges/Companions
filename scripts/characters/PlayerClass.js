@@ -1,4 +1,5 @@
 var playerJumpButton, currentPlayer, basePlayer;
+var slashUp, slashDown, slashRight, slashLeft;
 var overlappedCompanion = 'undefined';
 
 /*
@@ -35,10 +36,11 @@ basePlayer = new BasePlayer();
 Player = function (game, x = gameWidth / 2, y = gameHeight / 2) {
     // *INSTANTIATE AN ENEMY GROUP BEFORE THE PLAYER IN THE CODE FOR COLLISIONS WITH ENEMIES
 
-    // instantiate Sprite object
+    // Instantiate Sprite object
     Phaser.Sprite.call(this, game, x, y, 'player');
     this.anchor.setTo(.5, .5);
     this.scale.setTo(spawndirection, 1);
+    currentPlayer = this;
 
     // HP
     this.maxHearts = basePlayer.maxHearts;
@@ -49,6 +51,7 @@ Player = function (game, x = gameWidth / 2, y = gameHeight / 2) {
     this.animations.add('walk side', [16, 17, 18, 19, 20, 21], frameRate = 10);
     this.animations.add('slash side', [8, 9, 10], frameRate = 10);
     this.animations.add('slash down', [0, 1, 2], frameRate = 10);
+    this.animations.add('slash up', [22, 23, 24], frameRate = 10);
     this.frame = 11;
     this.stopAnimations = false;
 
@@ -65,22 +68,22 @@ Player = function (game, x = gameWidth / 2, y = gameHeight / 2) {
 
     this.faceDirection = 1; // x Direction player is facing. 1 or -1
 
-    // #region jumping
+    // #region JUMPING
     this.jumpAccel = basePlayer.jumpAccel;
     this.jumpInputTime = basePlayer.jumpInputTime; //ms
     this.jumpStorage = basePlayer.jumpStorage; // should be initialized to 0, can increase for dev purposes
     this.currentlyJumping = false;
-    currentPlayer = this;
+    this.jumpEnabled = true;
     playerJumpButton = game.input.keyboard.addKey(Phaser.Keyboard.UP);
     playerJumpButton.onDown.add(
         function () {
-            if (!currentPlayer.disableMovement) {
+            if (!currentPlayer.disableMovement && currentPlayer.jumpEnabled) {
                 // give player ability to jump when touching ground
                 if (currentPlayer.body.blocked.down && currentPlayer.jumpStorage == 0) {
                     currentPlayer.jumpStorage += 1;
                 }
                 // jumping 
-                if (devTools && currentPlayer.jumpStorage > 0){ // infinite jump, developer tool
+                if (devTools && currentPlayer.jumpStorage > 0) { // infinite jump, developer tool
                     currentPlayer.currentlyJumping = true;
                     //currentPlayer.body.velocity.y = currentPlayer.jumpVel;
                     currentPlayer.body.acceleration.y = currentPlayer.jumpAccel;
@@ -100,12 +103,28 @@ Player = function (game, x = gameWidth / 2, y = gameHeight / 2) {
         })
     // #endregion
 
-    // #region ----- SLASHING ----- 
-    // Animations
+    // #region SLASHING 
+    // Slash mechanics
+    this.isSlashing = false;
+    this.slashDamage = basePlayer.slashDamage;
+    slash = game.add.sprite(75, 800);
+    slash.anchor.setTo(.2, 0);
+    game.physics.enable(slash);
+    slash.body.allowGravity = false;
+    slash.body.setSize(20, 28, 0, 0);
+    this.slash = slash;
+    this.slashPositionFunction;
+
+    // #region Animations
     slashSide = this.animations.getAnimation('slash side');
     slashSide.onStart.add(function () {
         currentPlayer.stopAnimations = true;
         currentPlayer.isSlashing = true;
+        currentPlayer.slashPositionFunction = function () {
+            slash.body.setSize(20, 28, 0, 0);
+            currentPlayer.slash.x = currentPlayer.body.position.x + currentPlayer.faceDirection * 20;
+            currentPlayer.slash.y = currentPlayer.body.position.y;
+        }
     });
     slashSide.onComplete.add(function () {
         currentPlayer.stopAnimations = false;
@@ -115,32 +134,91 @@ Player = function (game, x = gameWidth / 2, y = gameHeight / 2) {
     slashDown.onStart.add(function () {
         currentPlayer.stopAnimations = true;
         currentPlayer.isSlashing = true;
+        currentPlayer.slashPositionFunction = function () {
+            slash.body.setSize(28, 20, 0, 0);
+            currentPlayer.slash.x = currentPlayer.body.position.x - 3;
+            currentPlayer.slash.y = currentPlayer.body.position.y + 25;
+        }
     });
     slashDown.onComplete.add(function () {
         currentPlayer.stopAnimations = false;
         currentPlayer.isSlashing = false;
     });
-    //slash mechanics
-    this.isSlashing = false;
-    this.slashDamage = basePlayer.slashDamage;
-    slash = game.add.sprite(0, 0);
-    this.slash = slash;
-    slash.anchor.setTo(0, .5);
-    game.physics.enable(slash);
-    slash.body.allowGravity = false;
-    slash.body.setSize(20, 28, 0, 0);
-    this.addChild(slash)
+    slashUp = this.animations.getAnimation('slash up');
+    slashUp.onStart.add(function () {
+        currentPlayer.stopAnimations = true;
+        currentPlayer.isSlashing = true;
+        currentPlayer.slashPositionFunction = function () {
+            slash.body.setSize(28, 20, 0, 0);
+            currentPlayer.slash.x = currentPlayer.body.position.x - 3;
+            currentPlayer.slash.y = currentPlayer.body.position.y - 20;
+        }
+    });
+    slashUp.onComplete.add(function () {
+        currentPlayer.stopAnimations = false;
+        currentPlayer.isSlashing = false;
+    });
+    // #endregion
 
+    // #region slash buttons
+    // AWSD Buttons
+    // slashUp = game.input.keyboard.addKey(Phaser.Keyboard.W);
+    // slashUp.onDown.add(
+    //     function () {
+    //         if (!currentPlayer.disableMovement) {
+    //             if (!currentPlayer.stopAnimations) {
+    //                 currentPlayer.animations.play('slash up');
+    //             }
+    //         }
+    //     });
+    // slashDown = game.input.keyboard.addKey(Phaser.Keyboard.S);
+    // slashDown.onDown.add(
+    //     function () {
+    //         if (!currentPlayer.disableMovement) {
+    //             if (!currentPlayer.stopAnimations) {
+    //                 currentPlayer.animations.play('slash down');
+    //             }
+    //         }
+    //     });
+    // slashRight = game.input.keyboard.addKey(Phaser.Keyboard.D);
+    // slashRight.onDown.add(
+    //     function () {
+    //         if (!currentPlayer.disableMovement) {
+    //             if (!currentPlayer.stopAnimations) {
+    //                 currentPlayer.scale.x = -Math.abs(currentPlayer.scale.x);
+    //                 currentPlayer.faceDirection = 1;
+    //                 currentPlayer.animations.play('slash side');
+    //             }
+    //         }
+    //     });
+    // slashLeft = game.input.keyboard.addKey(Phaser.Keyboard.A);
+    // slashLeft.onDown.add(
+    //     function () {
+    //         if (!currentPlayer.disableMovement) {
+    //             if (!currentPlayer.stopAnimations) {
+    //                 currentPlayer.scale.x = Math.abs(currentPlayer.scale.x);
+    //                 currentPlayer.faceDirection = -1;
+    //                 currentPlayer.animations.play('slash side');
+    //             }
+    //         }
+    //     });
+
+    // SPACEBAR Button
     playerSlashButton = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
     playerSlashButton.onDown.add(
         function () {
             if (!currentPlayer.disableMovement) {
-                if (game.input.keyboard.isDown(Phaser.Keyboard.DOWN) || game.input.keyboard.isDown(Phaser.Keyboard.S)) {
+                if (game.input.keyboard.isDown(Phaser.Keyboard.DOWN)) {
                     if (!currentPlayer.stopAnimations) {
                         currentPlayer.animations.play('slash down');
                     }
                 }
-                else {
+                else if (game.input.keyboard.isDown(Phaser.Keyboard.UP)){
+                    if (!currentPlayer.stopAnimations) {
+                        currentPlayer.animations.play('slash up');
+                    }
+                }
+                else{
                     if (!currentPlayer.stopAnimations) {
                         currentPlayer.animations.play('slash side');
                     }
@@ -148,6 +226,34 @@ Player = function (game, x = gameWidth / 2, y = gameHeight / 2) {
             }
         });
     // #endregion */
+    // #endregion */
+
+    // #region DASHING
+    this.isDashing = false;
+    this.dashCooldownLength = 500 // milliseconds
+    this.lastDash = -this.dashCooldownLength
+    this.dashEnabled = true;
+    playerDashButton = game.input.keyboard.addKey(Phaser.Keyboard.A);
+    playerDashButton.onDown.add(function () {
+        if (game.time.now - currentPlayer.lastDash >= currentPlayer.dashCooldownLength && currentPlayer.dashEnabled) {
+            // Note: this particular code does not feel clean
+            currentPlayer.lastDash = game.time.now;
+
+            returnPhysics = function () {
+                currentPlayer.body.allowGravity = true;
+                currentPlayer.disableMovement = false;
+                currentPlayer.body.drag.x = basePlayer.dragX;
+                currentPlayer.isDashing = false;
+                currentPlayer.body.maxVelocity.x = basePlayer.maxVelX;
+                currentPlayer.jumpEnabled = true;
+            }
+            timer = game.time.create(false);
+            timer.add(150, returnPhysics)
+            dash(timer);
+        }
+    })
+
+    // #endregion
     // #endregion */
 
     // Invulnerability
@@ -168,18 +274,32 @@ Player.prototype.constructor = Player;
 // (Automatically called by World.update)
 Player.prototype.update = function (player = this) {
 
-    // Dev tool
-    if (devTools && game.input.keyboard.isDown(Phaser.Keyboard.Z)){
-        this.body.position.y -= 3;
+    // #region Dev tool
+    if (devTools && game.input.keyboard.isDown(Phaser.Keyboard.Z)) {
+        if (game.input.keyboard.isDown(Phaser.Keyboard.LEFT)) {
+            this.body.position.x -= 3;
+        }
+        if (game.input.keyboard.isDown(Phaser.Keyboard.RIGHT)) {
+            this.body.position.x += 3;
+        }
+        if (game.input.keyboard.isDown(Phaser.Keyboard.UP)) {
+            this.body.position.y -= 3;
+        }
+        if (game.input.keyboard.isDown(Phaser.Keyboard.DOWN)) {
+            this.body.position.y += 3;
+        }
+
         this.body.enable = false;
     }
     else {
         this.body.enable = true;
     }
+    // #endregion
 
     // Slashing
-    this.slash.body.setSize(20, 35, -10 + this.faceDirection * 15, 0);
+    //this.slash.body.setSize(20, 35, -10 + this.faceDirection * 15, 0); //width, height, offsetX, offsetY
     if (this.isSlashing) {
+        this.slashPositionFunction();
         game.physics.arcade.overlap(this.slash, enemyGroup, function (slash, enemy) { enemy.hit(basePlayer.slashDamage) });
     }
 
@@ -200,6 +320,7 @@ Player.prototype.update = function (player = this) {
             this.body.acceleration.x = 0;
         }
         framerate = Math.abs(parseInt(this.body.velocity.x / 50)) + 10;
+        // Animation
         if (!currentPlayer.stopAnimations) {
             // left ----Animation----
             if (this.body.acceleration.x < 0) {
@@ -313,6 +434,22 @@ Player.prototype.takeDamage = function (dmg) {
 
 
 
+function dash(timer) {
+    currentPlayer.isDashing = true;
+    // Start Dash
+    dashVelocity = 500;
+    currentPlayer.body.maxVelocity.x = dashVelocity;
+    currentPlayer.body.velocity.x = currentPlayer.faceDirection * dashVelocity;
+    currentPlayer.body.velocity.y = 0;
+    currentPlayer.body.drag.x = 0;
+    currentPlayer.body.allowGravity = false;
+    currentPlayer.jumpEnabled = false;
+
+    // currentPlayer.disableMovement = true;
+    // Stop dash and retrun physics variables to correct values    
+    timer.start();
+
+}
 
 function createHearts(numhearts) {
     hearts = game.add.group();
@@ -343,6 +480,8 @@ function increaseMaxHearts(num) {
     basePlayer.maxHearts = basePlayer.maxHearts + num;
     //console.log(basePlayer.maxHearts);
 }
+
+
 
 // function doubleJump(){
 //     //basePlayer.jumpMax = 2

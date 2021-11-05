@@ -26,7 +26,7 @@ demo.level2_1.prototype = {
         this.createSpawnPoints();
 
         // Tilemap
-        tilemap = game.add.tilemap('level2-0');
+        tilemap = game.add.tilemap('level2-1');
         tilemap.addTilesetImage('Magic_Cliffs16','Magic_Cliffs16'); //make sure the tileset name is the same as the tileset name used in Tiled
         tilemap.addTilesetImage('nes-color-palette','nes-color-palette'); 
         tilemap.createLayer('caveBackground');  

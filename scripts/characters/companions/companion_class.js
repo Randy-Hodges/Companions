@@ -129,8 +129,9 @@ updateEquippedCompanionFollowObjects = function () {
     }
 }
 
+// TODO: add as part of companion class and override with subclasses to create effects for player
 unequipCompanion = function(){
-    // Remove the first slot, shift names down, append to end.L
+    // Remove the first slot, shift names down, append to end.
     basePlayer.companionNames.shift();
     unequippedCompanion = currentPlayer.companionSlots.shift();
     unequippedCompanion.isEquipped = false;

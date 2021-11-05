@@ -45,7 +45,8 @@ Slime = function (game, x, y, spritesheetStrID) {
     this.currentlyHit = false;
 
     // Preventing bugs
-    this.autoCull = true;
+    // this.autoCull = true;
+    this.checkWorldBounds = true;
     this.outOfBoundsKill = true;
 }
 
@@ -104,7 +105,6 @@ Slime.prototype.update = function (slime = this) {
 Slime.prototype.hit = function (damage, slime = this) {
     if (!slime.currentlyHit) {
         slime.health -= damage;
-        console.log('Slime health: ' + slime.health)
         slime.movementSpeed = 0;
         slime.currentlyHit = true;
         if (slime.health <= 0) {
