@@ -6,19 +6,17 @@ demo.level0.prototype = {
         loadCompanion();
         loadItems();
         loadUI();
-        //loadEnemies();
+        loadEnemies();
         game.load.tilemap('level0', "assets/tilemaps/village/village_tilemap.json", null, Phaser.Tilemap.TILED_JSON);
         game.load.image('Village Tileset', "assets/tiles/village/Village Tileset.png");
         game.load.image('nes-color-palette', "assets/tiles/nes-color-palette.jpg");
         
         game.load.audio('village', "assets/audio/music/Treasure Town.mp3");
-
+        
     },
     create: function(){
         // configs
         createGameConfigs();
-
-        // music
         addMusic('village');
 
         // Spawn points
@@ -57,18 +55,22 @@ demo.level0.prototype = {
         // Companion Init
         companionGroup = game.add.group();
         if (piggyUnlocked){
-            pig = new CompanionPig(game, 'piggy', 25*tileLength, 35*tileLength, false, false);
-            game.add.existing(pig);
-            companionGroup.add(pig);
+            if (!basePlayer.companionNames.includes('piggy')){
+                pig = new CompanionPig(game, 'piggy', 25*tileLength, 35*tileLength, false, false);
+                game.add.existing(pig);
+                companionGroup.add(pig);
+            }
         }
         if (froggyUnlocked){
-            frog = new CompanionFrog(game, 'froggy', 27*tileLength, 35*tileLength, false, false);
-            game.add.existing(frog);
-            companionGroup.add(frog);
+            if (!basePlayer.companionNames.includes('froggy')){
+                frog = new CompanionFrog(game, 'froggy', 27*tileLength, 35*tileLength, false, false);
+                game.add.existing(frog);
+                companionGroup.add(frog);
+            }
         }
-        // pig2 = new CompanionPig(game, 'piggy', 23*tileLength, 35*tileLength, false, false);
-        // game.add.existing(pig2);
-        // companionGroup.add(pig2);
+        slimeComp = new CompanionSlime(game, 23*tileLength, 35*tileLength, false, false);
+        game.add.existing(slimeComp);
+        companionGroup.add(slimeComp);
         
     },
     update: function(){
@@ -85,10 +87,9 @@ demo.level0.prototype = {
         game.physics.arcade.collide(currentPlayer, warp1, function(player, coin){backtrack.destroy(); addedAudio = false; spawn = 2; spawndirection = 1; changeToMap(0)});
     },
     render: function(){
-        //console.log('rendering');
-    //    game.debug.body(gdslime.enfrente);
-    //    game.debug.body(gdslime);
-       //game.debug.spriteInfo(player);
+        // game.debug.body(currentPlayer.slash);
+        game.debug.spriteInfo(currentPlayer);
+        // game.debug.geom(rect1, 'rgb(0,0,0)');
     },
     createSpawnPoints: function(){
         spawnpoint0 = [25, 35];

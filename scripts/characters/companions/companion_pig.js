@@ -3,6 +3,7 @@
 CompanionPig = function(game, spritesheetStrID, x, y, followOn, isEqiupped){
     Companion.call(this, game, 'piggy', x, y, followOn, isEqiupped);
     this.name = 'piggy';
+    this.home = new Phaser.Point(25*tileLength, 35*tileLength);
     
     //animation
     this.animations.add('piggy idle', [0, 1, 2, 3], frameRate=5, true);
