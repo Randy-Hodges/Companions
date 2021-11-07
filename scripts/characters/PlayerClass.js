@@ -4,7 +4,7 @@ var overlappedCompanion = 'undefined';
 
 /*
 Intended to be used to store the data of the current Player. Since Phaser automatically destroys sprite
-data between game states, the basePlayer classe was added to store important data for the player.
+data between game states, the basePlayer class was added to store important data for the player.
 */
 BasePlayer = function () {
 
@@ -27,7 +27,7 @@ BasePlayer = function () {
 
     this.jumpAccel = -3070;
     this.jumpInputTime = 120 //ms
-    this.jumpStorage = 0; // should be initialized to 0, can increase for dev purposes
+    this.jumpStorage = 0; 
 
 }
 
@@ -113,14 +113,14 @@ Player = function (game, x = gameWidth / 2, y = gameHeight / 2) {
     slash.body.allowGravity = false;
     slash.body.setSize(20, 28, 0, 0);
     this.slash = slash;
-    this.slashPositionFunction;
+    this.setSlashPosition;
 
     // #region Animations
     slashSide = this.animations.getAnimation('slash side');
     slashSide.onStart.add(function () {
         currentPlayer.stopAnimations = true;
         currentPlayer.isSlashing = true;
-        currentPlayer.slashPositionFunction = function () {
+        currentPlayer.setSlashPosition = function () {
             slash.body.setSize(20, 28, 0, 0);
             currentPlayer.slash.x = currentPlayer.body.position.x + currentPlayer.faceDirection * 20;
             currentPlayer.slash.y = currentPlayer.body.position.y;
@@ -134,7 +134,7 @@ Player = function (game, x = gameWidth / 2, y = gameHeight / 2) {
     slashDown.onStart.add(function () {
         currentPlayer.stopAnimations = true;
         currentPlayer.isSlashing = true;
-        currentPlayer.slashPositionFunction = function () {
+        currentPlayer.setSlashPosition = function () {
             slash.body.setSize(28, 20, 0, 0);
             currentPlayer.slash.x = currentPlayer.body.position.x - 3;
             currentPlayer.slash.y = currentPlayer.body.position.y + 25;
@@ -148,7 +148,7 @@ Player = function (game, x = gameWidth / 2, y = gameHeight / 2) {
     slashUp.onStart.add(function () {
         currentPlayer.stopAnimations = true;
         currentPlayer.isSlashing = true;
-        currentPlayer.slashPositionFunction = function () {
+        currentPlayer.setSlashPosition = function () {
             slash.body.setSize(28, 20, 0, 0);
             currentPlayer.slash.x = currentPlayer.body.position.x - 3;
             currentPlayer.slash.y = currentPlayer.body.position.y - 20;
@@ -208,17 +208,22 @@ Player = function (game, x = gameWidth / 2, y = gameHeight / 2) {
     playerSlashButton.onDown.add(
         function () {
             if (!currentPlayer.disableMovement) {
-                if (game.input.keyboard.isDown(Phaser.Keyboard.DOWN)) {
+                if (game.input.keyboard.isDown(Phaser.Keyboard.LEFT) || game.input.keyboard.isDown(Phaser.Keyboard.RIGHT)) {
+                    if (!currentPlayer.stopAnimations) {
+                        currentPlayer.animations.play('slash side');
+                    }
+                }
+                else if (game.input.keyboard.isDown(Phaser.Keyboard.DOWN)) {
                     if (!currentPlayer.stopAnimations) {
                         currentPlayer.animations.play('slash down');
                     }
                 }
-                else if (game.input.keyboard.isDown(Phaser.Keyboard.UP)){
+                else if (game.input.keyboard.isDown(Phaser.Keyboard.UP)) {
                     if (!currentPlayer.stopAnimations) {
                         currentPlayer.animations.play('slash up');
                     }
                 }
-                else{
+                else {
                     if (!currentPlayer.stopAnimations) {
                         currentPlayer.animations.play('slash side');
                     }
@@ -239,9 +244,23 @@ Player = function (game, x = gameWidth / 2, y = gameHeight / 2) {
             // Note: this particular code does not feel clean
             currentPlayer.lastDash = game.time.now;
 
+            
+            function dash(timer) {
+                currentPlayer.isDashing = true;
+                // Start Dash
+                dashVelocity = 500;
+                currentPlayer.body.maxVelocity.x = dashVelocity;
+                currentPlayer.body.velocity.x = currentPlayer.faceDirection * dashVelocity;
+                currentPlayer.body.velocity.y = 0;
+                currentPlayer.body.acceleration.y = 0;
+                currentPlayer.body.drag.x = 0;
+                currentPlayer.body.allowGravity = false;
+                currentPlayer.jumpEnabled = false;
+                // Stop dash and retrun physics variables to correct values    
+                timer.start();
+            }
             returnPhysics = function () {
                 currentPlayer.body.allowGravity = true;
-                currentPlayer.disableMovement = false;
                 currentPlayer.body.drag.x = basePlayer.dragX;
                 currentPlayer.isDashing = false;
                 currentPlayer.body.maxVelocity.x = basePlayer.maxVelX;
@@ -299,7 +318,7 @@ Player.prototype.update = function (player = this) {
     // Slashing
     //this.slash.body.setSize(20, 35, -10 + this.faceDirection * 15, 0); //width, height, offsetX, offsetY
     if (this.isSlashing) {
-        this.slashPositionFunction();
+        this.setSlashPosition();
         game.physics.arcade.overlap(this.slash, enemyGroup, function (slash, enemy) { enemy.hit(basePlayer.slashDamage) });
     }
 
@@ -434,22 +453,7 @@ Player.prototype.takeDamage = function (dmg) {
 
 
 
-function dash(timer) {
-    currentPlayer.isDashing = true;
-    // Start Dash
-    dashVelocity = 500;
-    currentPlayer.body.maxVelocity.x = dashVelocity;
-    currentPlayer.body.velocity.x = currentPlayer.faceDirection * dashVelocity;
-    currentPlayer.body.velocity.y = 0;
-    currentPlayer.body.drag.x = 0;
-    currentPlayer.body.allowGravity = false;
-    currentPlayer.jumpEnabled = false;
 
-    // currentPlayer.disableMovement = true;
-    // Stop dash and retrun physics variables to correct values    
-    timer.start();
-
-}
 
 function createHearts(numhearts) {
     hearts = game.add.group();

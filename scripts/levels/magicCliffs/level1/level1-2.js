@@ -59,7 +59,7 @@ demo.level1_2.prototype = {
         }
 
         // Companion
-        pig = new CompanionPig(game, 'piggy', 1620, 410, false, false);
+        pig = new CompanionPig(game, 1620, 410, false, false);
         game.add.existing(pig);
 
     },

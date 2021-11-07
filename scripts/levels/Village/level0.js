@@ -38,7 +38,7 @@ demo.level0.prototype = {
 
         // Text Instructions
         equipText1 = game.add.text(6*tileLength, 30*tileLength,"Press Q to Equip.", { fontSize: '14px', fill: '#000' });
-        equipText2 = game.add.text(6*tileLength, 31*tileLength,"Press E to Unequip.", { fontSize: '14px', fill: '#000' });
+        // equipText2 = game.add.text(6*tileLength, 31*tileLength,"Press E to Unequip.", { fontSize: '14px', fill: '#000' });
         
         // Warp points
         warp1 = new Warp(game, spawnpoint1[0]*tileLength, spawnpoint1[1]*tileLength);
@@ -56,14 +56,14 @@ demo.level0.prototype = {
         companionGroup = game.add.group();
         if (piggyUnlocked){
             if (!basePlayer.companionNames.includes('piggy')){
-                pig = new CompanionPig(game, 'piggy', 25*tileLength, 35*tileLength, false, false);
+                pig = new CompanionPig(game, 25*tileLength, 35*tileLength, false, false);
                 game.add.existing(pig);
                 companionGroup.add(pig);
             }
         }
         if (froggyUnlocked){
             if (!basePlayer.companionNames.includes('froggy')){
-                frog = new CompanionFrog(game, 'froggy', 27*tileLength, 35*tileLength, false, false);
+                frog = new CompanionFrog(game, 27*tileLength, 35*tileLength, false, false);
                 game.add.existing(frog);
                 companionGroup.add(frog);
             }
@@ -76,12 +76,6 @@ demo.level0.prototype = {
     update: function(){
         // Collision
         game.physics.arcade.collide(currentPlayer, levelTiles);
-        game.physics.arcade.overlap(currentPlayer, companionGroup, function(player, companion){
-            customKeys = new CustomKeys();
-            if (customKeys.isDown("Q") && !companion.isEquipped){
-                equipCompanion(companion);
-            }
-        });
         
         // Warping
         game.physics.arcade.collide(currentPlayer, warp1, function(player, coin){backtrack.destroy(); addedAudio = false; spawn = 2; spawndirection = 1; changeToMap(0)});

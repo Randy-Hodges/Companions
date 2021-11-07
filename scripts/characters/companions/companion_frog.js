@@ -1,6 +1,6 @@
 // frog
 
-CompanionFrog = function(game, spritesheetStrID, x, y, followOn, isEqiupped){
+CompanionFrog = function(game, x, y, followOn, isEqiupped){
     Companion.call(this, game, 'froggy', x, y, followOn, isEqiupped);
     this.name = 'froggy';
     this.home = new Phaser.Point(27*tileLength, 35*tileLength);

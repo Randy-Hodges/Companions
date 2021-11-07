@@ -35,6 +35,7 @@ demo.level2_1.prototype = {
         tilemap.setLayer('exclude');
         tilemap.forEach(function(tile){excludeCollision(tile)},1,0,0,tilemap.width,tilemap.height);
         tilemap.setCollisionByExclusion(Object.values(exclusionLayer), true, 'mainGrass');
+        setTileProperties();
         // Game borders based on tilemap
         game.world.setBounds(0, 0, tilemap.layer.widthInPixels, tilemap.layer.heightInPixels);
         
@@ -42,23 +43,55 @@ demo.level2_1.prototype = {
         warp1 = new Warp(game, spawnpoint1[0]*tileLength, spawnpoint1[1]*tileLength);
         warp2 = new Warp(game, spawnpoint2[0]*tileLength, spawnpoint2[1]*tileLength, 270);
         game.add.existing(warp2);
-
+        
         // Coins, Enemies, Player
         addCoins();
         addEnemiesMC();
         addPlayer();
-
+        
         // Front Layer
         tilemap.createLayer('front');
+        gates1 = tilemap.createLayer('gates1'); 
+        gates2 = tilemap.createLayer('gates2'); 
 
         addUI();
 
+        // Events
+        tilemap.setCollisionByExclusion(indexes = [0, -1], collides = true, layer = 'gates1')
+        tilemap.setCollisionByExclusion(indexes = [0, -1], collides = true, layer = 'gates2')
+        gates1.alpha = 0;
+        gates2.alpha = 0;
+        gates1Shown = false;
+        gates2Shown = false;
+        if (!level2Completed) {
+            gates1Shown = true;
+            rect1 = new Phaser.Rectangle(4560, 0, 40, 1000); // x0, y0, width, height
+            rect2 = new Phaser.Rectangle(1560, 0, 40, 1000); // x0, y0, width, height
+            eventTrackingList = [false, false];
+        }
+
+        // Companion
+        companionGroup = game.add.group();
+        frog = new CompanionFrog(game, 4680, 490, false, false);
+        game.add.existing(frog);
+        companionGroup.add(frog);
     },
     update: function(){
         // Collision
         game.physics.arcade.collide(currentPlayer, levelTiles);
         game.physics.arcade.collide(enemyGroup, levelTiles);
-
+        if (gates1Shown){
+            game.physics.arcade.collide(currentPlayer, gates1);
+            gates1.alpha = 1;
+            gates2.alpha = 0;
+        }
+        if (gates2Shown){
+            game.physics.arcade.collide(currentPlayer, gates2);
+            gates1.alpha = 0;
+            gates2.alpha = 1;
+        }
+        console.log(frog.name)
+        this.checkEvents();
         // Warping
         game.physics.arcade.collide(currentPlayer, warp1, function(player, coin){spawn = 1; spawndirection = 1; changeLevel(0,"0");});
         game.physics.arcade.collide(currentPlayer, warp2, function(player, coin){spawn = 2; spawndirection = 1; changeLevel(0,"2-0");});
@@ -66,24 +99,44 @@ demo.level2_1.prototype = {
     render: function(){
         //console.log('rendering');
         // game.debug.body(currentPlayer);
-        //game.debug.spriteInfo(player);
+        game.debug.spriteInfo(currentPlayer);
+        // game.debug.geom(rect1, 'rgb(0,0,0)');
     },
     createSpawnPoints: function(){
         //SpawnPoints are in units of tiles
         spawnpoint1 = [48, 73];
-        spawnpoint2 = [119.5, 1];
+        spawnpoint2 = [245, 3];
         if (spawn == 2){
             spawnpoint = spawnpoint2.slice();
             spawnpoint[0] += 2;
+            // spawnpoint[0] -= 20;
+            spawnpoint[1] += 20;
         }
         else { // (spawn == 1)
             spawnpoint = spawnpoint1.slice();
-            spawnpoint[0] += 3;
         }
         // else{
         //     spawnpoint = spawnpoint2.slice();
             
         // }
+    },
+    checkEvents: function () {
+        if (!level2Completed) {
+            if (eventTrackingList[0] == false) {
+                if (rect1.intersects(currentPlayer.body)) {
+                    // event3_1_2();
+                    eventTrackingList[0] = true;
+                }
+            }
+            if (eventTrackingList[1] == false) {
+                if (frog.isEquipped) {
+                    // event4_1_2();
+                    gates1Shown = false;
+                    gates2Shown = true;
+                    eventTrackingList[1] = true;
+                }
+            }
+        }
     }
 };
     

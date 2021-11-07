@@ -34,7 +34,7 @@ function addEnemyFromTilemapMC(tile){
         enemyGroup.add(slime);
     }
 	
-    if (tile.index == 2342){
+    if (tile.index == 2342 || tile.index == 1182){
         slime = new redSlime(game, tile.x*tileLength, tile.y*tileLength,'redSlime');
         game.add.existing(slime);
         enemyGroup.add(slime);
@@ -50,6 +50,25 @@ function addEnemyFromTilemapMC(tile){
         game.add.existing(bat);
         enemyGroup.add(bat);
     }
+}
+
+function setTileProperties(){
+    
+    function setTilePropertiesHelper(tile){
+        if (tile.index == 795 || tile.index == 796){
+            tile.collideUp = true;
+            tile.collideDown = false;
+            tile.collideLeft = false;
+            tile.collideRight = false;
+            tile.faceTop = true;
+            tile.faceBottom = false;
+            tile.faceLeft = false;
+            tile.faceRight = false;
+
+        }
+    }
+    tilemap.setLayer('mainGrass');
+    tilemap.forEach(function(tile){setTilePropertiesHelper(tile)},1,0,0,tilemap.width,tilemap.height);
 }
 
 function createGroups(){

@@ -19,7 +19,7 @@ redSlime.prototype.update = function () {
                 switchDirectionSlime(this);
             }
             // Fast speed
-            this.movementSpeed = 2.5 * this.baseMovementSpeed * this.faceDirection;
+            this.movementSpeed = 2 * this.baseMovementSpeed * this.faceDirection;
             // play attacking animation
             if (this.curAnimationPriority <= this.animationPriorities.attacking) {
                 this.curAnimationPriority = this.animationPriorities.attacking;
