@@ -20,10 +20,6 @@ demo.overworldMap.prototype = {
 
         game.load.image('Moving_cloud', "assets/overworld_map/Clouds/cloud1.png");
         game.load.image('Moving_cloud2', "assets/overworld_map/Clouds/cloud2.png");
-        
-        // loading in assets for level selection UI, currently a WIP
-        // game.load.image('Cursor', ""); // cursor
-        // game.load.image('UI_background', ""); // background
 
         // change this later
         game.load.audio('mapMusic', "assets/audio/music/PMD Remix/Personality Test.mp3");
@@ -94,11 +90,10 @@ demo.overworldMap.prototype = {
             levelSelect = game.add.text(8,8,"Use the arrow keys to move around the map. \nPress 'V' to go to the Village.", { fontSize: '11px', fill: '#fff'});
         }
 
-        // level select UI
-        levelSelect.fixedToCamera = true;
-
         // level select
         addLevelSpawns()
+
+        // add level select method eventually
     },
     
     update: function(){
