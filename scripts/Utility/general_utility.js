@@ -70,12 +70,26 @@ function addCoins(){
     tilemap.forEach(function(tile){addCoinFromTilemap(tile)},1,0,0,tilemap.width,tilemap.height);
 }
 
-
 function addCoinFromTilemap(tile){
     if (tile.index != 0 && tile.index != -1){
         coin = new Coin(game, tile.x*tileLength, tile.y*tileLength,'coin');
         game.add.existing(coin);
         coinGroup.add(coin);
+    }
+}
+
+function addHearts(){
+    // Hearts
+    heartGroup = game.add.group();
+    tilemap.setLayer('hearts');
+    tilemap.forEach(function(tile){addHeartFromTilemap(tile)},1,0,0,tilemap.width,tilemap.height);
+}
+
+function addHeartFromTilemap(tile){
+    if (tile.index != 0 && tile.index != -1){
+        heart = new Medi(game, tile.x*tileLength, tile.y*tileLength);
+        game.add.existing(heart);
+        heartGroup.add(heart);
     }
 }
 

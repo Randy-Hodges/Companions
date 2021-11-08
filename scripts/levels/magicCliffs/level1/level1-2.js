@@ -42,7 +42,8 @@ demo.level1_2.prototype = {
         game.add.existing(warp2);
 
         // Coins, Enemies, Player
-        // addCoins();
+        addCoins();
+        addHearts();
         addEnemiesMC();
         addPlayer();
 
@@ -59,7 +60,9 @@ demo.level1_2.prototype = {
         }
 
         // Companion
+        companionGroup = game.add.group();
         pig = new CompanionPig(game, 1620, 410, false, false);
+        companionGroup.add(pig)
         game.add.existing(pig);
 
     },

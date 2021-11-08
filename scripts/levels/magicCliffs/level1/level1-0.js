@@ -46,7 +46,8 @@ demo.level1.prototype = {
         warp2 = new Warp(game, spawnpoint2[0]*tileLength, spawnpoint2[1]*tileLength);
 
         // Coins, Enemies, Player
-        // addCoins();
+        addCoins();
+        addHearts();
         addEnemiesMC();
         addPlayer();
         

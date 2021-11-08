@@ -51,6 +51,7 @@ demo.level2_1.prototype = {
         
         // Coins, Enemies, Player
         addCoins();
+        addHearts();
         addEnemiesMC();
         addPlayer();
         

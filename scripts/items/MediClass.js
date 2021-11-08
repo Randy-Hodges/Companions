@@ -16,10 +16,8 @@ Medi = function(game, x, y){
 
 }
 
-
 Medi.prototype = Object.create(Phaser.Sprite.prototype);
 Medi.prototype.constructor = Medi;
-
 
 // (Automatically called by World.update)
 Medi.prototype.update = function() {
