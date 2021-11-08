@@ -68,7 +68,7 @@ demo.level3_0.prototype = {
     render: function(){
         //console.log('rendering');
         // game.debug.body(currentPlayer.slash);
-        game.debug.spriteInfo(currentPlayer);
+        // game.debug.spriteInfo(currentPlayer);
     },
     createSpawnPoints: function(){
         //SpawnPoints are in units of tiles

@@ -95,14 +95,14 @@ Companion.prototype.returnHome = function(){
 function createEquippedCompanion(companionName, followObject, positionX, positionY){
 
     if (companionName == 'piggy'){
-        pig = new CompanionPig(game, 'piggy', positionX, positionY, true, true);
+        pig = new CompanionPig(game, positionX, positionY, true, true);
         pig.followObject = followObject;
         pig.isEquipped = true;
         game.add.existing(pig);
         return pig;
     } 
     if (companionName == 'froggy'){
-        frog = new CompanionFrog(game, 'froggy', positionX, positionY, true, true);
+        frog = new CompanionFrog(game, positionX, positionY, true, true);
         frog.followObject = followObject;
         frog.isEquipped = true;
         game.add.existing(frog);
