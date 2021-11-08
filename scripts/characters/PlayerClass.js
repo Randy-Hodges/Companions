@@ -29,6 +29,8 @@ BasePlayer = function () {
     this.jumpInputTime = 120 //ms
     this.jumpStorage = 0; 
 
+    this.dashEnabled = false;
+
 }
 
 basePlayer = new BasePlayer();
@@ -59,7 +61,7 @@ Player = function (game, x = gameWidth / 2, y = gameHeight / 2) {
     this.disableMovement = false;
     this.accelx = basePlayer.accelx;
     game.physics.enable(this);
-    this.body.setSize(9, 28, 28, 20); // Creating hitbox. first two params are size of body, second two are offset of body
+    this.body.setSize(9, 28, 28, 20); // xsize, ysize, xoffset, yoffset
     this.body.gravity.y = basePlayer.gravityY;
     this.body.drag.x = basePlayer.dragX;
     this.body.maxVelocity.x = basePlayer.maxVelX;
@@ -237,7 +239,7 @@ Player = function (game, x = gameWidth / 2, y = gameHeight / 2) {
     this.isDashing = false;
     this.dashCooldownLength = 500 // milliseconds
     this.lastDash = -this.dashCooldownLength
-    this.dashEnabled = true;
+    this.dashEnabled = basePlayer.dashEnabled;
     playerDashButton = game.input.keyboard.addKey(Phaser.Keyboard.A);
     playerDashButton.onDown.add(function () {
         if (game.time.now - currentPlayer.lastDash >= currentPlayer.dashCooldownLength && currentPlayer.dashEnabled) {

@@ -14,6 +14,10 @@ demo.level2_1.prototype = {
 
         game.load.audio('backtrack', "assets/audio/music/Waterfall Cave.mp3");
 
+        // Events
+        loadHeadshots();
+        game.load.spritesheet('grandfather', "assets/sprites/enemies/Plague Doctor/plague_doctor_sheet.png", 64, 64);
+
     },
     create: function(){
         // Configs
@@ -40,7 +44,7 @@ demo.level2_1.prototype = {
         game.world.setBounds(0, 0, tilemap.layer.widthInPixels, tilemap.layer.heightInPixels);
         
         // Warp points
-        warp1 = new Warp(game, spawnpoint1[0]*tileLength, spawnpoint1[1]*tileLength);
+        warp1 = new Warp(game, spawnpoint1[0]*tileLength, spawnpoint1[1]*tileLength, 270, 1, 2.5);
         game.add.existing(warp1);
         warp2 = new Warp(game, spawnpoint2[0]*tileLength, spawnpoint2[1]*tileLength, 270);
         game.add.existing(warp2);
@@ -91,31 +95,30 @@ demo.level2_1.prototype = {
             gates1.alpha = 0;
             gates2.alpha = 1;
         }
-        console.log(frog.name)
         this.checkEvents();
         // Warping
-        game.physics.arcade.collide(currentPlayer, warp1, function(player, coin){spawn = 1; spawndirection = 1; changeLevel(0,"0");});
-        game.physics.arcade.collide(currentPlayer, warp2, function(player, coin){spawn = 2; spawndirection = 1; changeLevel(0,"2-0");});
+        game.physics.arcade.collide(currentPlayer, warp1, function(player, coin){spawn = 2; spawndirection = 1; changeLevel(0,"2-0");});
+        game.physics.arcade.collide(currentPlayer, warp2, function(player, coin){spawn = 1; spawndirection = 1; changeLevel(0,"0");});
     },
     render: function(){
         //console.log('rendering');
-        // game.debug.body(currentPlayer);
-        game.debug.spriteInfo(currentPlayer);
+        game.debug.body(warp1);
+        // game.debug.spriteInfo(currentPlayer);
         // game.debug.geom(rect1, 'rgb(0,0,0)');
     },
     createSpawnPoints: function(){
         //SpawnPoints are in units of tiles
-        spawnpoint1 = [48, 73];
+        spawnpoint1 = [42, 75];
         spawnpoint2 = [245, 3];
         if (spawn == 2){
             spawnpoint = spawnpoint2.slice();
             spawnpoint[0] += 2;
-            // spawnpoint[0] -= 20;
             spawnpoint[1] += 20;
         }
         else { // (spawn == 1)
             spawnpoint = spawnpoint1.slice();
-            spawnpoint[0] += 2;
+            spawnpoint[0] += 7;
+            spawnpoint[1] -= 2;
         }
         // else{
         //     spawnpoint = spawnpoint2.slice();
@@ -126,13 +129,14 @@ demo.level2_1.prototype = {
         if (!level2Completed) {
             if (eventTrackingList[0] == false) {
                 if (rect1.intersects(currentPlayer.body)) {
-                    // event3_1_2();
+                    event1_2_1();
                     eventTrackingList[0] = true;
                 }
             }
             if (eventTrackingList[1] == false) {
                 if (frog.isEquipped) {
-                    // event4_1_2();
+                    basePlayer.dashEnabled = true;
+                    currentPlayer.dashEnabled = true;
                     gates1Shown = false;
                     gates2Shown = true;
                     eventTrackingList[1] = true;
