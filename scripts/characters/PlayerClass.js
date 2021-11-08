@@ -445,18 +445,7 @@ Player.prototype.takeDamage = function (dmg) {
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
+// Heart Functions - Health
 function createHearts(numhearts) {
     hearts = game.add.group();
     hearts.fixedToCamera = true;
@@ -480,6 +469,12 @@ function healHearts(heal) {
         createHearts(basePlayer.currentHearts);
     }
 }
+
+
+
+
+
+
 
 // Companion Functions - Powerups
 function increaseMaxHearts(num) {
