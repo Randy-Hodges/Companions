@@ -1,6 +1,6 @@
-
-demo.level3_0 =  function(){};
-demo.level3_0.prototype = {
+var slimeBoss
+demo.level3_1 =  function(){};
+demo.level3_1.prototype = {
     preload: function(){
         loadGameConfigs();
         loadPlayer();
@@ -9,11 +9,14 @@ demo.level3_0.prototype = {
         loadEnemies();
         loadUI();
         // Tilemap
-        game.load.tilemap('level3-0', "assets/tilemaps/Levels/Level 3/level3-0.json", null, Phaser.Tilemap.TILED_JSON);
+        game.load.tilemap('level3-1', "assets/tilemaps/Levels/Level 3/level3-1.json", null, Phaser.Tilemap.TILED_JSON);
         game.load.image('Magic_Cliffs16', "assets/tiles/Magic-Cliffs-Environment/PNG/tileset.png");
         game.load.image('nes-color-palette', "assets/tiles/nes-color-palette.jpg");
         // Music
         game.load.audio('backtrack', "assets/audio/music/Waterfall Cave.mp3");
+        // Events
+        game.load.spritesheet('slimeBoss', "assets/sprites/enemies/blue slime/slime-Sheet-white.png", 32, 25);
+
 
     },
     create: function(){
@@ -27,7 +30,7 @@ demo.level3_0.prototype = {
         this.createSpawnPoints();
 
         // Tilemap creation
-        tilemap = game.add.tilemap('level3-0');
+        tilemap = game.add.tilemap('level3-1');
         tilemap.addTilesetImage('Magic_Cliffs16','Magic_Cliffs16'); //make sure the tileset name is the same as the tileset name used in Tiled
         tilemap.addTilesetImage('nes-color-palette','nes-color-palette'); 
         tilemap.createLayer('caveBackground');  
@@ -51,6 +54,16 @@ demo.level3_0.prototype = {
         addEnemiesMC();
         addPlayer();
 
+        // Events
+        game.camera.unfollow();
+        game.camera.x = 28*tileWidth;
+        game.camera.y = 40*tileWidth;
+
+        slimeBoss = new bossSlime(game, 53*tileWidth, 52*tileWidth);
+        game.add.existing(slimeBoss);
+        enemyGroup.add(slimeBoss);
+
+
         // Front Layer
         tilemap.createLayer('front');
 
@@ -63,24 +76,24 @@ demo.level3_0.prototype = {
 
         // Warping
         game.physics.arcade.collide(currentPlayer, warp1, function(player, warp){spawn = 1; spawndirection = 1; changeLevel(0,"0");});
-        game.physics.arcade.collide(currentPlayer, warp2, function(player, warp){spawn = 1; spawndirection = 1; changeLevel(0,"3-1");});
+        game.physics.arcade.collide(currentPlayer, warp2, function(player, warp){spawn = 1; spawndirection = 1; changeLevel(0,"2-1");});
     },
     render: function(){
         //console.log('rendering');
-        // game.debug.body(currentPlayer.slash);
-        game.debug.spriteInfo(currentPlayer);
+        // game.debug.body(slimeBoss);
+        // game.debug.spriteInfo(currentPlayer);
     },
     createSpawnPoints: function(){
         //SpawnPoints are in units of tiles
-        spawnpoint1 = [78, 56];
-        spawnpoint2 = [444, 41];
+        spawnpoint1 = [25, 52]; // 8, 47
+        spawnpoint2 = [0, 0];
         if (spawn == 2){
             spawnpoint = spawnpoint2.slice();
             spawnpoint[0] += 6;
         }
         else { // (spawn == 1)
             spawnpoint = spawnpoint1.slice();
-            spawnpoint[0] += 2;
+            spawnpoint[0] += 7;
         }
         // else{
         //     spawnpoint = spawnpoint2.slice();

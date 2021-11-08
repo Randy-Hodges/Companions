@@ -41,6 +41,7 @@ demo.level2_1.prototype = {
         
         // Warp points
         warp1 = new Warp(game, spawnpoint1[0]*tileLength, spawnpoint1[1]*tileLength);
+        game.add.existing(warp1);
         warp2 = new Warp(game, spawnpoint2[0]*tileLength, spawnpoint2[1]*tileLength, 270);
         game.add.existing(warp2);
         
@@ -114,6 +115,7 @@ demo.level2_1.prototype = {
         }
         else { // (spawn == 1)
             spawnpoint = spawnpoint1.slice();
+            spawnpoint[0] += 2;
         }
         // else{
         //     spawnpoint = spawnpoint2.slice();

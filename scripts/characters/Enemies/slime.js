@@ -27,7 +27,7 @@ Slime = function (game, x, y, spritesheetStrID) {
     // physics
     game.physics.enable(this);
     hitboxOffsetX = 7;
-    hitboxOffsetY = 14;
+    hitboxOffsetY = 13;
     this.body.setSize(18, 11, hitboxOffsetX, hitboxOffsetY);
     this.baseMovementSpeed = 60;
     this.movementSpeed = 60;
@@ -65,7 +65,13 @@ Slime.prototype.update = function (slime = this) {
     //Don't fall off ledges
     // if they are on a no-collision tile and haven't switched direction in a while, switch direction
     // Tile index in front of slime
-    tileIdx = levelTilesTiles[levelTiles.getTileY(slime.body.position.y) * game.world.bounds.width / tileLength + levelTiles.getTileX(slime.body.position.x + faceconstant)].index
+    try{
+        tileIdx = levelTilesTiles[levelTiles.getTileY(slime.body.position.y) * game.world.bounds.width / tileLength + levelTiles.getTileX(slime.body.position.x + faceconstant)].index
+    }
+    catch{
+        slime.destroy();
+        return;
+    }
     if (!magicCliffsNoCollide.includes(tileIdx) &&
     !(String(tileIdx) in exclusionLayer && tileIdx != -1) &&
     game.time.now - slime.timeLastSwitch > 200
@@ -121,6 +127,7 @@ Slime.prototype.die = function (slime = this) {
     slime.curAnimationPriority = slime.animationPriorities.dying;
     slime.animations.play('dying');
 }
+
 
 function switchDirectionSlime(slime) {
     slime.timeLastSwitch = game.time.now;
