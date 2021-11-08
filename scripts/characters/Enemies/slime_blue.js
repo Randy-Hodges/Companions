@@ -14,6 +14,7 @@ blueSlime.prototype.update = function () {
     if (!this.currentlyHit) {
         // if player is close to slime and is in front of slime
         if (game.physics.arcade.distanceBetween(this, currentPlayer) < 160 && this.faceDirection * (this.body.position.x - currentPlayer.body.position.x) < 0) {
+            this.attacking = true;
             this.movementSpeed = 2.5 * this.baseMovementSpeed * this.faceDirection;
             // play attacking animation
             if (this.curAnimationPriority <= this.animationPriorities.attacking) {
@@ -21,6 +22,7 @@ blueSlime.prototype.update = function () {
             }
         }
         else {
+            this.attacking = false;
             this.movementSpeed = this.baseMovementSpeed * this.faceDirection;
             // play walking animation
             if (this.curAnimationPriority <= this.animationPriorities.attacking) {

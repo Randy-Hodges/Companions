@@ -24,6 +24,8 @@ var dialogueList = [];
 var dialogueFunctionList; // is of the form [[function, index of dialogue to occur at],[],[],...] | Not fully implemented yet
 var dialogueEndFunction;
 var dialogueIndex = 0;
+// Sound
+var textContinueSound;
 
 function generateText(text, sprite) {
     // Fix variables when resetting
@@ -187,6 +189,7 @@ function checkCloseText(temptext) {
 // adds the listener that autofills the text box and that proceeds to the next set of text
 function addTextContinueListener() {
     addedTextContinueListener = true;
+    textContinueSound = game.add.audio('textContinue');
     // add event listener to react to the text box
     game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR).onDown.add(
         function () {
@@ -198,6 +201,7 @@ function addTextContinueListener() {
                     // resume scrolling of text
                     curSenLen = 0;
                     quickFillEnded = false;
+                    //textContinueSound.play();
                     checkCloseText(temptext);
                 }
                 else if (quickFillEnabled && !quickFillEnded) {

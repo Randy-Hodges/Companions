@@ -8,7 +8,7 @@ var addedAudio = false;
 var spawn = 0, spawndirection = -1;
 var eventTrackingList = [];
 
-var coinGroup, enemyGroup, mediGroup;
+var coinGroup, enemyGroup, heartGroup;
 
 var devTools = true; // Developer tools are turned on if true, otherwise, they are inactive
 
@@ -42,6 +42,7 @@ function loadUI(){
     game.load.image('Gear_LightBlue', "assets/UI/Gear_LightBlue.png");
     game.load.image('Play_Blue', "assets/UI/Play_Blue.png");
     game.load.image('Green', "assets/UI/Green.png");
+    game.load.audio('textContinue', "assets/audio/soundeffects/progress_text.wav");
 }
 
 function updateMoney(){

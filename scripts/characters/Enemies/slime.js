@@ -43,9 +43,9 @@ Slime = function (game, x, y, spritesheetStrID) {
     this.damage = { none: false, left: true, right: true, up: false, down: true };
     this.health = 5;
     this.currentlyHit = false;
+    this.attacking = false;
 
     // Preventing bugs
-    // this.autoCull = true;
     this.checkWorldBounds = true;
     this.outOfBoundsKill = true;
 }
@@ -65,18 +65,20 @@ Slime.prototype.update = function (slime = this) {
     //Don't fall off ledges
     // if they are on a no-collision tile and haven't switched direction in a while, switch direction
     // Tile index in front of slime
-    try{
-        tileIdx = levelTilesTiles[levelTiles.getTileY(slime.body.position.y) * game.world.bounds.width / tileLength + levelTiles.getTileX(slime.body.position.x + faceconstant)].index
-    }
-    catch{
-        slime.destroy();
-        return;
-    }
-    if (!magicCliffsNoCollide.includes(tileIdx) &&
-    !(String(tileIdx) in exclusionLayer && tileIdx != -1) &&
-    game.time.now - slime.timeLastSwitch > 200
-    ) {
-        switchDirectionSlime(slime);
+    if (!slime.attacking){
+        try{
+            tileIdx = levelTilesTiles[levelTiles.getTileY(slime.body.position.y) * game.world.bounds.width / tileLength + levelTiles.getTileX(slime.body.position.x + faceconstant)].index
+        }
+        catch{
+            slime.destroy();
+            return;
+        }
+        if (!magicCliffsNoCollide.includes(tileIdx) &&
+        !(String(tileIdx) in exclusionLayer && tileIdx != -1) &&
+        game.time.now - slime.timeLastSwitch > 200
+        ) {
+            switchDirectionSlime(slime);
+        }
     }
 
 
