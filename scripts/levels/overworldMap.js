@@ -22,7 +22,7 @@ demo.overworldMap.prototype = {
         game.load.image('Moving_cloud2', "assets/overworld_map/Clouds/cloud2.png");
 
         // change this later
-        game.load.audio('mapMusic', "assets/audio/music/PMD Remix/Personality Test.mp3");
+        game.load.audio('mapMusic', "assets/audio/music/Personality Test.mp3");
 
     },
 
