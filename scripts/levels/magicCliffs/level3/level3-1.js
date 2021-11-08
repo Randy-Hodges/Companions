@@ -13,7 +13,7 @@ demo.level3_1.prototype = {
         game.load.image('Magic_Cliffs16', "assets/tiles/Magic-Cliffs-Environment/PNG/tileset.png");
         game.load.image('nes-color-palette', "assets/tiles/nes-color-palette.jpg");
         // Music
-        game.load.audio('backtrack', "assets/audio/music/Waterfall Cave.mp3");
+        game.load.audio('backtrack', "assets/audio/music/Defy the Legends.mp3");
         // Events
         game.load.spritesheet('slimeBoss', "assets/sprites/enemies/blue slime/slime-Sheet-white.png", 32, 25);
 

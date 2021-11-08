@@ -63,7 +63,7 @@ demo.level3_0.prototype = {
 
         // Warping
         game.physics.arcade.collide(currentPlayer, warp1, function(player, warp){spawn = 1; spawndirection = 1; changeLevel(0,"0");});
-        game.physics.arcade.collide(currentPlayer, warp2, function(player, warp){spawn = 1; spawndirection = 1; changeLevel(0,"3-1");});
+        game.physics.arcade.collide(currentPlayer, warp2, function(player, warp){backtrack.destroy(); addedAudio = false; spawn = 1; spawndirection = 1; changeLevel(0,"3-1");});
     },
     render: function(){
         //console.log('rendering');
