@@ -63,15 +63,13 @@ demo.overworldMap.prototype = {
         layer.scale.set(1);
         layer.resizeWorld();
 
-        x = 470;
-        y = -250;
         // create view, clouds, level select UI, change as more levels are unlocked
         if (level3Unlocked){ // 3 unlocked
-            game.camera.x = 300;
-            game.camera.y = 400;
+            game.camera.x = 540;
+            game.camera.y = 275;
 
             // clouds for level 3
-            level3_clouds(x, y);
+            level3_clouds();
             
             levelSelect = game.add.text(8,8,"Use the arrow keys to move around the map. \nPress 'V' to go to the Village. \nPress 'C' to go to Level 1. \nPress 'H' to go to Level 2. \nPress 'T' to go to Level 3.", { fontSize: '11px', fill: '#fff' });
         } else if (level2Unlocked){ // level 2 unlocked
@@ -79,7 +77,7 @@ demo.overworldMap.prototype = {
             game.camera.y = 525;
 
             // clouds for level 3
-            level3_clouds(x, y);
+            level3_clouds();
             // clouds for level 2
             level2_clouds();
 
@@ -89,7 +87,7 @@ demo.overworldMap.prototype = {
             game.camera.y = 375;
 
             // clouds for level 3
-            level3_clouds(x, y);
+            level3_clouds();
             // clouds for level 2
             level2_clouds();   
 
@@ -99,7 +97,7 @@ demo.overworldMap.prototype = {
             game.camera.y = 400;
 
             // clouds for level 3
-            level3_clouds(x, y);
+            level3_clouds();
             // clouds for level 2
             level2_clouds();
 
@@ -189,35 +187,38 @@ function level2_clouds() {
     }
 }
 
-function level3_clouds(x, y) {
-    cloud14 = game.add.sprite(275 + x, 700 + y, 'Moving_cloud2');
+function level3_clouds() {
+    x_rel_level3 = 470;
+    y_rel_level3 = -250;
+    
+    cloud14 = game.add.sprite(275 + x_rel_level3, 700 + y_rel_level3, 'Moving_cloud2');
     cloud14.anchor.set(0.5);
     
-    cloud13 = game.add.sprite(375 + x, 695 + y, 'Moving_cloud');
+    cloud13 = game.add.sprite(375 + x_rel_level3, 695 + y_rel_level3, 'Moving_cloud');
     cloud13.anchor.set(0.5);
 
-    cloud12 = game.add.sprite(250 + x, 675 + y, 'Moving_cloud2');
+    cloud12 = game.add.sprite(250 + x_rel_level3, 675 + y_rel_level3, 'Moving_cloud2');
     cloud12.anchor.set(0.5);
 
-    cloud11 = game.add.sprite(350 + x, 625 + y, 'Moving_cloud2');
+    cloud11 = game.add.sprite(350 + x_rel_level3, 625 + y_rel_level3, 'Moving_cloud2');
     cloud11.anchor.set(0.5);
 
-    cloud10 = game.add.sprite(315 + x, 665 + y, 'Moving_cloud');
+    cloud10 = game.add.sprite(315 + x_rel_level3, 665 + y_rel_level3, 'Moving_cloud');
     cloud10.anchor.set(0.5);
 
-    cloud9 = game.add.sprite(300 + x, 725 + y, 'Moving_cloud');
+    cloud9 = game.add.sprite(300 + x_rel_level3, 725 + y_rel_level3, 'Moving_cloud');
     cloud9.anchor.set(0.5);
 
-    cloud8 = game.add.sprite(375 + x, 650 + y, 'Moving_cloud2');
+    cloud8 = game.add.sprite(375 + x_rel_level3, 650 + y_rel_level3, 'Moving_cloud2');
     cloud8.anchor.set(0.5);
 
     if (level3Unlocked){
         game.add.tween(cloud9).to({ x: 1500 }, 25000, Phaser.Easing.Out, true);
         game.add.tween(cloud10).to({ x: -100 }, 15000, Phaser.Easing.Out, true);
-        game.add.tween(cloud11).to({ x: -100 }, 10000, Phaser.Easing.Out, true);
+        game.add.tween(cloud11).to({ x: -100 }, 25000, Phaser.Easing.Out, true);
         game.add.tween(cloud12).to({ x: 1500 }, 22000, Phaser.Easing.Out, true);
         game.add.tween(cloud13).to({ x: 1500 }, 20000, Phaser.Easing.Out, true);
-        game.add.tween(cloud14).to({ x: -100 }, 7000, Phaser.Easing.Out, true);
+        game.add.tween(cloud14).to({ x: -100 }, 18000, Phaser.Easing.Out, true);
         game.add.tween(cloud8).to({ x: -100 }, 14000, Phaser.Easing.Out, true);
     }
 }
