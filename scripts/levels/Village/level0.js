@@ -82,7 +82,7 @@ demo.level0.prototype = {
     },
     render: function(){
         // game.debug.body(currentPlayer.slash);
-        game.debug.spriteInfo(currentPlayer);
+        // game.debug.spriteInfo(currentPlayer);
         // game.debug.geom(rect1, 'rgb(0,0,0)');
     },
     createSpawnPoints: function(){

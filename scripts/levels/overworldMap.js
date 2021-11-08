@@ -71,7 +71,8 @@ demo.overworldMap.prototype = {
             // clouds for level 3
             level3_clouds();
             
-            levelSelect = game.add.text(8,8,"Use the arrow keys to move around the map. \nPress 'V' to go to the Village. \nPress 'C' to go to Level 1. \nPress 'H' to go to Level 2. \nPress 'T' to go to Level 3.", { fontSize: '11px', fill: '#fff' });
+            levelUI = game.add.text(8,8,"Use the arrow keys to move around the map. \nPress 'V' to go to the Village. \nPress 'C' to go to Level 1. \nPress 'H' to go to Level 2. \nPress 'T' to go to Level 3.", { fontSize: '11px', fill: '#fff' });
+            levelUI.fixedToCamera = true;
         } else if (level2Unlocked){ // level 2 unlocked
             game.camera.x = 85;
             game.camera.y = 525;
@@ -81,7 +82,8 @@ demo.overworldMap.prototype = {
             // clouds for level 2
             level2_clouds();
 
-            levelSelect = game.add.text(8,8,"Use the arrow keys to move around the map. \nPress 'V' to go to the Village. \nPress 'C' to go to Level 1. \nPress 'H' to go to Level 2.", { fontSize: '11px', fill: '#fff' });
+            levelUI = game.add.text(8,8,"Use the arrow keys to move around the map. \nPress 'V' to go to the Village. \nPress 'C' to go to Level 1. \nPress 'H' to go to Level 2.", { fontSize: '11px', fill: '#fff' });
+            levelUI.fixedToCamera = true;
         } else if (level1Unlocked){ // level 1 unlocked
             game.camera.x = 25;
             game.camera.y = 375;
@@ -91,7 +93,8 @@ demo.overworldMap.prototype = {
             // clouds for level 2
             level2_clouds();   
 
-            levelSelect = game.add.text(8,8,"Use the arrow keys to move around the map. \nPress 'V' to go to the Village. \nPress 'C' to go to Level 1.", { fontSize: '11px', fill: '#fff' });
+            levelUI = game.add.text(8,8,"Use the arrow keys to move around the map. \nPress 'V' to go to the Village. \nPress 'C' to go to Level 1.", { fontSize: '11px', fill: '#fff' });
+            levelUI.fixedToCamera = true;
         } else { // start of game
             game.camera.x = 300;
             game.camera.y = 400;
@@ -101,7 +104,8 @@ demo.overworldMap.prototype = {
             // clouds for level 2
             level2_clouds();
 
-            levelSelect = game.add.text(8,8,"Use the arrow keys to move around the map. \nPress 'V' to go to the Village.", { fontSize: '11px', fill: '#fff'});
+            levelUI = game.add.text(8,8,"Use the arrow keys to move around the map. \nPress 'V' to go to the Village.", { fontSize: '11px', fill: '#fff'});
+            levelUI.fixedToCamera = true;
         }
 
         // level select
