@@ -13,7 +13,7 @@ demo.level3_0.prototype = {
         game.load.image('Magic_Cliffs16', "assets/tiles/Magic-Cliffs-Environment/PNG/tileset.png");
         game.load.image('nes-color-palette', "assets/tiles/nes-color-palette.jpg");
         // Music
-        game.load.audio('backtrack', "assets/audio/music/Waterfall Cave.mp3");
+        game.load.audio('backtrack', "assets/audio/music/Drenched Bluff.mp3");
 
     },
     create: function(){
