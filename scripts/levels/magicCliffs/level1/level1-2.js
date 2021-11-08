@@ -62,8 +62,8 @@ demo.level1_2.prototype = {
         // Companion
         companionGroup = game.add.group();
         pig = new CompanionPig(game, 1620, 410, false, false);
-        companionGroup.add(pig)
         game.add.existing(pig);
+        companionGroup.add(pig)
 
     },
     update: function () {

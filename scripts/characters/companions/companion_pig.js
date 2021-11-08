@@ -12,7 +12,7 @@ CompanionPig = function(game, x, y, followOn, isEqiupped){
     this.body.maxVelocity.x = 300;
     this.body.maxVelocity.y = 350;
     
-    increaseMaxHearts(1); 
+    // increaseMaxHearts(1); 
 }
 
 CompanionPig.prototype = Object.create(Companion.prototype);
