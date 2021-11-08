@@ -41,9 +41,9 @@ demo.level3_0.prototype = {
         game.world.setBounds(0, 0, tilemap.layer.widthInPixels, tilemap.layer.heightInPixels);
         
         // Warp points
-        warp1 = new Warp(game, spawnpoint1[0]*tileLength, spawnpoint1[1]*tileLength);
+        warp1 = new Warp(game, spawnpoint1[0]*tileLength, spawnpoint1[1]*tileLength, 180);
         game.add.existing(warp1);
-        warp2 = new Warp(game, spawnpoint2[0]*tileLength, spawnpoint2[1]*tileLength, 270);
+        warp2 = new Warp(game, spawnpoint2[0]*tileLength, spawnpoint2[1]*tileLength);
         game.add.existing(warp2);
 
         // Coins, Enemies, Player
@@ -72,8 +72,8 @@ demo.level3_0.prototype = {
     },
     createSpawnPoints: function(){
         //SpawnPoints are in units of tiles
-        spawnpoint1 = [78, 56];
-        spawnpoint2 = [444, 41];
+        spawnpoint1 = [78, 59];
+        spawnpoint2 = [444, 40];
         if (spawn == 2){
             spawnpoint = spawnpoint2.slice();
             spawnpoint[0] += 6;

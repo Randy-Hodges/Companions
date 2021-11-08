@@ -109,7 +109,7 @@ demo.level2_1.prototype = {
     createSpawnPoints: function(){
         //SpawnPoints are in units of tiles
         spawnpoint1 = [42, 75];
-        spawnpoint2 = [245, 3];
+        spawnpoint2 = [244, 4];
         if (spawn == 2){
             spawnpoint = spawnpoint2.slice();
             spawnpoint[0] += 2;
