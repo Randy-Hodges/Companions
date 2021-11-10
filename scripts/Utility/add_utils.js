@@ -22,6 +22,13 @@ function addCoinFromTilemap(tile){
     }
 }
 
+function addGoldHeart(x, y){
+    heartGroup = game.add.group();
+    goldenHeart = new GoldenHeart(game, x*tileLength, y*tileLength);
+    game.add.existing(goldenHeart);
+    heartGroup.add(goldenHeart);
+}
+
 function addHearts(){
     // Hearts
     heartGroup = game.add.group();
