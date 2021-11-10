@@ -61,10 +61,16 @@ function addMusic(music = 'backtrack'){
 
 function addUI(){
     // Money - Coins
+    moneyText2 = game.add.text(9,27,"Coins: " + money, { fontSize: '18px', fill: '#000' });
+    moneyText2.fixedToCamera = true;
+    
     moneyText = game.add.text(8,26,"Coins: " + money, { fontSize: '18px', fill: '#fff' });
     moneyText.fixedToCamera = true;
     
     // Hearts
+    heartText2 = game.add.text(9,9,"Hearts: ", { fontSize: '18px', fill: '#000' });
+    heartText2.fixedToCamera = true;
+    
     heartText = game.add.text(8,8,"Hearts: ", { fontSize: '18px', fill: '#fff' });
     heartText.fixedToCamera = true;
     createHearts(basePlayer.currentHearts);

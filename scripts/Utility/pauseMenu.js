@@ -21,7 +21,10 @@ function pause(event){
     // Then add the menu
     console.log('Paused.');
     menu = game.add.text(currentPlayer.x, currentPlayer.y - 50, "Paused!!!", { fontSize: '18px', fill: '#000' }); //game.add.sprite(gameWidth-20, 20, 'Play_Blue');
+    menu2 = game.add.text(currentPlayer.x - 1, currentPlayer.y - 51, "Paused!!!", { fontSize: '18px', fill: '#fff' });
+    
     menu.anchor.setTo(0.5, 0.5);
+    menu2.anchor.setTo(0.5, 0.5);
 }
 
 // Unpause
@@ -32,6 +35,7 @@ function unpause(event){
         // Remove the menu and the label
         console.log('Unpaused.');
         menu.destroy();
+        menu2.destroy();
         game.paused = false;
     }
 
