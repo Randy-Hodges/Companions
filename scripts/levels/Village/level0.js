@@ -33,6 +33,7 @@ demo.level0.prototype = {
         companionDoor = tilemap.createLayer('companionDoor');
         front = tilemap.createLayer('front');  // layer name is the same as used in Tiled
         tilemap.setCollisionByExclusion(villageNoCollide, true, levelTiles);
+        
         // Game borders based on tilemap
         game.world.setBounds(0, 0, tilemap.layer.widthInPixels, tilemap.layer.heightInPixels);
 
@@ -43,6 +44,9 @@ demo.level0.prototype = {
         // Warp points
         warp1 = new Warp(game, spawnpoint1[0]*tileLength, spawnpoint1[1]*tileLength);
         game.add.existing(warp1) // comment this out to make warp zone invisible
+        
+        // Golden Heart
+        addGoldHeart(21.5, 17.5);
         
         // Player
         addPlayer();
