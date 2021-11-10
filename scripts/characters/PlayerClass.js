@@ -433,7 +433,7 @@ Player.prototype.takeDamage = function (dmg) {
         hearts.removeChildAt(numhearts - 1);
         this.invulnerable = true;
         this.invulnerableTime = game.time.now;
-        console.log("got hit");
+        console.log("Got hit. Current hearts:", basePlayer.currentHearts, "Num hearts:", numhearts);
     }
 }
 
@@ -461,7 +461,13 @@ function healHearts(heal = 1) {
     createHearts(basePlayer.currentHearts);
 }
 
-
+function healFullHearts() {
+    if (basePlayer.currentHearts < basePlayer.maxHearts){
+        basePlayer.currentHearts = basePlayer.maxHearts;
+        numhearts = basePlayer.currentHearts;
+        createHearts(basePlayer.currentHearts);
+    }
+}
 
 // Companion Functions - Powerups
 function increaseMaxHearts(num) {
