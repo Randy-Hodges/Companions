@@ -23,10 +23,10 @@ function addCoinFromTilemap(tile){
 }
 
 function addGoldHeart(x, y){
-    heartGroup = game.add.group();
+    goldHeartGroup = game.add.group();
     goldenHeart = new GoldenHeart(game, x*tileLength, y*tileLength);
     game.add.existing(goldenHeart);
-    heartGroup.add(goldenHeart);
+    goldHeartGroup.add(goldenHeart);
 }
 
 function addHearts(){
@@ -61,7 +61,7 @@ function addMusic(music = 'backtrack'){
 
 function addUI(){
     // Money - Coins
-    moneyText2 = game.add.text(9,27,"Coins: " + money, { fontSize: '18px', fill: '#000' });
+    moneyText2 = game.add.text(9,27,"Coins: "  + money, { fontSize: '18px', fill: '#000' });
     moneyText2.fixedToCamera = true;
     
     moneyText = game.add.text(8,26,"Coins: " + money, { fontSize: '18px', fill: '#fff' });

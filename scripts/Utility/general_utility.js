@@ -38,4 +38,5 @@ function rgbToHex(r, g, b) {
 
 function updateMoney(){
     moneyText.text = "Coins: " + money;
+    moneyText2.text = "Coins: " + money;
 }

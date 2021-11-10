@@ -46,7 +46,7 @@ demo.level0.prototype = {
         game.add.existing(warp1) // comment this out to make warp zone invisible
         
         // Golden Heart
-        addGoldHeart(21.5, 17.5);
+        addGoldHeart(52, 17.5);
         
         // Player
         addPlayer();
