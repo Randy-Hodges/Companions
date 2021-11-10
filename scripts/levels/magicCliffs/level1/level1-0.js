@@ -51,6 +51,9 @@ demo.level1.prototype = {
         addEnemiesMC();
         addPlayer();
         
+        // Golden Heart
+        addGoldHeart(30, 35);
+        
         // Tilemap Infront
         tilemap.createLayer('front');
 
