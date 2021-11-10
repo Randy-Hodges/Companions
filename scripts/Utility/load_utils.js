@@ -30,3 +30,12 @@ function loadUI(){
     game.load.image('Green', "assets/UI/Green.png");
     game.load.audio('textContinue', "assets/audio/soundeffects/progress_text.wav");
 }
+
+function loadGameConfigs(){
+    game.scale.pageAlignHorizontally = true;
+    game.scale.pageAlignVertically = true;
+    game.scale.refresh();
+    textOffsetX = 100;
+    textWidth = game.width - textOffsetX;
+    textHeight = game.height/5;
+}

@@ -453,7 +453,7 @@ function increaseMaxHearts(increasenum) {
     createHearts(numhearts);
 }
 
-function healHearts(heal) {
+function healHearts(heal = 1) {
     basePlayer.currentHearts += heal;
     if (basePlayer.currentHearts > basePlayer.maxHearts){
         basePlayer.currentHearts = basePlayer.maxHearts;

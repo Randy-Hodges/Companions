@@ -1,7 +1,7 @@
 var demo = {};
+globalGravity = 400;
 var levelTiles, tilemap; 
-var tileLength = 16;
-var tileWidth = 16;
+var tileLength = 16, tileWidth = 16;
 var money = 0, moneyText;
 var addedAudio = false;
 
@@ -11,6 +11,7 @@ var eventTrackingList = [];
 var coinGroup, enemyGroup, heartGroup;
 
 var devTools = true; // Developer tools are turned on if true, otherwise, they are inactive
+
 
 function changeLevel(i, levelNum){
     console.log('level change to: ' + levelNum);

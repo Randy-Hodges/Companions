@@ -1,3 +1,12 @@
+
+function createGameConfigs(){
+    // configs
+    game.physics.startSystem(Phaser.Physics.ARCADE);
+    game.physics.arcade.gravity.y = globalGravity;
+    game.stage.backgroundColor = 'aeffee';
+    game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+}
+
 function addCoins(){
     // Coins
     coinGroup = game.add.group();
