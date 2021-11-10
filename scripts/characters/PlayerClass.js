@@ -454,18 +454,12 @@ function increaseMaxHearts(increasenum) {
 }
 
 function healHearts(heal) {
-    if (basePlayer.currentHearts >= basePlayer.maxHearts) {
-        console.log("At max hearts!");
+    basePlayer.currentHearts += heal;
+    if (basePlayer.currentHearts > basePlayer.maxHearts){
+        basePlayer.currentHearts = basePlayer.maxHearts;
     }
-    else {
-        basePlayer.currentHearts += 1;
-        createHearts(basePlayer.currentHearts);
-    }
+    createHearts(basePlayer.currentHearts);
 }
-
-
-
-
 
 
 
