@@ -12,6 +12,6 @@ game.state.add('level2-0', demo.level2_0);
 game.state.add('level2-1', demo.level2_1);
 game.state.add('level3-0', demo.level3_0);
 game.state.add('level3-1', demo.level3_1);
-spawn = 0;
-game.state.start('level1-0');
+spawn = 1;
+game.state.start('level3-1');
 

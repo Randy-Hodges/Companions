@@ -57,23 +57,39 @@ demo.level3_1.prototype = {
 
         // Events
         game.camera.unfollow();
-        game.camera.x = 28*tileWidth;
-        game.camera.y = 40*tileWidth;
+        game.camera.x = 27.5*tileWidth;
+        game.camera.y = 39.5*tileWidth;
 
-        slimeBoss = new bossSlime(game, 53*tileWidth, 52*tileWidth);
+        slimeBoss = new bossSlime(game, 50*tileWidth, 52*tileWidth);
         game.add.existing(slimeBoss);
         enemyGroup.add(slimeBoss);
 
 
         // Front Layer
         tilemap.createLayer('front');
+        gates1 = tilemap.createLayer('gates1');
 
         addUI();
+
+        // Events
+        tilemap.setCollisionByExclusion(indexes = [0, -1], collides = true, layer = 'gates1')
+        gates1.alpha = 0;
+        gates1Shown = true;
+        if (!level3Completed) {
+            rect1 = new Phaser.Rectangle(4560, 0, 40, 1000); // x0, y0, width, height
+            eventTrackingList = [false, false];
+        }
+
     },
     update: function(){
         // Collision
         game.physics.arcade.collide(currentPlayer, levelTiles);
         game.physics.arcade.collide(enemyGroup, levelTiles);
+        if (gates1Shown){
+            game.physics.arcade.collide(currentPlayer, gates1);
+            game.physics.arcade.collide(enemyGroup, gates1);
+            gates1.alpha = 1;
+        }
 
         // Warping
         game.physics.arcade.collide(currentPlayer, warp1, function(player, warp){spawn = 1; spawndirection = 1; changeLevel(0,"0");});

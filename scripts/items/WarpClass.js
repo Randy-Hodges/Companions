@@ -11,9 +11,7 @@ Warp = function(game, x, y, rotation = 0, x_scale = 1, y_scale = 2){
     
     // Animations
     this.animations.add('rotate', [0,1,2]);
-
-    console.log(Math.cos(0))
-    
+        
     // physics
     game.physics.enable(this);
     this.body.setSize(this.width/x_scale * Math.cos(rotation*Math.PI/180) - this.height/x_scale * Math.sin(rotation*Math.PI/180),

@@ -27,7 +27,7 @@ BasePlayer = function () {
 
     this.jumpAccel = -3070;
     this.jumpInputTime = 120 //ms
-    this.jumpStorage = 0; 
+    this.jumpStorage = 0;
 
     this.dashEnabled = false;
 
@@ -204,29 +204,24 @@ Player = function (game, x = gameWidth / 2, y = gameHeight / 2) {
     //             }
     //         }
     //     });
+    // #endregion
 
     // SPACEBAR Button
     playerSlashButton = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
     playerSlashButton.onDown.add(
         function () {
             if (!currentPlayer.disableMovement) {
-                if (game.input.keyboard.isDown(Phaser.Keyboard.LEFT) || game.input.keyboard.isDown(Phaser.Keyboard.RIGHT)) {
-                    if (!currentPlayer.stopAnimations) {
-                        currentPlayer.animations.play('slash side');
-                    }
-                }
-                else if (game.input.keyboard.isDown(Phaser.Keyboard.DOWN)) {
-                    if (!currentPlayer.stopAnimations) {
+                if (!currentPlayer.stopAnimations) {
+                    if (game.input.keyboard.isDown(Phaser.Keyboard.DOWN)) {
                         currentPlayer.animations.play('slash down');
                     }
-                }
-                else if (game.input.keyboard.isDown(Phaser.Keyboard.UP)) {
-                    if (!currentPlayer.stopAnimations) {
+                    else if (game.input.keyboard.isDown(Phaser.Keyboard.LEFT) || game.input.keyboard.isDown(Phaser.Keyboard.RIGHT)) {
+                        currentPlayer.animations.play('slash side');
+                    }
+                    else if (game.input.keyboard.isDown(Phaser.Keyboard.UP)) {
                         currentPlayer.animations.play('slash up');
                     }
-                }
-                else {
-                    if (!currentPlayer.stopAnimations) {
+                    else {
                         currentPlayer.animations.play('slash side');
                     }
                 }
@@ -239,14 +234,13 @@ Player = function (game, x = gameWidth / 2, y = gameHeight / 2) {
     this.isDashing = false;
     this.dashCooldownLength = 500 // milliseconds
     this.lastDash = -this.dashCooldownLength
-    this.dashEnabled = basePlayer.dashEnabled;
+    this.dashEnabled = devTools ? true : basePlayer.dashEnabled;
     playerDashButton = game.input.keyboard.addKey(Phaser.Keyboard.A);
     playerDashButton.onDown.add(function () {
         if (game.time.now - currentPlayer.lastDash >= currentPlayer.dashCooldownLength && currentPlayer.dashEnabled) {
             // Note: this particular code does not feel clean
             currentPlayer.lastDash = game.time.now;
 
-            
             function dash(timer) {
                 currentPlayer.isDashing = true;
                 // Start Dash
@@ -295,7 +289,7 @@ Player.prototype.constructor = Player;
 // (Automatically called by World.update)
 Player.prototype.update = function (player = this) {
 
-    // #region Dev tool
+    // #region Dev tool clipping
     if (devTools && game.input.keyboard.isDown(Phaser.Keyboard.Z)) {
         if (game.input.keyboard.isDown(Phaser.Keyboard.LEFT)) {
             this.body.position.x -= 3;
@@ -318,7 +312,6 @@ Player.prototype.update = function (player = this) {
     // #endregion
 
     // Slashing
-    //this.slash.body.setSize(20, 35, -10 + this.faceDirection * 15, 0); //width, height, offsetX, offsetY
     if (this.isSlashing) {
         this.setSlashPosition();
         game.physics.arcade.overlap(this.slash, enemyGroup, function (slash, enemy) { enemy.hit(basePlayer.slashDamage) });

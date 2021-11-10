@@ -64,9 +64,9 @@ Slime.prototype.update = function (slime = this) {
     }
     //Don't fall off ledges
     // if they are on a no-collision tile and haven't switched direction in a while, switch direction
-    // Tile index in front of slime
-    if (!slime.attacking){
+    if (!slime.attacking && !slime.slimeBoss){
         try{
+            // Tile index in front of slime
             tileIdx = levelTilesTiles[levelTiles.getTileY(slime.body.position.y) * game.world.bounds.width / tileLength + levelTiles.getTileX(slime.body.position.x + faceconstant)].index
         }
         catch{
@@ -74,26 +74,28 @@ Slime.prototype.update = function (slime = this) {
             return;
         }
         if (!magicCliffsNoCollide.includes(tileIdx) &&
-        !(String(tileIdx) in exclusionLayer && tileIdx != -1) &&
-        game.time.now - slime.timeLastSwitch > 200
-        ) {
+            !(String(tileIdx) in exclusionLayer && tileIdx != -1) &&
+            game.time.now - slime.timeLastSwitch > 200){
             switchDirectionSlime(slime);
         }
     }
 
 
     // Collision
-    if (enemyGroup) {
-        game.physics.arcade.collide(enemyGroup, enemyGroup, function (enemy1, enemy2) { switchDirectionSlime(enemy1); switchDirectionSlime(enemy2) });
-    }
-    if ((slime.body.blocked.right || slime.body.blocked.left)) {
+    if ((slime.body.blocked.right || slime.body.blocked.left) && game.time.now - slime.timeLastSwitch > 300) {
         switchDirectionSlime(slime);
+    }
+    else if (enemyGroup) {
+        game.physics.arcade.collide(enemyGroup, enemyGroup, function (enemy1, enemy2) { switchDirectionSlime(enemy1); switchDirectionSlime(enemy2) });
     }
 
     slime.body.velocity.x = slime.movementSpeed;
 
     // Animations
-    if (slime.curAnimationPriority == slime.animationPriorities.moving) {
+    if (slime.curAnimationPriority == slime.animationPriorities.idle) {
+        slime.animations.play('idle', 8, true);
+    }
+    else if (slime.curAnimationPriority == slime.animationPriorities.moving) {
         slime.animations.play('moving', 10, true);
     }
     else if (slime.curAnimationPriority == slime.animationPriorities.attacking) {
@@ -113,13 +115,18 @@ Slime.prototype.update = function (slime = this) {
 Slime.prototype.hit = function (damage, slime = this) {
     if (!slime.currentlyHit) {
         slime.health -= damage;
-        slime.movementSpeed = 0;
+        console.log("Slime Health: " + slime.health);
+        if (!slime.slimeBoss){
+            slime.movementSpeed = 0;
+        }
         slime.currentlyHit = true;
         if (slime.health <= 0) {
             slime.die();
         }
         else {
-            slime.curAnimationPriority = slime.animationPriorities.hit;
+            if (!slime.slimeBoss){
+                slime.curAnimationPriority = slime.animationPriorities.hit;
+            }
         }
     }
 }
@@ -133,9 +140,15 @@ Slime.prototype.die = function (slime = this) {
 
 function switchDirectionSlime(slime) {
     slime.timeLastSwitch = game.time.now;
-    slime.faceDirection *= -1;
     slime.movementSpeed *= -1;
-    slime.scale.x *= -1;
+    if (slime.movementSpeed < 0){
+        slime.faceDirection = -1;
+        slime.scale.x = Math.abs(slime.scale.x);
+    }
+    else if (slime.movementSpeed > 0){
+        slime.faceDirection = 1;
+        slime.scale.x = -Math.abs(slime.scale.x);
+    }
 }
 
 
