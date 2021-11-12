@@ -452,6 +452,8 @@ function createHearts(numhearts) {
 function increaseMaxHearts(increasenum) {
     var numhearts = basePlayer.currentHearts + increasenum;
     basePlayer.currentHearts += increasenum;
+    
+    hearts.destroy();
     createHearts(numhearts);
 }
 
@@ -460,6 +462,8 @@ function healHearts(heal = 1) {
     if (basePlayer.currentHearts > basePlayer.maxHearts){
         basePlayer.currentHearts = basePlayer.maxHearts;
     }
+    
+    hearts.destroy();
     createHearts(basePlayer.currentHearts);
 }
 
@@ -467,6 +471,8 @@ function healFullHearts() {
     if (basePlayer.currentHearts < basePlayer.maxHearts){
         basePlayer.currentHearts = basePlayer.maxHearts;
         numhearts = basePlayer.currentHearts;
+        
+        hearts.destroy();
         createHearts(basePlayer.currentHearts);
     }
 }
