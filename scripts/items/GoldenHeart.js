@@ -22,11 +22,5 @@ GoldenHeart.prototype.constructor = GoldenHeart;
 // (Automatically called by World.update)
 GoldenHeart.prototype.update = function() {
     this.animations.play('heartbeat', 10);
-    game.physics.arcade.overlap(currentPlayer, goldHeartGroup, function(player, heart){killGoldHeart(); healFullHearts(); /*heartCollect.play();*/});
-}
-
-function killGoldHeart () {
-    if (basePlayer.maxHearts > basePlayer.currentHearts) {
-        heart.kill();
-    }
+    game.physics.arcade.overlap(currentPlayer, goldHeartGroup, function(player, heart){goldenHeart.kill(); healFullHearts(); /*heartCollect.play();*/});
 }
