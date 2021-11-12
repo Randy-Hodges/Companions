@@ -129,11 +129,11 @@ function addLevelSpawns() {
     // scene change for village
     addKeyCallback(Phaser.Keyboard.V, function(){backtrack.destroy(); addedAudio = false; changeLevel(this, '0');});
     // scene change for level 1
-    addKeyCallback(Phaser.Keyboard.C, function(){backtrack.destroy(); addedAudio = false; spawn = 0; spawndirection = -1; changeLevel(this, '1-0');}); 
+    addKeyCallback(Phaser.Keyboard.C, function(){backtrack.destroy(); addedAudio = false; spawn = 1; changeLevel(this, '1-0');}); 
     // scene change for level 2
-    addKeyCallback(Phaser.Keyboard.H, function(){backtrack.destroy(); addedAudio = false; spawn = 1; spawndirection = -1; changeLevel(this, '2-0');});
+    addKeyCallback(Phaser.Keyboard.H, function(){backtrack.destroy(); addedAudio = false; spawn = 1; changeLevel(this, '2-0');});
     // scene change for level 3
-    addKeyCallback(Phaser.Keyboard.T, function(){backtrack.destroy(); addedAudio = false; spawn = 1; spawndirection = -1; changeLevel(this, '3-0');});
+    addKeyCallback(Phaser.Keyboard.T, function(){backtrack.destroy(); addedAudio = false; spawn = 1; changeLevel(this, '3-0');});
 };
 
 function updateView() {

@@ -56,7 +56,8 @@ Player = function (game, x = gameWidth / 2, y = gameHeight / 2) {
     this.animations.add('slash up', [22, 23, 24], frameRate = 10);
     this.frame = 11;
     this.stopAnimations = false;
-
+    this.faceDirection = 1; // x Direction player is facing. 1 or -1 (positive is right)
+    
     // #region Physics
     this.disableMovement = false;
     this.accelx = basePlayer.accelx;
@@ -67,8 +68,8 @@ Player = function (game, x = gameWidth / 2, y = gameHeight / 2) {
     this.body.maxVelocity.x = basePlayer.maxVelX;
     this.body.maxVelocity.y = basePlayer.maxVelY;
     this.body.collideWorldBounds = true;
+    // #endregion */
 
-    this.faceDirection = 1; // x Direction player is facing. 1 or -1
 
     // #region JUMPING
     this.jumpAccel = basePlayer.jumpAccel;
@@ -228,8 +229,7 @@ Player = function (game, x = gameWidth / 2, y = gameHeight / 2) {
             }
         });
     // #endregion */
-    // #endregion */
-
+    
     // #region DASHING
     this.isDashing = false;
     this.dashCooldownLength = 500 // milliseconds
@@ -240,7 +240,7 @@ Player = function (game, x = gameWidth / 2, y = gameHeight / 2) {
         if (game.time.now - currentPlayer.lastDash >= currentPlayer.dashCooldownLength && currentPlayer.dashEnabled) {
             // Note: this particular code does not feel clean
             currentPlayer.lastDash = game.time.now;
-
+            
             function dash(timer) {
                 currentPlayer.isDashing = true;
                 // Start Dash
@@ -255,22 +255,21 @@ Player = function (game, x = gameWidth / 2, y = gameHeight / 2) {
                 // Stop dash and retrun physics variables to correct values    
                 timer.start();
             }
-            returnPhysics = function () {
+            function returnPhysics() {
                 currentPlayer.body.allowGravity = true;
                 currentPlayer.body.drag.x = basePlayer.dragX;
                 currentPlayer.isDashing = false;
                 currentPlayer.body.maxVelocity.x = basePlayer.maxVelX;
                 currentPlayer.jumpEnabled = true;
             }
-            timer = game.time.create(false);
+            var timer = game.time.create(false);
             timer.add(150, returnPhysics)
             dash(timer);
         }
     })
-
+    
     // #endregion
-    // #endregion */
-
+    
     // Invulnerability
     this.invulnerableTime = game.time.now;
     this.invulnerable = false;

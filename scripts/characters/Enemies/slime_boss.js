@@ -3,7 +3,9 @@ bossSlime = function (game, x, y) {
     scale = 4;
     this.scale.setTo(-scale, scale);
     this.slimeBoss = true;
-    this.baseMovementSpeed = 90
+    this.baseMovementSpeed = 90;
+    this.movementSpeed = this.baseMovementSpeed;
+    switchDirectionSlime(this);
     
     // Colors
     this.tint = rgbToHex(255, 255, 255);
@@ -21,12 +23,12 @@ bossSlime = function (game, x, y) {
     this.lastTransitionTime = 0;
     this.transitionThresh = 1200;
     // Color switch
-    this.timeLastColorSwitch = 0;
+    this.timeLastColorSwitch = game.time.now;
     this.timeColorSwitchThresh = 5000 + this.transitionThresh;
     this.switchingTime = 0;
 
     // Health
-    this.health = 50;
+    this.health = 1;
     this.currentlyHitCount = 0;
 }
 
@@ -45,8 +47,8 @@ bossSlime.prototype.update = function () {
         this.currentlyHit = false;
         this.currentlyHitCount = 0;
     }
-    if (slime.health <= 0) {
-        slime.die();
+    if (this.health <= 0) {
+        this.die();
     }
     
     // Switch color
@@ -80,6 +82,13 @@ bossSlime.prototype.update = function () {
     else{
         this.transition();
     }
+}
+
+bossSlime.prototype.die = function(){
+    this.body.enable = false;
+    this.curAnimationPriority = this.animationPriorities.dying;
+    this.animations.play('dying');
+    event_bossEnd_3_1();
 }
 
 
@@ -167,8 +176,9 @@ bossSlime.prototype.transition = function(){
 
 
 bossSlime.prototype.actGreen = function(){
-    var direction = this.movementSpeed != 0 ? this.movementSpeed : -1;
-    this.movementSpeed = this.baseMovementSpeed*1.5*Math.abs(direction)/direction;
+    var direction = this.movementSpeed != 0 ? this.movementSpeed : 1;
+    var directionFull = Math.abs(direction)/direction;
+    this.movementSpeed = this.baseMovementSpeed*1.5*directionFull;
     this.curAnimationPriority = this.animationPriorities.moving;
 }
 
@@ -229,8 +239,12 @@ bossSlime.prototype.actRed = function(){
 
 bossSlime.prototype.actRainbow = function(){
     this.rainbowTint(5)
-    var direction = this.movementSpeed != 0 ? this.movementSpeed : -1;
-    this.movementSpeed = this.baseMovementSpeed*2*Math.abs(direction)/direction;
+    var direction = this.movementSpeed != 0 ? this.movementSpeed : 1;
+    var directionFull = Math.abs(direction)/direction;
+    this.movementSpeed = this.baseMovementSpeed*1.5*directionFull;
+    this.curAnimationPriority = this.animationPriorities.moving;
+    this.faceDirection = -directionFull;
+    this.scale.x *= -directionFull;
     if (this.body.blocked.down){
         this.body.velocity.y = -300;
         this.curAnimationPriority = this.animationPriorities.attacking;

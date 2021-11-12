@@ -2,7 +2,6 @@
 GoldenHeart = function(game, x, y){        
     // instantiate Sprite object
     Phaser.Sprite.call(this, game, x, y, 'gold heart');
-    //this.anchor.setTo(.5,.5);   
     this.scale.setTo(1,1);
 
     // Animations
@@ -10,9 +9,9 @@ GoldenHeart = function(game, x, y){
 
     // physics
     game.physics.enable(this);
-    //this.body.setSize(9,28,28,20); // Creating hitbox. first two params are size of body, second two are offset of body
-    //this.body.data.gravityScale=0;
-    this.body.acceleration.y = -400;
+    this.body.acceleration.y = -globalGravity;
+
+    this.killable = true;
 
 }
 
@@ -22,12 +21,14 @@ GoldenHeart.prototype.constructor = GoldenHeart;
 // (Automatically called by World.update)
 GoldenHeart.prototype.update = function() {
     this.animations.play('heartbeat', 10);
-    game.physics.arcade.overlap(currentPlayer, goldHeartGroup, function(player, heart){killGoldenHeart(); healFullHearts(); /*heartCollect.play();*/});
+    game.physics.arcade.overlap(currentPlayer, goldHeartGroup, function(player, heart){heart.kill(); healFullHearts(); /*heartCollect.play();*/});
 }
 
 
-function killGoldenHeart(){
+GoldenHeart.prototype.kill = function(){
     if (basePlayer.currentHearts < basePlayer.maxHearts){
-        goldenHeart.kill();    
+        if (this.killable){
+            this.destroy();   
+        }
     }
 }
