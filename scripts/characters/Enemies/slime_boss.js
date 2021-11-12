@@ -23,13 +23,16 @@ bossSlime = function (game, x, y) {
     this.lastTransitionTime = 0;
     this.transitionThresh = 1200;
     // Color switch
-    this.timeLastColorSwitch = game.time.now;
+    this.timeLastColorSwitch = game.time.now + 800;
     this.timeColorSwitchThresh = 5000 + this.transitionThresh;
     this.switchingTime = 0;
 
     // Health
-    this.health = 1;
+    this.health = 50;
     this.currentlyHitCount = 0;
+    this.dead = false;
+
+    this.isPreFight = true;
 }
 
 bossSlime.prototype = Object.create(Slime.prototype);
@@ -39,6 +42,10 @@ bossSlime.prototype.constructor = bossSlime;
 bossSlime.prototype.update = function () {
     Slime.prototype.update(this); // Update like a normal slime
 
+    if (this.isPreFight){
+        this.preFight();
+        return;
+    }
     // Hitting
     if (this.currentlyHit && this.currentlyHitCount < 30){
         this.currentlyHitCount += 1;
@@ -49,13 +56,13 @@ bossSlime.prototype.update = function () {
     }
     if (this.health <= 0) {
         this.die();
+        return;
     }
     
     // Switch color
     if (game.time.now - this.timeLastColorSwitch > this.timeColorSwitchThresh){
         if (!this.isTrasitioning){
             this.color = this.chooseColor();
-            this.timeLastColorSwitch = game.time.now;
         }
     }
     if (!this.isTrasitioning){
@@ -84,11 +91,15 @@ bossSlime.prototype.update = function () {
     }
 }
 
+
 bossSlime.prototype.die = function(){
-    this.body.enable = false;
-    this.curAnimationPriority = this.animationPriorities.dying;
-    this.animations.play('dying');
-    event_bossEnd_3_1();
+    if (!this.dead){
+        this.body.enable = false;
+        this.curAnimationPriority = this.animationPriorities.dying;
+        this.animations.play('dying');
+        event_bossEnd_3_1();
+        this.dead = true;
+    }
 }
 
 
@@ -134,6 +145,7 @@ bossSlime.prototype.chooseColor = function(){
     }
     this.isTrasitioning = true;
     this.lastTransitionTime = game.time.now;
+    this.timeLastColorSwitch = game.time.now;
     this.r = 255;
     this.g = 0;
     this.b = 0;
@@ -176,9 +188,8 @@ bossSlime.prototype.transition = function(){
 
 
 bossSlime.prototype.actGreen = function(){
-    var direction = this.movementSpeed != 0 ? this.movementSpeed : 1;
-    var directionFull = Math.abs(direction)/direction;
-    this.movementSpeed = this.baseMovementSpeed*1.5*directionFull;
+    var direction = this.movementSpeed != 0 ? Math.abs(this.movementSpeed)/this.movementSpeed : 1;
+    this.movementSpeed = this.baseMovementSpeed*1.5*direction;
     this.curAnimationPriority = this.animationPriorities.moving;
 }
 
@@ -239,14 +250,29 @@ bossSlime.prototype.actRed = function(){
 
 bossSlime.prototype.actRainbow = function(){
     this.rainbowTint(5)
-    var direction = this.movementSpeed != 0 ? this.movementSpeed : 1;
-    var directionFull = Math.abs(direction)/direction;
-    this.movementSpeed = this.baseMovementSpeed*1.5*directionFull;
-    this.curAnimationPriority = this.animationPriorities.moving;
-    this.faceDirection = -directionFull;
-    this.scale.x *= -directionFull;
+    var direction = this.movementSpeed != 0 ? Math.abs(this.movementSpeed)/this.movementSpeed : 1;
+    this.movementSpeed = this.baseMovementSpeed*1.5*direction;
+    this.curAnimationPriority = this.animationPriorities.attacking;
     if (this.body.blocked.down){
         this.body.velocity.y = -300;
-        this.curAnimationPriority = this.animationPriorities.attacking;
+    }
+}
+
+
+bossSlime.prototype.preFight = function(){
+    this.rainbowTint(5);
+    if (this.body.position.x > 66*tileLength){
+        this.movementSpeed = -this.baseMovementSpeed;
+    }
+    else{
+        var timer = game.time.create(false);
+        bossSlimeVar = this
+        timer.add(1500, function(){
+            bossSlimeVar.movementSpeed = 0;
+            bossSlimeVar.isPreFight = false;
+            bossSlimeVar.chooseColor();
+            bossSlimeVar.transition();
+        })
+        timer.start()
     }
 }

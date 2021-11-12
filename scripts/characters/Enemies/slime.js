@@ -91,7 +91,16 @@ Slime.prototype.update = function (slime = this) {
          });
     }
 
+    // Velocity 
     slime.body.velocity.x = slime.movementSpeed;
+    if (slime.movementSpeed < 0){
+        slime.faceDirection = -1;
+        slime.scale.x = Math.abs(slime.scale.x);
+    }
+    else if (slime.movementSpeed > 0){
+        slime.faceDirection = 1;
+        slime.scale.x = -Math.abs(slime.scale.x);
+    }
 
     // Animations
     if (slime.curAnimationPriority == slime.animationPriorities.idle) {
@@ -143,14 +152,6 @@ Slime.prototype.die = function (slime = this) {
 function switchDirectionSlime(slime) {
     slime.timeLastSwitch = game.time.now;
     slime.movementSpeed *= -1;
-    if (slime.movementSpeed < 0){
-        slime.faceDirection = -1;
-        slime.scale.x = Math.abs(slime.scale.x);
-    }
-    else if (slime.movementSpeed > 0){
-        slime.faceDirection = 1;
-        slime.scale.x = -Math.abs(slime.scale.x);
-    }
 }
 
 Slime.prototype.kill = function(){

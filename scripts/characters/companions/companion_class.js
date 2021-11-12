@@ -139,6 +139,7 @@ equipCompanion = function(companion){
     // console.log('Companion Slot 1:', currentPlayer.companionSlots[0].name, '| Companion Slot 2:', currentPlayer.companionSlots[1].name);
 }
 
+// TODO: move to part of a class
 updateEquippedCompanionFollowObjects = function () {
     // updates the followObject property of equipped companions
     for (var i = 0; i < currentPlayer.companionSlots.length; i += 1) {

@@ -53,7 +53,6 @@ function addEnemyFromTilemapMC(tile){
 }
 
 function setTileProperties(){
-    
     function setTilePropertiesHelper(tile){
         if (tile.index == 795 || tile.index == 796){
             tile.collideUp = true;
@@ -72,6 +71,7 @@ function setTileProperties(){
 }
 
 function createGroups(){
+    // **Not used currently
     if (typeof coinGroup == 'undefined'){
         coinGroup = game.add.group();
     }

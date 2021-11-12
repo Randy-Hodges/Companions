@@ -59,6 +59,11 @@ function addMusic(music = 'backtrack'){
     }
 }
 
+function removeMusic(music = backtrack){
+    music.destroy(); 
+    addedAudio = false; 
+}
+
 function addUI(){
     // Money - Coins
     moneyText2 = game.add.text(9,27,"Coins: "  + money, { fontSize: '18px', fill: '#000' });

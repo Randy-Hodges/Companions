@@ -98,7 +98,7 @@ demo.level2_1.prototype = {
             gates2.alpha = 1;
         }
         // Warping
-        game.physics.arcade.collide(currentPlayer, warp1, function(player, warp){console.log('asdfasdf'); spawn = 2; changeLevel(0,"2-0");});
+        game.physics.arcade.collide(currentPlayer, warp1, function(player, warp){spawn = 2; changeLevel(0,"2-0");});
         game.physics.arcade.collide(currentPlayer, warp2, function(player, warp){
             backtrack.destroy(); 
             addedAudio = false; 
@@ -112,7 +112,7 @@ demo.level2_1.prototype = {
     },
     render: function(){
         //console.log('rendering');
-        game.debug.body(warp1);
+        // game.debug.body(warp1);
         // game.debug.spriteInfo(currentPlayer);
         // game.debug.geom(rect1, 'rgb(0,0,0)');
     },

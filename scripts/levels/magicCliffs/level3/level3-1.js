@@ -13,7 +13,8 @@ demo.level3_1.prototype = {
         game.load.image('Magic_Cliffs16', "assets/tiles/Magic-Cliffs-Environment/PNG/tileset.png");
         game.load.image('nes-color-palette', "assets/tiles/nes-color-palette.jpg");
         // Music
-        game.load.audio('backtrack', "assets/audio/music/Defy the Legends.mp3");
+        game.load.audio('bossFight', "assets/audio/music/Defy the Legends.mp3");
+        game.load.audio('backtrack', "assets/audio/music/Drenched Bluff.mp3");
         // Events
         game.load.spritesheet('slimeBoss', "assets/sprites/enemies/blue slime/slime-Sheet-white.png", 32, 25);
         loadHeadshots();
@@ -49,7 +50,7 @@ demo.level3_1.prototype = {
         // Warp points
         warp1 = new Warp(game, spawnpoint1[0]*tileLength, spawnpoint1[1]*tileLength);
         game.add.existing(warp1);
-        warp2 = new Warp(game, spawnpoint2[0]*tileLength, spawnpoint2[1]*tileLength, 180);
+        warp2 = new Warp(game, spawnpoint2[0]*tileLength, spawnpoint2[1]*tileLength);
         game.add.existing(warp2);
 
         // Coins, Enemies, Player
@@ -65,6 +66,9 @@ demo.level3_1.prototype = {
         addUI();
 
         // Events
+        cameraIsTweening = false;
+        tween = game.add.tween(game.camera).to({ x: currentPlayer.x - game.width/2, y: currentPlayer.y - game.height/2}, 200, 'Linear', true, 0);
+        tweeningCount = 0;
         tilemap.setCollisionByExclusion(indexes = [0, -1], collides = true, layer = 'gates1')
         gates1.alpha = 0;
         gates1Shown = false;
@@ -80,6 +84,10 @@ demo.level3_1.prototype = {
         game.physics.arcade.collide(currentPlayer, levelTiles);
         game.physics.arcade.collide(enemyGroup, levelTiles);
 
+        // Warping
+        game.physics.arcade.collide(currentPlayer, warp1, function(player, warp){spawn = 2; changeLevel(0,"3-0");});
+        game.physics.arcade.collide(currentPlayer, warp2, function(player, warp){spawn = 1; changeLevel(0,"0");});
+
         // Events
         if (gates1Shown){
             game.physics.arcade.collide(currentPlayer, gates1);
@@ -89,24 +97,23 @@ demo.level3_1.prototype = {
         else{
             gates1.alpha = 0;
         }
-        this.checkEvents();
+        
 
-        // Warping
-        game.physics.arcade.collide(currentPlayer, warp1, function(player, warp){spawn = 2; changeLevel(0,"3-0");});
-        game.physics.arcade.collide(currentPlayer, warp2, function(player, warp){spawn = 1; changeLevel(0,"0");});
+        this.checkEvents();
     },
     render: function(){
         //console.log('rendering');
-        // game.debug.body(slimeBoss);
+        game.debug.body(warp2);
         // game.debug.spriteInfo(currentPlayer);
     },
     createSpawnPoints: function(){
-        //SpawnPoints are in units of tiles
+        // SpawnPoints are in units of tiles
         spawnpoint1 = [3, 46]; // 3, 46 normal
         spawnpoint2 = [115, 55];
         if (spawn == 2){
             spawnpoint = spawnpoint2.slice();
             spawnpoint[0] -= 2;
+            spawnpoint[1] -= 2;
             spawndirection = -1;
         }
         else { // (spawn == 1)
@@ -123,12 +130,26 @@ demo.level3_1.prototype = {
                     eventTrackingList[0] = true;
                 }
             }
-            if (eventTrackingList[1] == false) {
-                if (rect2.intersects(currentPlayer.body)) {
-                    event_bossStart_3_1();
-                    eventTrackingList[1] = true;
-                }
+        }
+        if (eventTrackingList[1] == false) {
+            if (rect2.intersects(currentPlayer.body)) {
+                event_bossStart_3_1();
+                eventTrackingList[1] = true;
             }
+        }
+        if (cameraIsTweening){
+            game.camera.unfollow();
+            tweeningCount += 1;
+            if (tweeningCount % 2 == 0){
+                tween.stop();
+                tween = game.add.tween(game.camera).to({ x: currentPlayer.x - game.width/2, y: currentPlayer.y - game.height/2}, 100, 'Linear', true, 0);
+            }
+            if (tweeningCount > 60){
+                tween.stop();
+                game.camera.follow(currentPlayer);
+                cameraIsTweening = false;
+            }
+            // game.physics.arcade.moveToObject(game.camera, currentPlayer, 250);
         }
     }
 };
