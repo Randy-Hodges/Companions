@@ -86,7 +86,7 @@ demo.level3_1.prototype = {
 
         // Warping
         game.physics.arcade.collide(currentPlayer, warp1, function(player, warp){spawn = 2; changeLevel(0,"3-0");});
-        game.physics.arcade.collide(currentPlayer, warp2, function(player, warp){spawn = 1; changeLevel(0,"0");});
+        game.physics.arcade.collide(currentPlayer, warp2, function(player, warp){removeMusic(); spawn = 1; changeLevel(0,"0");});
 
         // Events
         if (gates1Shown){
