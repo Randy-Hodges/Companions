@@ -11,7 +11,7 @@ redSlime.prototype.update = function () {
     Slime.prototype.update(this); // Update like a normal slime
 
     // Add red specific properties
-    if (!this.currentlyHit) {
+    if (!this.currentlyHit && this.inWorld) {
         // if player is close to slime and is in front of slime
         if (game.physics.arcade.distanceBetween(this, currentPlayer) < 160) {
             this.attacking = true;

@@ -56,9 +56,9 @@ demo.level3_1.prototype = {
         addPlayer();
 
         // Events
-        game.camera.unfollow();
-        game.camera.x = 27.5*tileWidth;
-        game.camera.y = 39.5*tileWidth;
+        // game.camera.unfollow();
+        // game.camera.x = 27.5*tileWidth;
+        // game.camera.y = 39.5*tileWidth;
 
         slimeBoss = new bossSlime(game, 50*tileWidth, 52*tileWidth);
         game.add.existing(slimeBoss);
@@ -92,8 +92,8 @@ demo.level3_1.prototype = {
         }
 
         // Warping
-        game.physics.arcade.collide(currentPlayer, warp1, function(player, warp){spawn = 1; spawndirection = 1; changeLevel(0,"0");});
-        game.physics.arcade.collide(currentPlayer, warp2, function(player, warp){spawn = 1; spawndirection = 1; changeLevel(0,"2-1");});
+        game.physics.arcade.collide(currentPlayer, warp1, function(player, warp){spawn = 2; changeLevel(0,"3-0");});
+        game.physics.arcade.collide(currentPlayer, warp2, function(player, warp){spawn = 1; changeLevel(0,"0");});
     },
     render: function(){
         //console.log('rendering');
@@ -102,20 +102,18 @@ demo.level3_1.prototype = {
     },
     createSpawnPoints: function(){
         //SpawnPoints are in units of tiles
-        spawnpoint1 = [25, 52]; // 8, 47
+        spawnpoint1 = [3, 46]; // 3, 47 normal, 25, 52 Boss
         spawnpoint2 = [0, 0];
         if (spawn == 2){
             spawnpoint = spawnpoint2.slice();
-            spawnpoint[0] += 6;
+            spawnpoint[0] -= 2;
+            spawndirection = -1;
         }
         else { // (spawn == 1)
             spawnpoint = spawnpoint1.slice();
-            spawnpoint[0] += 7;
+            spawnpoint[0] += 2;
+            spawndirection = 1;
         }
-        // else{
-        //     spawnpoint = spawnpoint2.slice();
-            
-        // }
     }
 };
     

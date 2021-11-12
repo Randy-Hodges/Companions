@@ -72,14 +72,14 @@ demo.level1_2.prototype = {
         game.physics.arcade.collide(enemyGroup, levelTiles);
 
         // Warping
-        game.physics.arcade.collide(currentPlayer, warp1, function (player, warp, backtrack) { spawn = 1; spawndirection = 1; changeLevel(0, "1-1"); });
+        game.physics.arcade.collide(currentPlayer, warp1, function (player, warp) { spawn = 2; changeLevel(0, "1-1"); });
         game.physics.arcade.collide(currentPlayer, warp2, function (player, warp) { 
             backtrack.destroy(); 
             addedAudio = false; 
             level2Unlocked = true; 
             level1Completed = true; 
             piggyUnlocked = true;
-            spawn = 2; spawndirection = 1; 
+            spawn = 1;
             changeLevel(0, "0"); 
         });
 
@@ -96,16 +96,14 @@ demo.level1_2.prototype = {
         spawnpoint1 = [10, 12];
         spawnpoint2 = [107, 22];
         if (spawn == 1) {
-            spawnpoint = spawnpoint2.slice();
-            //spawnpoint[0] += 2;
+            spawnpoint = spawnpoint1.slice();
+            spawnpoint[0] += 2;
+            spawndirection = 1;
         }
         if (spawn == 2){
-            spawnpoint = spawnpoint1.slice();
-            spawnpoint[0] += 2;
-        }
-        if (spawn == 0) {
-            spawnpoint = spawnpoint1.slice();
-            spawnpoint[0] += 2;
+            spawnpoint = spawnpoint2.slice();
+            spawnpoint[0] -= 2;
+            spawndirection = -1;
         }
     },
     collideEvents: function () {

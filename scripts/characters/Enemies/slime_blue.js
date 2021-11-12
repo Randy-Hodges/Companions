@@ -11,7 +11,7 @@ blueSlime.prototype.update = function () {
     Slime.prototype.update(this); // Update like a normal slime
 
     // Add blue specific properties
-    if (!this.currentlyHit) {
+    if (!this.currentlyHit && this.inWorld) {
         // if player is close to slime and is in front of slime
         if (game.physics.arcade.distanceBetween(this, currentPlayer) < 160 && this.faceDirection * (this.body.position.x - currentPlayer.body.position.x) < 0) {
             this.attacking = true;

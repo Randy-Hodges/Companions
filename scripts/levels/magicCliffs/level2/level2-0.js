@@ -62,8 +62,8 @@ demo.level2_0.prototype = {
         game.physics.arcade.collide(enemyGroup, levelTiles);
 
         // Warping
-        game.physics.arcade.collide(currentPlayer, warp1, function(player, warp){spawn = 1; spawndirection = 1; changeLevel(0,"0");});
-        game.physics.arcade.collide(currentPlayer, warp2, function(player, warp){spawn = 1; spawndirection = 1; changeLevel(0,"2-1");});
+        game.physics.arcade.collide(currentPlayer, warp1, function(player, warp){spawn = 1; changeLevel(0,"0");});
+        game.physics.arcade.collide(currentPlayer, warp2, function(player, warp){spawn = 1; changeLevel(0,"2-1");});
     },
     render: function(){
         //console.log('rendering');
@@ -75,10 +75,12 @@ demo.level2_0.prototype = {
         spawnpoint1 = [4, 44];
         spawnpoint2 = [119, 2];
         if (spawn == 2){
+            spawndirection = -1;
             spawnpoint = spawnpoint2.slice();
             spawnpoint[0] += 2;
         }
         else { // (spawn == 1)
+            spawndirection = 1;
             spawnpoint = spawnpoint1.slice();
             spawnpoint[0] += 2;
         }

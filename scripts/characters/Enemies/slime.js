@@ -80,13 +80,15 @@ Slime.prototype.update = function (slime = this) {
         }
     }
 
-
     // Collision
-    if ((slime.body.blocked.right || slime.body.blocked.left) && game.time.now - slime.timeLastSwitch > 300) {
+    if ((slime.body.blocked.right || slime.body.blocked.left)) {
         switchDirectionSlime(slime);
     }
     else if (enemyGroup) {
-        game.physics.arcade.collide(enemyGroup, enemyGroup, function (enemy1, enemy2) { switchDirectionSlime(enemy1); switchDirectionSlime(enemy2) });
+        game.physics.arcade.collide(enemyGroup, enemyGroup, function (enemy1, enemy2) { 
+            switchDirectionSlime(enemy1); 
+            switchDirectionSlime(enemy2);
+         });
     }
 
     slime.body.velocity.x = slime.movementSpeed;
@@ -149,6 +151,10 @@ function switchDirectionSlime(slime) {
         slime.faceDirection = 1;
         slime.scale.x = -Math.abs(slime.scale.x);
     }
+}
+
+Slime.prototype.kill = function(){
+    this.destroy();
 }
 
 

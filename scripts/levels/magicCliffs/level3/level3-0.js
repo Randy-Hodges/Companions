@@ -63,8 +63,13 @@ demo.level3_0.prototype = {
         game.physics.arcade.collide(enemyGroup, levelTiles);
 
         // Warping
-        game.physics.arcade.collide(currentPlayer, warp1, function(player, warp){spawn = 1; spawndirection = 1; changeLevel(0,"0");});
-        game.physics.arcade.collide(currentPlayer, warp2, function(player, warp){backtrack.destroy(); addedAudio = false; spawn = 1; spawndirection = 1; changeLevel(0,"3-1");});
+        game.physics.arcade.collide(currentPlayer, warp1, function(player, warp){spawn = 1; changeLevel(0,"0");});
+        game.physics.arcade.collide(currentPlayer, warp2, function(player, warp){
+            backtrack.destroy(); 
+            addedAudio = false; 
+            spawn = 1; 
+            changeLevel(0,"3-1");
+            });
     },
     render: function(){
         //console.log('rendering');
@@ -77,16 +82,14 @@ demo.level3_0.prototype = {
         spawnpoint2 = [444, 40];
         if (spawn == 2){
             spawnpoint = spawnpoint2.slice();
-            spawnpoint[0] += 6;
+            spawnpoint[0] -= 2;
+            spawndirection = -1;
         }
         else { // (spawn == 1)
             spawnpoint = spawnpoint1.slice();
             spawnpoint[0] += 2;
+            spawndirection = 1;
         }
-        // else{
-        //     spawnpoint = spawnpoint2.slice();
-            
-        // }
     }
 };
     

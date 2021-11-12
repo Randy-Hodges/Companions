@@ -83,6 +83,7 @@ demo.level2_1.prototype = {
         companionGroup.add(frog);
     },
     update: function(){
+        
         // Collision
         game.physics.arcade.collide(currentPlayer, levelTiles);
         game.physics.arcade.collide(enemyGroup, levelTiles);
@@ -96,18 +97,18 @@ demo.level2_1.prototype = {
             gates1.alpha = 0;
             gates2.alpha = 1;
         }
-        this.checkEvents();
         // Warping
-        game.physics.arcade.collide(currentPlayer, warp1, function(player, coin){spawn = 2; spawndirection = 1; changeLevel(0,"2-0");});
-        game.physics.arcade.collide(currentPlayer, warp2, function(player, coin){
+        game.physics.arcade.collide(currentPlayer, warp1, function(player, warp){console.log('asdfasdf'); spawn = 2; changeLevel(0,"2-0");});
+        game.physics.arcade.collide(currentPlayer, warp2, function(player, warp){
             backtrack.destroy(); 
             addedAudio = false; 
             spawn = 1; 
-            spawndirection = 1; 
             changeLevel(0,"0");
             level2Completed = true;
             level3Unlocked = true;
         });
+        
+        this.checkEvents();
     },
     render: function(){
         //console.log('rendering');
@@ -117,22 +118,20 @@ demo.level2_1.prototype = {
     },
     createSpawnPoints: function(){
         //SpawnPoints are in units of tiles
-        spawnpoint1 = [42, 75];
+        spawnpoint1 = [42, 74.8];
         spawnpoint2 = [244, 4];
         if (spawn == 2){
             spawnpoint = spawnpoint2.slice();
             spawnpoint[0] += 2;
             spawnpoint[1] += 20;
+            spawndirection = -1;
         }
         else { // (spawn == 1)
             spawnpoint = spawnpoint1.slice();
             spawnpoint[0] += 7;
             spawnpoint[1] -= 2;
+            spawndirection = 1;
         }
-        // else{
-        //     spawnpoint = spawnpoint2.slice();
-            
-        // }
     },
     checkEvents: function () {
         if (!level2Completed) {

@@ -5,7 +5,7 @@ var tileLength = 16, tileWidth = 16;
 var money = 0, moneyText;
 var addedAudio = false;
 
-var spawn = 0, spawndirection = -1;
+var spawn = 1, spawndirection = 1;
 var eventTrackingList = [];
 
 var coinGroup, enemyGroup, heartGroup;

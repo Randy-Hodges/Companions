@@ -25,7 +25,6 @@ GoldenHeart.prototype.update = function() {
     game.physics.arcade.overlap(currentPlayer, goldHeartGroup, function(player, heart){killGoldHeart(); healFullHearts(); /*heartCollect.play();*/});
 }
 
-
 function killGoldHeart () {
     if (basePlayer.maxHearts > basePlayer.currentHearts) {
         heart.kill();

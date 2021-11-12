@@ -42,7 +42,7 @@ demo.level1.prototype = {
         game.world.setBounds(0, 0, tilemap.layer.widthInPixels, tilemap.layer.heightInPixels);
         
         // Warp points (doing it with coins that aren't physically loaded in the game)
-        warp1 = new Warp(game, spawnpoint1[0]*tileLength, spawnpoint1[1]*tileLength);
+        warp1 = new Warp(game, spawnpoint0[0]*tileLength, spawnpoint0[1]*tileLength);
         warp2 = new Warp(game, spawnpoint2[0]*tileLength, spawnpoint2[1]*tileLength);
 
         // Coins, Enemies, Player
@@ -73,31 +73,33 @@ demo.level1.prototype = {
         game.physics.arcade.collide(enemyGroup, levelTiles);
 
         // Warping
-        game.physics.arcade.collide(currentPlayer, warp1, function(player, coin){backtrack.destroy(); addedAudio = false; spawn = 1; spawndirection = 1; changeLevel(0, "0");});
-        game.physics.arcade.collide(currentPlayer, warp2, function(player, coin){spawn = 2; spawndirection = -1; changeLevel(0,"1-1");});
+        game.physics.arcade.collide(currentPlayer, warp1, function(player, coin){backtrack.destroy(); addedAudio = false; spawn = 1; changeLevel(0, "0");});
+        game.physics.arcade.collide(currentPlayer, warp2, function(player, coin){spawn = 1; changeLevel(0,"1-1");});
 
         // Events
         this.collideEvents();
     },
     render: function(){
-    //    game.debug.body(currentPlayer.slash);
+    //    game.debug.body(currentPlayer);
         // game.debug.spriteInfo(currentPlayer);
         // game.debug.geom(rect1, 'rgb(0,0,0)');
     },
     createSpawnPoints: function(){
-        spawnpoint0 = [25, 35]
-        spawnpoint1 = [0,6];
+        spawnpoint0 = [0,6];
+        spawnpoint1 = [23, 35]
         spawnpoint2 = [229,12];
         if (spawn == 0){
             spawnpoint = spawnpoint0.slice();
         }
         else if (spawn == 1){
-            spawnpoint = spawnpoint2.slice();
-            spawnpoint[0] -= 2;
-        }
-        else { 
             spawnpoint = spawnpoint1.slice();
             spawnpoint[0] += 2;
+            spawndirection = 1;
+        }
+        else{ 
+            spawnpoint = spawnpoint2.slice();
+            spawnpoint[0] -= 2;
+            spawndirection = -1;
         }
     },
     collideEvents: function(){

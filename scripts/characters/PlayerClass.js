@@ -41,7 +41,7 @@ Player = function (game, x = gameWidth / 2, y = gameHeight / 2) {
     // Instantiate Sprite object
     Phaser.Sprite.call(this, game, x, y, 'player');
     this.anchor.setTo(.5, .5);
-    this.scale.setTo(spawndirection, 1);
+    this.scale.setTo(-spawndirection, 1);
     currentPlayer = this;
 
     // HP
@@ -419,7 +419,7 @@ Player.prototype.calcDamageKnockback = function (enemy, player = this) {
 }
 
 // Health Functions
-Player.prototype.takeDamage = function (dmg) {
+Player.prototype.takeDamage = function (dmg = 1) {
     numhearts = basePlayer.currentHearts;
     // If Dead
     if (numhearts <= 1) {
@@ -429,11 +429,13 @@ Player.prototype.takeDamage = function (dmg) {
     }
     // Otherwise, Remove one heart
     else {
-        basePlayer.currentHearts -= 1;
-        hearts.removeChildAt(numhearts - 1);
+        basePlayer.currentHearts -= dmg;
+        for (var i = 1; i <= dmg; i += 1){
+            hearts.removeChildAt(numhearts - i);
+        }
         this.invulnerable = true;
         this.invulnerableTime = game.time.now;
-        console.log("Got hit. Current hearts:", basePlayer.currentHearts, "Num hearts:", numhearts);
+        console.log("Got hit. Current hearts:", basePlayer.currentHearts, "Num hearts:", numhearts - dmg);
     }
 }
 
