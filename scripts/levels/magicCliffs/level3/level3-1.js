@@ -66,17 +66,7 @@ demo.level3_1.prototype = {
         addUI();
 
         // Events
-        cameraIsTweening = false;
-        tween = game.add.tween(game.camera).to({ x: currentPlayer.x - game.width/2, y: currentPlayer.y - game.height/2}, 200, 'Linear', true, 0);
-        tweeningCount = 0;
-        tilemap.setCollisionByExclusion(indexes = [0, -1], collides = true, layer = 'gates1')
-        gates1.alpha = 0;
-        gates1Shown = false;
-        if (!level3Completed) {
-            rect1 = new Phaser.Rectangle(18*tileLength, 0, 40, 1000); // x0, y0, width, height
-            rect2 = new Phaser.Rectangle(46*tileLength, 0, 40, 1000); // x0, y0, width, height
-            eventTrackingList = [false, false];
-        }
+        this.setUpEvents();
 
     },
     update: function(){
@@ -103,7 +93,7 @@ demo.level3_1.prototype = {
     },
     render: function(){
         //console.log('rendering');
-        game.debug.body(warp2);
+        // game.debug.body(warp2);
         // game.debug.spriteInfo(currentPlayer);
     },
     createSpawnPoints: function(){
@@ -150,6 +140,19 @@ demo.level3_1.prototype = {
                 cameraIsTweening = false;
             }
             // game.physics.arcade.moveToObject(game.camera, currentPlayer, 250);
+        }
+    },
+    setUpEvents: function(){
+        cameraIsTweening = false;
+        tween = game.add.tween(game.camera).to({ x: currentPlayer.x - game.width/2, y: currentPlayer.y - game.height/2}, 200, 'Linear', true, 0);
+        tweeningCount = 0;
+        tilemap.setCollisionByExclusion(indexes = [0, -1], collides = true, layer = 'gates1')
+        gates1.alpha = 0;
+        gates1Shown = false;
+        if (!level3Completed) {
+            rect1 = new Phaser.Rectangle(18*tileLength, 0, 40, 1000); // x0, y0, width, height
+            rect2 = new Phaser.Rectangle(46*tileLength, 0, 40, 1000); // x0, y0, width, height
+            eventTrackingList = [false, false];
         }
     }
 };

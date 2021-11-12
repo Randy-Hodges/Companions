@@ -17,6 +17,9 @@ function event1_1_0(){
     }
     
     // Ghost
+    if (typeof grandfather !== 'undefined'){
+        grandfather.leave();
+    }
     grandfather = new GrandfatherNPC(game, 438, 520, 'grandfather');
     game.add.existing(grandfather);
 
@@ -39,12 +42,20 @@ function event2_1_0(){
     }
     
     // Ghost
+    if (typeof grandfather !== 'undefined'){
+        grandfather.leave();
+    }
     grandfather = new GrandfatherNPC(game, 1000, 455, 'grandfather');
     grandfather.flipX();
     game.add.existing(grandfather);
 
     var endOfDialogueFunction = function(){
         grandfather.leave();
+        grandfather = new GrandfatherNPC(game, 62*tileLength, 29*tileLength, 'grandfather');
+        grandfather.flipX();
+        grandfather.setIdle();
+        grandfather.setDialogue([['I have here in my notes that you PRESS SPACEBAR TO SLASH ATTACK.', 'ghostHeadshot']])    
+        game.add.existing(grandfather);
     }
     
     startDialogue(eventDialogueList, endOfDialogueFunction);
@@ -61,6 +72,9 @@ function event3_1_2(){
     }
     
     // Ghost
+    if (typeof grandfather !== 'undefined'){
+        grandfather.leave();
+    }
     grandfather = new GrandfatherNPC(game, 380, 160, 'grandfather');
     game.add.existing(grandfather);
 
@@ -76,13 +90,16 @@ function event4_1_2(){
     var eventDialogueList = [];
     player = 'playerHeadshot';
     ghost = 'ghostHeadshot';
-    text1 = ['[Will edit this dialogue later] Aye look it is your first companion. Go ahead and free it from '+
-                'that cage. asdfasfasdfsa', ghost];
+    text1 = ['Hey look, a companion. Go ahead and free it from '+
+                'that cage.', ghost];
     for (i = 1; i<=1; i += 1){
         eventDialogueList.push(eval("text" + i));
     }
     
     // Ghost
+    if (typeof grandfather !== 'undefined'){
+        grandfather.leave();
+    }
     grandfather = new GrandfatherNPC(game, 1500, 380, 'grandfather');
     grandfather.flipX()
     game.add.existing(grandfather);

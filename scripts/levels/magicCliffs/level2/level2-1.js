@@ -45,7 +45,7 @@ demo.level2_1.prototype = {
         
         // Warp points
         warp1 = new Warp(game, spawnpoint1[0]*tileLength, spawnpoint1[1]*tileLength, 270, 1, 2.5);
-        game.add.existing(warp1);
+        // game.add.existing(warp1);
         warp2 = new Warp(game, spawnpoint2[0]*tileLength, spawnpoint2[1]*tileLength, 270);
         game.add.existing(warp2);
         
@@ -63,18 +63,7 @@ demo.level2_1.prototype = {
         addUI();
 
         // Events
-        tilemap.setCollisionByExclusion(indexes = [0, -1], collides = true, layer = 'gates1')
-        tilemap.setCollisionByExclusion(indexes = [0, -1], collides = true, layer = 'gates2')
-        gates1.alpha = 0;
-        gates2.alpha = 0;
-        gates1Shown = false;
-        gates2Shown = false;
-        if (!level2Completed) {
-            gates1Shown = true;
-            rect1 = new Phaser.Rectangle(4560, 0, 40, 1000); // x0, y0, width, height
-            rect2 = new Phaser.Rectangle(1560, 0, 40, 1000); // x0, y0, width, height
-            eventTrackingList = [false, false];
-        }
+        this.setUpEvents();
 
         // Companion
         companionGroup = game.add.group();
@@ -150,6 +139,20 @@ demo.level2_1.prototype = {
                     eventTrackingList[1] = true;
                 }
             }
+        }
+    },
+    setUpEvents: function() {
+        tilemap.setCollisionByExclusion(indexes = [0, -1], collides = true, layer = 'gates1')
+        tilemap.setCollisionByExclusion(indexes = [0, -1], collides = true, layer = 'gates2')
+        gates1.alpha = 0;
+        gates2.alpha = 0;
+        gates1Shown = false;
+        gates2Shown = false;
+        if (!level2Completed) {
+            gates1Shown = true;
+            rect1 = new Phaser.Rectangle(4560, 0, 40, 1000); // x0, y0, width, height
+            rect2 = new Phaser.Rectangle(1560, 0, 40, 1000); // x0, y0, width, height
+            eventTrackingList = [false, false];
         }
     }
 };

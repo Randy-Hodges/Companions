@@ -8,6 +8,9 @@ function event1_3_1(){
     }
     
     // Ghost
+    if (typeof grandfather !== 'undefined'){
+        grandfather.leave();
+    }
     grandfather = new GrandfatherNPC(game, 19*tileLength, 47*tileLength, 'grandfather');
     grandfather.flipX();
     game.add.existing(grandfather);

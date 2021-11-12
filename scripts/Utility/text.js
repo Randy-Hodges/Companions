@@ -256,8 +256,8 @@ function dialogueReset(){
 
 function startDialogue(dialogueListIncoming, endFunction = undefined, functionList = undefined) {
     dialogueList = dialogueListIncoming;
-    dialogueFunctionList = functionList;
     dialogueEndFunction = endFunction;
+    dialogueFunctionList = functionList;
     currentPlayer.disableMovement = true;
     generateText(dialogueList[dialogueIndex][0], dialogueList[dialogueIndex][1]);
 }
