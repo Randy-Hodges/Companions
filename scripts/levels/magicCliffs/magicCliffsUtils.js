@@ -10,8 +10,8 @@ magicCliffsNoCollide = [0,1768,1769,1801,1802,1803,1804,1805,1806,661,1831,1832,
 exclusionLayer = {};
 
 function loadHeadshots(){
-    game.load.image('ghostHeadshot', "assets/sprites/characters/headshots/Ghost1.png");
-    game.load.image('playerHeadshot', "assets/sprites/characters/headshots/Player1.png");
+    game.load.image('ghostHeadshot', "assets/sprites/characters/portraits/Icons_28.png");
+    // game.load.image('playerHeadshot', "assets/sprites/characters/headshots/Player1.png");
 }
 
 

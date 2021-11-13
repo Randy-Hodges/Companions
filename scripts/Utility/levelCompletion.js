@@ -1,3 +1,5 @@
+firstVisitVillage = true;
+
 // level 1 is automatically unlocked
 level1Unlocked = true;
 level1Completed = false;

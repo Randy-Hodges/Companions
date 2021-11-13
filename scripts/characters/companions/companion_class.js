@@ -1,6 +1,7 @@
 var companionGroup;
-var piggyUnlocked = true;
-var froggyUnlocked = true;
+var piggyUnlocked = false;
+var froggyUnlocked = false;
+var slimeUnlocked = false;
 
 Companion = function(game, spritesheetStrID, x = gameWidth/2, y = gameHeight/2, followOn = false, isEquipped = false){ 
     

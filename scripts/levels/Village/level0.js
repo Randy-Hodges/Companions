@@ -44,6 +44,9 @@ demo.level0.prototype = {
         // Warp points
         warp1 = new Warp(game, spawnpoint1[0]*tileLength, spawnpoint1[1]*tileLength);
         game.add.existing(warp1) // comment this out to make warp zone invisible
+        cp = new Checkpoint(game, (spawnpoint1[0] - 3)*tileLength, (spawnpoint1[1]+ 2)*tileLength);
+        game.add.existing(cp);
+
         
         // Golden Heart
         addGoldHeart(52, 17.5);
@@ -58,31 +61,36 @@ demo.level0.prototype = {
             
         // Companion Init
         companionGroup = game.add.group();
-        if (piggyUnlocked){
+        if (piggyUnlocked || devTools){
             if (!basePlayer.companionNames.includes('piggy')){
                 pig = new CompanionPig(game, 25*tileLength, 35*tileLength, false, false);
                 game.add.existing(pig);
                 companionGroup.add(pig);
             }
         }
-        if (froggyUnlocked){
+        if (froggyUnlocked || devTools){
             if (!basePlayer.companionNames.includes('froggy')){
                 frog = new CompanionFrog(game, 27*tileLength, 35*tileLength, false, false);
                 game.add.existing(frog);
                 companionGroup.add(frog);
             }
         }
-        slimeComp = new CompanionSlime(game, 23*tileLength, 35*tileLength, false, false);
-        game.add.existing(slimeComp);
-        companionGroup.add(slimeComp);
-        
+        if (slimeUnlocked || devTools || true){
+            if (!basePlayer.companionNames.includes('slime')){
+                slimeComp = new CompanionSlime(game, 23*tileLength, 35*tileLength, false, false);
+                game.add.existing(slimeComp);
+                companionGroup.add(slimeComp);
+            }
+        }
     },
     update: function(){
         // Collision
         game.physics.arcade.collide(currentPlayer, levelTiles);
         
         // Warping
-        game.physics.arcade.collide(currentPlayer, warp1, function(player, coin){backtrack.destroy(); addedAudio = false; spawn = 2; spawndirection = 1; changeToMap(0)});
+        game.physics.arcade.collide(currentPlayer, warp1, function(player, warp){removeMusic(); spawn = 2; changeToMap(0)});
+
+        this.checkEvents();
     },
     render: function(){
         // game.debug.body(currentPlayer.slash);
@@ -91,17 +99,25 @@ demo.level0.prototype = {
     },
     createSpawnPoints: function(){
         spawnpoint0 = [25, 35];
-        spawnpoint1 = [61, 14]; // for the right side of village screen 
-        spawnpoint2 = [25, 35];
+        spawnpoint1 = [61, 14];
+        spawnpoint2 = [25, 35];  
         if (spawn == 0){
             spawnpoint = spawnpoint0.slice();
         };
         if (spawn == 2){
-            spawnpoint = spawnpoint1.slice();
+            spawnpoint = spawnpoint2.slice();
             spawnpoint[0] -= 2;
         };
         if (spawn == 1){
-           spawnpoint = spawnpoint2.slice();
+            spawnpoint = spawnpoint1.slice();
+            spawnpoint[0] -= 2;
+            spawndirection = -1;
+        }
+    },
+    checkEvents: function(){
+        if (firstVisitVillage){
+            event1_village();
+            firstVisitVillage = false;
         }
     }
 }

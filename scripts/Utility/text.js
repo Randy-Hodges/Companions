@@ -41,7 +41,7 @@ function generateText(text, sprite) {
 
 function placeHeadshot(sprite) {
     headshot = game.add.sprite(10, game.height - textHeight, sprite);
-    headshot.scale.setTo(1.2, 1.2);
+    headshot.scale.setTo(2.2, 2.2); // 1.2 1.2 for 64x64
     headshot.fixedToCamera = true;
 }
 
