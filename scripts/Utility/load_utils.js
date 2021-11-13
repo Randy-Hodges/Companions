@@ -14,7 +14,8 @@ function loadItems(){
     game.load.audio('coin collect', "assets/audio/soundeffects/Collect Coin Sound Effect.mp3");
     game.load.spritesheet('heart', "assets/sprites/items/Collectible/heart_tilesheet.png", 13, 13);
     game.load.spritesheet('gold heart', "assets/sprites/items/Collectible/gold_heart_tilesheet.png", 13, 13);
-    game.load.spritesheet('portal', "assets/sprites/items/portal/pixelportal_tilesheet.png", 16, 32)
+    game.load.spritesheet('portal', "assets/sprites/items/portal/pixelportal_tilesheet.png", 16, 32);
+    game.load.spritesheet('cp', "assets/sprites/items/money/spr_coin_azu.png", 16, 16);
 }
 
 function loadEnemies(){

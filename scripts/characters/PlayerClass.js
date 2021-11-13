@@ -10,7 +10,7 @@ BasePlayer = function () {
 
     // hearts - HP
     this.maxHearts = 5;
-    this.currentHearts = 5;
+    this.currentHearts = this.maxHearts;
 
     // companions (string)
     this.companionNames = [undefined, undefined];
@@ -30,7 +30,7 @@ BasePlayer = function () {
     this.jumpStorage = 0;
 
     this.dashEnabled = false;
-
+    this.lastCP = new CheckpointBase(55*tileLength, 16*tileLength, 'level0');
 }
 
 basePlayer = new BasePlayer();
@@ -370,7 +370,7 @@ Player.prototype.update = function (player = this) {
     if (enemyGroup != undefined) {
         if (!this.invulnerable) {
             game.physics.arcade.collide(currentPlayer, enemyGroup, function (player, enemy) {
-                player.calcDamageKnockback(enemy);
+                player.calcDamageKnockback(enemy);                
             });
         }
     }
@@ -379,7 +379,6 @@ Player.prototype.update = function (player = this) {
     if (this.invulnerable && game.time.now - this.invulnerableTime > this.iFrames) {
         this.invulnerable = false;
     }
-
 };
 
 Player.prototype.calcDamageKnockback = function (enemy, player = this) {
@@ -423,8 +422,7 @@ Player.prototype.takeDamage = function (dmg = 1) {
     // If Dead
     if (numhearts <= 1) {
         hearts.removeChildAt(numhearts - 1);
-        changeLevel(0, "0");
-        basePlayer.currentHearts = basePlayer.maxHearts;
+        currentPlayer.die();
     }
     // Otherwise, Remove one heart
     else {
@@ -434,11 +432,22 @@ Player.prototype.takeDamage = function (dmg = 1) {
         }
         this.invulnerable = true;
         this.invulnerableTime = game.time.now;
-        console.log("Got hit. Current hearts:", basePlayer.currentHearts, "Num hearts:", numhearts - dmg);
+        // console.log("Got hit. Current hearts:", basePlayer.currentHearts, "Num hearts:", numhearts - dmg);
     }
 }
 
+Player.prototype.die = function(){
+    removeMusic();
+    if (typeof bossMusic !== 'undefined'){
+        removeMusic(bossMusic);
+    }
+    spawn = -1;
+    changeLevel(0, basePlayer.lastCP.level);
+    basePlayer.currentHearts = basePlayer.maxHearts;
+}
 
+// #region Hearts
+// TODO: make as part of the player class (for the functions below)
 // Heart Functions - Health
 function createHearts(numhearts) {
     hearts = game.add.group();
@@ -481,24 +490,4 @@ function increaseMaxHearts(num) {
     basePlayer.maxHearts = basePlayer.maxHearts + num;
     //console.log(basePlayer.maxHearts);
 }
-
-
-
-// function doubleJump(){
-//     //basePlayer.jumpMax = 2
-// }
-
-// function enableFire(){
-//     //basePlayer.fireEnable = True
-// }
-
-
-// Overlap
-// function checkOverlap(spriteA, spriteB) {
-
-//     var boundsA = spriteA.getBounds();
-//     var boundsB = spriteB.getBounds();
-
-//     return Phaser.Rectangle.intersects(boundsA, boundsB);
-
-// }
+// #endregion

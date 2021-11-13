@@ -53,6 +53,9 @@ demo.level3_1.prototype = {
         warp2 = new Warp(game, spawnpoint2[0]*tileLength, spawnpoint2[1]*tileLength);
         game.add.existing(warp2);
 
+        cp1 = new Checkpoint(game, 20*tileLength, 45*tileLength);
+        game.add.existing(cp1)
+
         // Coins, Enemies, Player
         addCoins();
         addHearts();
@@ -106,9 +109,14 @@ demo.level3_1.prototype = {
             spawnpoint[1] -= 2;
             spawndirection = -1;
         }
-        else { // (spawn == 1)
+        else if (spawn == 1){
             spawnpoint = spawnpoint1.slice();
             spawnpoint[0] += 2;
+            spawndirection = 1;
+        }
+        else{
+            // checkpoint
+            spawnpoint = [basePlayer.lastCP.x/tileLength, basePlayer.lastCP.y/tileLength];
             spawndirection = 1;
         }
     },

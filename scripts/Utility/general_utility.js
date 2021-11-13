@@ -13,10 +13,15 @@ var coinGroup, enemyGroup, heartGroup;
 var devTools = true; // Developer tools are turned on if true, otherwise, they are inactive
 
 
-function changeLevel(i, levelNum){
+function changeLevel(i, levelNum, unique = false){
     console.log('level change to: ' + levelNum);
     addedTextContinueListener = false;
-    game.state.start('level' + levelNum);
+    // Change level
+    if (unique){
+        game.state.start(levelNum);
+    }
+    levelString = levelNum.includes('level') ? levelNum : 'level' + levelNum;
+    game.state.start(levelString);
 }
 
 function excludeCollision(tile){
