@@ -441,7 +441,7 @@ Player.prototype.die = function(){
     if (typeof bossMusic !== 'undefined'){
         removeMusic(bossMusic);
     }
-    spawn = -1;
+    spawn = 1;
     changeLevel(0, basePlayer.lastCP.level);
     basePlayer.currentHearts = basePlayer.maxHearts;
 }

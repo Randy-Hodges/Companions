@@ -52,7 +52,7 @@ demo.level1.prototype = {
         addPlayer();
         
         // Golden Heart
-        addGoldHeart(82, 28);
+        //addGoldHeart(82, 28);
         
         // Tilemap Infront
         tilemap.createLayer('front');
