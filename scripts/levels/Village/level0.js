@@ -38,8 +38,8 @@ demo.level0.prototype = {
         game.world.setBounds(0, 0, tilemap.layer.widthInPixels, tilemap.layer.heightInPixels);
 
         // Text Instructions
-        equipText1 = game.add.text(6*tileLength, 30*tileLength,"Press Q to Equip.", { fontSize: '14px', fill: '#000' });
-        // equipText2 = game.add.text(6*tileLength, 31*tileLength,"Press E to Unequip.", { fontSize: '14px', fill: '#000' });
+        equipText1 = game.add.text(6*tileLength + 1, 30*tileLength + 1,"Press Q to Equip.", { fontSize: '14px', fill: '#000' });
+        equipText2 = game.add.text(6*tileLength, 30*tileLength,"Press Q to Equip.", { fontSize: '14px', fill: '#fff' });
         
         // Warp points
         warp1 = new Warp(game, spawnpoint1[0]*tileLength, spawnpoint1[1]*tileLength);
