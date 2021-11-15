@@ -10,7 +10,7 @@ Slime = function (game, x, y, spritesheetStrID) {
     slime = this;
 
     // Sound
-    this.hitSound = game.add.audio('slime hit sound');
+    this.hitSound = game.add.audio('enemy hit sound');
     this.hitSound.volume = 1;
     this.deathSound = game.add.audio('slime death sound');
     this.deathSound.volume = .7;

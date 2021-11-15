@@ -11,8 +11,8 @@ function event1_3_1(){
     if (typeof grandfather !== 'undefined'){
         grandfather.leave();
     }
-    grandfather = new GrandfatherNPC(game, 19*tileLength, 47*tileLength, 'grandfather');
-    grandfather.flipX();
+    grandfather = new GrandfatherNPC(game, 24*tileLength, 47*tileLength, 'grandfather');
+    // grandfather.flipX();
     game.add.existing(grandfather);
 
     var endOfDialogueFunction = function(){
@@ -58,5 +58,5 @@ function event_bossEnd_3_1(){
     gates1Shown = false;
     cameraIsTweening = true;
     bossMusic.fadeOut(500);
-    backtrack.fadeIn(1000);
+    backtrack.fadeIn(2000);
 }

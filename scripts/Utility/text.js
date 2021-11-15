@@ -62,8 +62,10 @@ function spellOutText(text, x = textOffsetX + 7, y = game.height - textHeight + 
         textBox.drawRoundedRect(textOffsetX, 0, textWidth, textHeight, 10);
         textBox.endFill();
         firstTextBox = false;
+        // Add sentence
         sentence = game.add.text(x, y, '', { fontSize: fontsize + 'px' });
         sentence.fixedToCamera = true;
+        // Add loop
         textLoop = game.time.events.loop(speed, addChar, this);
         game.time.events.start(textLoop);
     }
@@ -200,18 +202,21 @@ function checkCloseText(temptext) {
 function addTextContinueListener() {
     addedTextContinueListener = true;
     textContinueSound = game.add.audio('textContinue');
+    textContinueSound.volume = .05;
     // add event listener to react to the text box
     game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR).onDown.add(
         function () {
             if (!(dialogueList.length == 0)) {
                 if (quickFillEnded && quickFillEnabled) {
+                    if (!textContinueSound.isPlaying){
+                        textContinueSound.play();
+                    }
                     // update indices
                     fullTextIndex += temptext[1];
                     curTextIndex = fullTextIndex;
                     // resume scrolling of text
                     curSenLen = 0;
                     quickFillEnded = false;
-                    //textContinueSound.play();
                     checkCloseText(temptext);
                 }
                 else if (!quickFillEnded && quickFillEnabled) {
@@ -223,12 +228,18 @@ function addTextContinueListener() {
                     textScrollSound.stop();
                 }
                 if (readyToContinueText) { // move to next text box
+                    if (!textContinueSound.isPlaying){
+                        textContinueSound.play();
+                    }
                     sentence.setText('');
                     game.time.events.resume(textLoop);
                     readyToContinueText = false;
                 }
                 else if (readyToCloseText) { // close the entire text box
                     // remove/reset variables
+                    if (!textContinueSound.isPlaying){
+                        textContinueSound.play();
+                    }
                     sentence.setText('');
                     readyToCloseText = false;
                     closedText = true;

@@ -6,6 +6,9 @@ bossSlime = function (game, x, y) {
     this.baseMovementSpeed = 90;
     this.movementSpeed = this.baseMovementSpeed;
     switchDirectionSlime(this);
+
+    // Sound
+    this.hitSound.volume = 6;
     
     // Colors
     this.tint = rgbToHex(255, 255, 255);
@@ -28,7 +31,7 @@ bossSlime = function (game, x, y) {
     this.switchingTime = 0;
 
     // Health
-    this.health = 50;
+    this.health = 65;
     this.currentlyHitCount = 0;
     this.dead = false;
 

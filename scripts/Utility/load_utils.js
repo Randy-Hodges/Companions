@@ -26,7 +26,7 @@ function loadEnemies(){
     game.load.spritesheet('redSlime', "assets/sprites/enemies/blue slime/slime-Sheet-red.png", 32, 25);
     game.load.spritesheet('blueSlime', "assets/sprites/enemies/blue slime/slime-Sheet-blue.png", 32, 25);
     game.load.spritesheet('bat', "assets/sprites/enemies/Bat/bat-sheet.png", 32, 32);
-    game.load.audio('slime hit sound', "assets/audio/soundeffects/enemy_hit.wav");
+    game.load.audio('enemy hit sound', "assets/audio/soundeffects/enemy_hit.wav");
     game.load.audio('slime death sound', "assets/audio/soundeffects/slime_death.wav");
 }
 

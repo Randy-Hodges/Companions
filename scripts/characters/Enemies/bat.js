@@ -9,6 +9,10 @@ Bat = function(game, x, y, spritesheetStrID){
     this.faceDirection = 1;
     bat = this;
 
+    // Sound
+    this.hitSound = game.add.audio('enemy hit sound');
+    this.hitSound.volume = 1;
+
     // Add animations
     this.animations.add('flying', [0,1,2,3,4,5,6]);
     this.animations.add('attacking', [7,8,9,10,11,12,13,14,15,16]);
@@ -90,6 +94,7 @@ Bat.prototype.update = function(bat = this) {
 
 Bat.prototype.hit = function(damage, bat = this){
     if(!bat.currentlyHit){
+        bat.hitSound.play();
         // Take damage
         bat.health -= damage;
         bat.currentlyHit = true;

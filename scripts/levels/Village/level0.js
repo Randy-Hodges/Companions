@@ -45,7 +45,7 @@ demo.level0.prototype = {
         warp1 = new Warp(game, spawnpoint1[0]*tileLength, spawnpoint1[1]*tileLength);
         game.add.existing(warp1) // comment this out to make warp zone invisible
         cp = new Checkpoint(game, (spawnpoint1[0] - 3)*tileLength, (spawnpoint1[1]+ 2)*tileLength);
-        game.add.existing(cp);
+        // game.add.existing(cp);
 
         
         // Golden Heart
