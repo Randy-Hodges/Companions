@@ -41,7 +41,7 @@ function event_bossStart_3_1(){
     timer.add(3000, function(){
         gates1Shown = true;
         bossMusic = game.add.audio('bossFight');
-        bossMusic.volume = 0;
+        bossMusic.volume = .1;
         bossMusic.fadeIn(1000);
         game.camera.shake(.04, 1500);
         var timer2 = game.time.create(false);
