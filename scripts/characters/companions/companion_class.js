@@ -30,9 +30,12 @@ Companion = function(game, spritesheetStrID, x = gameWidth/2, y = gameHeight/2, 
     this.body.maxVelocity.y = 300;
 
     // Text
-    this.equipText = game.add.text(this.body.position.x, this.body.position.y,"Q", { fontSize: '12px', fill: '#FFF' });
-    this.equipTextShowing = false;
-    this.equipText.alpha = 0;
+    this.equipText1 = game.add.text(this.body.position.x, this.body.position.y,"Q", { fontSize: '12px', fill: '#000' });
+    this.equipText2 = game.add.text(this.body.position.x, this.body.position.y,"Q", { fontSize: '12px', fill: '#fff' });
+    this.equipText1Showing = false;
+    this.equipText1.alpha = 0;
+    this.equipText2Showing = false;
+    this.equipText2.alpha = 0;
 }
 
 Companion.prototype = Object.create(Phaser.Sprite.prototype);
@@ -42,11 +45,16 @@ Companion.prototype.constructor = Companion;
 Companion.prototype.update = function(companion = this) {
     // Equipping
     var overlapped = game.physics.arcade.overlap(currentPlayer, companionGroup, function(player, companion){
-        if (!companion.isEquipped && !companion.equipTextShowing){
-            companion.equipText.x = companion.body.position.x + 2;
-            companion.equipText.y = companion.body.position.y - 13;
-            companion.equipText.alpha = 1;
-            companion.equipTextShowing = true;
+        if (!companion.isEquipped && !companion.equipText1Showing){
+            companion.equipText1.x = companion.body.position.x + 3;
+            companion.equipText1.y = companion.body.position.y - 12;
+            companion.equipText1.alpha = 1;
+            companion.equipText1Showing = true;
+
+            companion.equipText2.x = companion.body.position.x + 2;
+            companion.equipText2.y = companion.body.position.y - 13;
+            companion.equipText2.alpha = 1;
+            companion.equipText2Showing = true;
         }
         customKeys = new CustomKeys();
         if (customKeys.isDown("Q") && !companion.isEquipped){
@@ -54,8 +62,10 @@ Companion.prototype.update = function(companion = this) {
         }
     });
     if (!overlapped){
-        companion.equipText.alpha = 0;
-        companion.equipTextShowing = false;
+        companion.equipText1.alpha = 0;
+        companion.equipText1Showing = false;
+        companion.equipText2.alpha = 0;
+        companion.equipText2Showing = false;
     }
     
     // Follow Logic
