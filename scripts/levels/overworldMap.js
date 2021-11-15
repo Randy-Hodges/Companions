@@ -71,7 +71,7 @@ demo.overworldMap.prototype = {
             // clouds for level 3
             level3_clouds();
             
-            levelUI = game.add.text(8,8,"Use the arrow keys to move around the map. \nPress 'V' to go to the Village. \nPress 'C' to go to Level 1. \nPress 'H' to go to Level 2. \nPress 'T' to go to Level 3.", { fontSize: '11px', fill: '#fff' });
+            levelUI = game.add.text(8,8,"Use the arrow keys to move around the map. \nPress 'V' to go to the Village. \nPress 'C' to go to Abandoned Caverns. \nPress 'H' to go to Rocky Pass. \nPress 'T' to go to Slime Valley.", { fontSize: '11px', fill: '#fff' });
             levelUI.fixedToCamera = true;
         } else if (level2Unlocked){ // level 2 unlocked
             game.camera.x = 85;
@@ -82,7 +82,7 @@ demo.overworldMap.prototype = {
             // clouds for level 2
             level2_clouds();
 
-            levelUI = game.add.text(8,8,"Use the arrow keys to move around the map. \nPress 'V' to go to the Village. \nPress 'C' to go to Level 1. \nPress 'H' to go to Level 2.", { fontSize: '11px', fill: '#fff' });
+            levelUI = game.add.text(8,8,"Use the arrow keys to move around the map. \nPress 'V' to go to the Village. \nPress 'C' to go to Abandoned Caverns. \nPress 'H' to go to Rocky Pass.", { fontSize: '11px', fill: '#fff' });
             levelUI.fixedToCamera = true;
         } else if (level1Unlocked){ // level 1 unlocked
             game.camera.x = 25;
@@ -93,7 +93,7 @@ demo.overworldMap.prototype = {
             // clouds for level 2
             level2_clouds();   
 
-            levelUI = game.add.text(8,8,"Use the arrow keys to move around the map. \nPress 'V' to go to the Village. \nPress 'C' to go to Level 1.", { fontSize: '11px', fill: '#fff' });
+            levelUI = game.add.text(8,8,"Use the arrow keys to move around the map. \nPress 'V' to go to the Village. \nPress 'C' to go to Abandoned Caverns.", { fontSize: '11px', fill: '#fff' });
             levelUI.fixedToCamera = true;
         } else { // start of game
             game.camera.x = 300;
