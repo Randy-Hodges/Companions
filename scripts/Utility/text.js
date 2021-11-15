@@ -26,6 +26,8 @@ var dialogueEndFunction;
 var dialogueIndex = 0;
 // Sound
 var textContinueSound;
+var textScrollSound;
+var textScrollSoundAdded = false;
 
 function generateText(text, sprite) {
     // Fix variables when resetting
@@ -33,7 +35,6 @@ function generateText(text, sprite) {
     globalText = text;
     var headshot;
     textBoxTextWidth = parseInt(gameWidth * .12);
-
     // Generate text
     placeHeadshot(sprite);
     spellOutText(text);
@@ -48,6 +49,8 @@ function placeHeadshot(sprite) {
 function spellOutText(text, x = textOffsetX + 7, y = game.height - textHeight + 3, fontsize = 12, speed = 0) {
     if (!addedTextContinueListener) {
         addedTextContinueListener = true;
+        textScrollSound = game.add.audio('text scroll sound');
+        textScrollSound.allowMultiple = false;
         addTextContinueListener();
     }
     if (firstTextBox) {
@@ -76,8 +79,12 @@ function spellOutText(text, x = textOffsetX + 7, y = game.height - textHeight + 
 }
 
 function addChar() {
+
     text = globalText;
     width = textBoxTextWidth;
+    if (!textScrollSound.isPlaying){
+        textScrollSound.play();
+    }
     // Manually refresh the text box
     if (text[curTextIndex] == "@") {
         curTextIndex += 1;
@@ -109,7 +116,9 @@ function addChar() {
     if (curTextIndex >= text.length) {
         game.time.events.pause(textLoop);
         readyToCloseText = true;
+        textScrollSound.stop();
     }
+    
 }
 function findFullText(index, text) {
     // Find the full amount of text that goes into a text box
@@ -173,6 +182,7 @@ function checkRefresh(text, refresh = false) {
         curLineAmount = 0;
         temptext = findFullText(fullTextIndex, text);
         quickFillEnded = true;
+        textScrollSound.pause();
     }
 }
 
@@ -194,7 +204,7 @@ function addTextContinueListener() {
     game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR).onDown.add(
         function () {
             if (!(dialogueList.length == 0)) {
-                if (quickFillEnabled && quickFillEnded) {
+                if (quickFillEnded && quickFillEnabled) {
                     // update indices
                     fullTextIndex += temptext[1];
                     curTextIndex = fullTextIndex;
@@ -204,12 +214,13 @@ function addTextContinueListener() {
                     //textContinueSound.play();
                     checkCloseText(temptext);
                 }
-                else if (quickFillEnabled && !quickFillEnded) {
+                else if (!quickFillEnded && quickFillEnabled) {
                     // fill text box with words
                     temptext = findFullText(fullTextIndex, globalText);
                     sentence.setText(temptext[0]);
                     quickFillEnded = true;
                     game.time.events.pause(textLoop);
+                    textScrollSound.stop();
                 }
                 if (readyToContinueText) { // move to next text box
                     sentence.setText('');

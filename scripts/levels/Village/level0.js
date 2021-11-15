@@ -103,14 +103,19 @@ demo.level0.prototype = {
         spawnpoint2 = [25, 35];  
         if (spawn == 0){
             spawnpoint = spawnpoint0.slice();
-        };
-        if (spawn == 2){
+        }
+        else if (spawn == 2){
             spawnpoint = spawnpoint2.slice();
             spawnpoint[0] -= 2;
-        };
-        if (spawn == 1){
+        }
+        else if (spawn == 1){
             spawnpoint = spawnpoint1.slice();
             spawnpoint[0] -= 2;
+            spawndirection = -1;
+        }
+        else{
+            // checkpoint
+            spawnpoint = [basePlayer.lastCP.x/tileLength, basePlayer.lastCP.y/tileLength];
             spawndirection = -1;
         }
     },

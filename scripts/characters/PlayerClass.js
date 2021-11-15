@@ -48,6 +48,12 @@ Player = function (game, x = gameWidth / 2, y = gameHeight / 2) {
     this.maxHearts = basePlayer.maxHearts;
     this.currentHearts = basePlayer.currentHearts;
 
+    // Sound
+    this.jumpSound = game.add.audio('jump sound');
+    this.jumpSound.volume = .15;
+    this.slashSound = game.add.audio('air slash sound');
+    this.slashSound.volume = .07;
+
     // Animations
     this.animations.add('idle side', [11, 12, 13, 14, 15], frameRate = 10);
     this.animations.add('walk side', [16, 17, 18, 19, 20, 21], frameRate = 10);
@@ -90,6 +96,7 @@ Player = function (game, x = gameWidth / 2, y = gameHeight / 2) {
                     currentPlayer.currentlyJumping = true;
                     //currentPlayer.body.velocity.y = currentPlayer.jumpVel;
                     currentPlayer.body.acceleration.y = currentPlayer.jumpAccel;
+                    currentPlayer.jumpSound.play();
                 }
                 else if (currentPlayer.jumpStorage > 0) { // normal jump
                     currentPlayer.jumpStorage -= 1;
@@ -121,6 +128,7 @@ Player = function (game, x = gameWidth / 2, y = gameHeight / 2) {
     // #region Animations
     slashSide = this.animations.getAnimation('slash side');
     slashSide.onStart.add(function () {
+        currentPlayer.slashSound.play();
         currentPlayer.stopAnimations = true;
         currentPlayer.isSlashing = true;
         currentPlayer.setSlashPosition = function () {
@@ -135,6 +143,7 @@ Player = function (game, x = gameWidth / 2, y = gameHeight / 2) {
     });
     slashDown = this.animations.getAnimation('slash down');
     slashDown.onStart.add(function () {
+        currentPlayer.slashSound.play();
         currentPlayer.stopAnimations = true;
         currentPlayer.isSlashing = true;
         currentPlayer.setSlashPosition = function () {
@@ -149,6 +158,7 @@ Player = function (game, x = gameWidth / 2, y = gameHeight / 2) {
     });
     slashUp = this.animations.getAnimation('slash up');
     slashUp.onStart.add(function () {
+        currentPlayer.slashSound.play();
         currentPlayer.stopAnimations = true;
         currentPlayer.isSlashing = true;
         currentPlayer.setSlashPosition = function () {
@@ -237,7 +247,9 @@ Player = function (game, x = gameWidth / 2, y = gameHeight / 2) {
     this.dashEnabled = devTools ? true : basePlayer.dashEnabled;
     playerDashButton = game.input.keyboard.addKey(Phaser.Keyboard.A);
     playerDashButton.onDown.add(function () {
-        if (game.time.now - currentPlayer.lastDash >= currentPlayer.dashCooldownLength && currentPlayer.dashEnabled) {
+        if (game.time.now - currentPlayer.lastDash >= currentPlayer.dashCooldownLength 
+            && currentPlayer.dashEnabled
+            && !currentPlayer.disableMovement) {
             // Note: this particular code does not feel clean
             currentPlayer.lastDash = game.time.now;
             
@@ -441,7 +453,7 @@ Player.prototype.die = function(){
     if (typeof bossMusic !== 'undefined'){
         removeMusic(bossMusic);
     }
-    spawn = 1;
+    spawn = -1;
     changeLevel(0, basePlayer.lastCP.level);
     basePlayer.currentHearts = basePlayer.maxHearts;
 }

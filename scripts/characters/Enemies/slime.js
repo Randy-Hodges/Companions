@@ -9,6 +9,12 @@ Slime = function (game, x, y, spritesheetStrID) {
     this.faceDirection = 1;
     slime = this;
 
+    // Sound
+    this.hitSound = game.add.audio('slime hit sound');
+    this.hitSound.volume = 1;
+    this.deathSound = game.add.audio('slime death sound');
+    this.deathSound.volume = .7;
+    
     // add animations
     this.animations.add('idle', [0, 1, 2, 3]);
     this.animations.add('moving', [4, 5, 6, 7]);
@@ -41,7 +47,7 @@ Slime = function (game, x, y, spritesheetStrID) {
     
     // Dealing/receiving damage
     this.damage = { none: false, left: true, right: true, up: false, down: true };
-    this.health = 5;
+    this.health = 10;
     this.currentlyHit = false;
     this.attacking = false;
 
@@ -127,6 +133,7 @@ Slime.prototype.hit = function (damage, slime = this) {
     if (!slime.currentlyHit) {
         slime.health -= damage;
         console.log("Slime Health: " + slime.health);
+        slime.hitSound.play();
         if (!slime.slimeBoss){
             slime.movementSpeed = 0;
         }
@@ -146,6 +153,7 @@ Slime.prototype.die = function (slime = this) {
     slime.body.enable = false;
     slime.curAnimationPriority = slime.animationPriorities.dying;
     slime.animations.play('dying');
+    slime.deathSound.play();
 }
 
 
