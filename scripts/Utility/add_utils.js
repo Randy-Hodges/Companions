@@ -50,11 +50,11 @@ function addPlayer(){
     game.camera.follow(currentPlayer);
 }
 
-function addMusic(music = 'backtrack'){
+function addMusic(music = 'backtrack', vol = .1){
     if (!addedAudio){
         backtrack = game.add.audio(music);
         backtrack.play();
-        backtrack.volume = .1;
+        backtrack.volume = vol;
         addedAudio = true;
     }
 }
