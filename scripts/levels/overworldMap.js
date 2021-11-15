@@ -21,6 +21,8 @@ demo.overworldMap.prototype = {
         game.load.image('Moving_cloud', "assets/overworld_map/Clouds/cloud1.png");
         game.load.image('Moving_cloud2', "assets/overworld_map/Clouds/cloud2.png");
 
+        // game.load.image('background', "");
+
         // change this later
         game.load.audio('mapMusic', "assets/audio/music/Personality Test.mp3");
 
@@ -63,6 +65,8 @@ demo.overworldMap.prototype = {
         layer.scale.set(1);
         layer.resizeWorld();
 
+        style = { fontSize: '11px', fill: '#fff', backgroundColor: '#343131' };
+
         // create view, clouds, level select UI, change as more levels are unlocked
         if (level3Unlocked){ // 3 unlocked
             game.camera.x = 540;
@@ -71,7 +75,7 @@ demo.overworldMap.prototype = {
             // clouds for level 3
             level3_clouds();
             
-            levelUI = game.add.text(8,8,"Use the arrow keys to move around the map. \nPress 'V' to go to the Village. \nPress 'C' to go to Abandoned Caverns. \nPress 'H' to go to Rocky Pass. \nPress 'T' to go to Slime Valley.", { fontSize: '11px', fill: '#fff' });
+            levelUI = game.add.text(8, 8, "  Use the arrow keys to move around the map.  \n      • 'V' - Village\n      • 'R' - Rocky Pass\n      • 'A' - Abandoned Caverns\n      • 'S' - Slime Valley", style);
             levelUI.fixedToCamera = true;
         } else if (level2Unlocked){ // level 2 unlocked
             game.camera.x = 85;
@@ -82,7 +86,7 @@ demo.overworldMap.prototype = {
             // clouds for level 2
             level2_clouds();
 
-            levelUI = game.add.text(8,8,"Use the arrow keys to move around the map. \nPress 'V' to go to the Village. \nPress 'C' to go to Abandoned Caverns. \nPress 'H' to go to Rocky Pass.", { fontSize: '11px', fill: '#fff' });
+            levelUI = game.add.text(8, 8, "  Use the arrow keys to move around the map.  \n      • 'V' - Village\n      • 'R' - Rocky Pass\n      • 'A' - Abandoned Caverns", style);
             levelUI.fixedToCamera = true;
         } else if (level1Unlocked){ // level 1 unlocked
             game.camera.x = 25;
@@ -93,8 +97,20 @@ demo.overworldMap.prototype = {
             // clouds for level 2
             level2_clouds();   
 
-            levelUI = game.add.text(8,8,"Use the arrow keys to move around the map. \nPress 'V' to go to the Village. \nPress 'C' to go to Abandoned Caverns.", { fontSize: '11px', fill: '#fff' });
+            levelUI = game.add.text(8, 8, "  Use the arrow keys to move around the map.  \n      • 'V' - Village\n      • 'R' - Rocky Pass", style);
             levelUI.fixedToCamera = true;
+
+
+
+            // If we want to use a background image, uncomment this
+                // UI_background = game.add.sprite(0, 0, 'background');
+                // UI_background.scale.setTo(0.25, 0.25);
+
+                // UI_background.fixedToCamera = true;
+                // style = { font: "16px Arial", fill: "#ff0044", wordWrap: true, wordWrapWidth: UI_background.width, align: "center", backgroundColor: "#000" };
+
+                // text = game.add.text(0, 0, "- text on a sprite", style);
+                // text.anchor.set(0.5);
         } else { // start of game
             game.camera.x = 300;
             game.camera.y = 400;
@@ -104,7 +120,7 @@ demo.overworldMap.prototype = {
             // clouds for level 2
             level2_clouds();
 
-            levelUI = game.add.text(8,8,"Use the arrow keys to move around the map. \nPress 'V' to go to the Village.", { fontSize: '11px', fill: '#fff'});
+            levelUI = game.add.text(8, 8, "  Use the arrow keys to move around the map.  \n      • 'V' - Village", style);
             levelUI.fixedToCamera = true;
         }
 
@@ -118,6 +134,10 @@ demo.overworldMap.prototype = {
         // update view
         updateView()
 
+        // If we want to use a background image, uncomment this
+            // text.x = Math.floor(UI_background.x + UI_background.width / 2);
+            // text.y = Math.floor(UI_background.y + UI_background.height / 2);
+
     }
 };
 
@@ -129,11 +149,11 @@ function addLevelSpawns() {
     // scene change for village
     addKeyCallback(Phaser.Keyboard.V, function(){backtrack.destroy(); addedAudio = false; changeLevel(this, '0');});
     // scene change for level 1
-    addKeyCallback(Phaser.Keyboard.C, function(){backtrack.destroy(); addedAudio = false; spawn = 1; changeLevel(this, '1-0');}); 
+    addKeyCallback(Phaser.Keyboard.R, function(){backtrack.destroy(); addedAudio = false; spawn = 1; changeLevel(this, '1-0');}); 
     // scene change for level 2
-    addKeyCallback(Phaser.Keyboard.H, function(){backtrack.destroy(); addedAudio = false; spawn = 1; changeLevel(this, '2-0');});
+    addKeyCallback(Phaser.Keyboard.A, function(){backtrack.destroy(); addedAudio = false; spawn = 1; changeLevel(this, '2-0');});
     // scene change for level 3
-    addKeyCallback(Phaser.Keyboard.T, function(){backtrack.destroy(); addedAudio = false; spawn = 1; changeLevel(this, '3-0');});
+    addKeyCallback(Phaser.Keyboard.S, function(){backtrack.destroy(); addedAudio = false; spawn = 1; changeLevel(this, '3-0');});
 };
 
 function updateView() {
