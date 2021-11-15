@@ -70,7 +70,7 @@ demo.overworldMap.prototype = {
         // create view, clouds, level select UI, change as more levels are unlocked
         if (level3Unlocked){ // 3 unlocked
             game.camera.x = 540;
-            game.camera.y = 275;
+            game.camera.y = 230;
 
             // clouds for level 3
             level3_clouds();
