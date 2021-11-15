@@ -79,9 +79,10 @@ Slime.prototype.update = function (slime = this) {
             slime.destroy();
             return;
         }
-        if (!magicCliffsNoCollide.includes(tileIdx) &&
-            !(String(tileIdx) in exclusionLayer && tileIdx != -1) &&
-            game.time.now - slime.timeLastSwitch > 200){
+        if (!magicCliffsNoCollide.includes(tileIdx)
+            && !(String(tileIdx) in exclusionLayer && tileIdx != -1)
+            && game.time.now - slime.timeLastSwitch > 200
+            ){
             switchDirectionSlime(slime);
         }
     }

@@ -18,6 +18,7 @@ redSlime.prototype.update = function () {
             // If not facing player and sufficient time since last switch
             if (this.faceDirection * (this.body.position.x - currentPlayer.body.position.x) > 0 && game.time.now - this.timeLastSwitch > 500) {
                 switchDirectionSlime(this);
+                this.faceDirection *= -1;
             }
             // Fast speed
             this.movementSpeed = 2 * this.baseMovementSpeed * this.faceDirection;
