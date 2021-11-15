@@ -43,7 +43,7 @@ demo.level2_0.prototype = {
         // Warp points
         warp1 = new Warp(game, spawnpoint1[0]*tileLength, spawnpoint1[1]*tileLength);
         warp2 = new Warp(game, spawnpoint2[0]*tileLength, spawnpoint2[1]*tileLength, 270);
-        game.add.existing(warp2);
+        // game.add.existing(warp2);
 
         // Coins, Enemies, Player
         addCoins();

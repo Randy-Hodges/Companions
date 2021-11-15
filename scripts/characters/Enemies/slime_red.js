@@ -1,6 +1,6 @@
 redSlime = function (game, x, y) {
     Slime.call(this, game, x, y, 'redSlime');
-    this.health = 25;
+    this.health = 20;
 }
 
 redSlime.prototype = Object.create(Slime.prototype);
