@@ -114,7 +114,7 @@ demo.level0.prototype = {
             spawndirection = -1;
         }
         else{
-            // checkpoint
+            // checkpoints
             spawnpoint = [basePlayer.lastCP.x/tileLength, basePlayer.lastCP.y/tileLength];
             spawndirection = -1;
         }
