@@ -10,7 +10,7 @@ var eventTrackingList = [];
 
 var coinGroup, enemyGroup, heartGroup;
 
-var devTools = true; // Developer tools are turned on if true, otherwise, they are inactive
+var devTools = false; // Developer tools are turned on if true, otherwise, they are inactive
 
 
 function changeLevel(i, levelNum, unique = false){
