@@ -7,8 +7,9 @@ function addPauseMenu(){
         pause_label.fixedToCamera = true;
         pause_label.inputEnabled = true;
         
-        // When the pause button is pressed, pause
+        // When the pause button is pressed or ESC is pressed, pause
         pause_label.events.onInputUp.add(pause, self);
+        addKeyCallback(Phaser.Keyboard.ESC, pause);
 
         // Add a input listener that can help us return from being paused
         game.input.onDown.add(unpause, self);
@@ -38,5 +39,4 @@ function unpause(event){
         menu2.destroy();
         game.paused = false;
     }
-
 }
