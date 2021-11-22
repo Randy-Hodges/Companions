@@ -6,8 +6,11 @@ class CustomKeys{
         this.D = Phaser.Keyboard.D;
         this.Q = Phaser.Keyboard.Q;
         this.E = Phaser.Keyboard.E;
-        this.Space = Phaser.Keyboard.SPACEBAR;
-        this.space = Phaser.Keyboard.SPACEBAR;
+        this.UP = Phaser.Keyboard.UP
+        this.DOWN = Phaser.Keyboard.DOWN
+        this.RIGHT = Phaser.Keyboard.RIGHT
+        this.LEFT = Phaser.Keyboard.LEFT
+        this.SPACE = Phaser.Keyboard.SPACEBAR;
     }
     processKey(key){
         // supporting string types ex: customKeys.isDown("A")
