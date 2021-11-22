@@ -75,7 +75,7 @@ demo.level0.prototype = {
                 companionGroup.add(frog);
             }
         }
-        if (slimeUnlocked || devTools || true){
+        if (slimeUnlocked || devTools){
             if (!basePlayer.companionNames.includes('slime')){
                 slimeComp = new CompanionSlime(game, 23*tileLength, 35*tileLength, false, false);
                 game.add.existing(slimeComp);

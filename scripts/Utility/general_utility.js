@@ -45,3 +45,14 @@ function updateMoney(){
     moneyText.text = "Coins: " + money;
     moneyText2.text = "Coins: " + money;
 }
+
+function hitSpike(sprite, tile){
+    if (enemyGroup.contains(sprite)){
+        console.log('in enemy group');
+        sprite.hit(100);
+    }
+    if (sprite == currentPlayer){
+        currentPlayer.takeDamage(1);
+    }
+    return true;
+}

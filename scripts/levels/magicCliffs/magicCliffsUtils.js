@@ -63,7 +63,9 @@ function setTileProperties(){
             tile.faceBottom = false;
             tile.faceLeft = false;
             tile.faceRight = false;
-
+        }
+        if (tile.index == 1023){
+            tile.setCollisionCallback(hitSpike, this);
         }
     }
     tilemap.setLayer('mainGrass');

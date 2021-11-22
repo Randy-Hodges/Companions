@@ -110,7 +110,6 @@ Bat.prototype.hit = function(damage, bat = this){
         // Take damage
         bat.health -= damage;
         bat.currentlyHit = true;
-        console.log('2')
         // Either die or get hit
         if (bat.health <= 0){
             bat.die();

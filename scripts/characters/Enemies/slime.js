@@ -22,7 +22,7 @@ Slime = function (game, x, y, spritesheetStrID) {
     this.animations.add('hurt', [13, 14, 15, 16])
     this.animations.getAnimation('hurt').onComplete.add(function (slime) {
         slime.curAnimationPriority = slime.animationPriorities.moving;
-        this.movementSpeed = this.baseMovementSpeed;
+        this.movementSpeed = this.baseMovementSpeed*this.faceDirection;
         this.currentlyHit = false;
     }, this);
     this.animations.add('dying', [1, 17, 18, 19, 20], frameRate = 10);
@@ -144,8 +144,6 @@ Slime.prototype.hit = function (damage, slime = this) {
         slime.health -= damage;
         // console.log("Slime Health: " + slime.health);
         slime.hitSound.play();
-        console.log('1')
-
         slime.currentlyHit = true;
         if (slime.health <= 0) {
             slime.die();

@@ -449,7 +449,6 @@ Player.prototype.slashKnockback = function(enemy){
     var surfaceConstant = 20;
     var playerKnockbackVel = velocityConstant/this.mass + surfaceConstant;
     var enemyKnockbackVel = velocityConstant/enemy.mass + surfaceConstant;
-    console.log('2');
     if (this.slashDirection == 'left'){
         this.body.velocity.x = playerKnockbackVel;
         enemyKnockbackVel *= -1;
@@ -477,6 +476,9 @@ Player.prototype.slashKnockback = function(enemy){
 
 // Health Functions
 Player.prototype.takeDamage = function (dmg = 1) {
+    if (currentPlayer.invulnerable){
+        return;
+    }
     numhearts = basePlayer.currentHearts;
     // If Dead
     if (numhearts <= 1) {
