@@ -14,7 +14,7 @@ Slime = function (game, x, y, spritesheetStrID) {
     this.hitSound.volume = 1;
     this.deathSound = game.add.audio('slime death sound');
     this.deathSound.volume = .7;
-    
+
     // add animations
     this.animations.add('idle', [0, 1, 2, 3]);
     this.animations.add('moving', [4, 5, 6, 7]);
@@ -39,12 +39,13 @@ Slime = function (game, x, y, spritesheetStrID) {
     this.movementSpeed = 60;
     this.body.velocity.x = this.movementSpeed;
     this.body.maxVelocity.x = this.movementSpeed * 20;
+    this.mass = 15;
 
-    
+
     // Miscellaneous (might break into own sections in the future)
     this.timeLastSwitch = game.time.now;
-    levelTilesTiles = levelTiles.getTiles(0, 0, game.world.bounds.width, game.world.bounds.height) // I need to change names and understand how tf this is operating
-    
+    levelTilesTiles = levelTiles.getTiles(0, 0, game.world.bounds.width, game.world.bounds.height);
+
     // Dealing/receiving damage
     this.damage = { none: false, left: true, right: true, up: false, down: true };
     this.health = 10;
@@ -70,19 +71,19 @@ Slime.prototype.update = function (slime = this) {
     }
     //Don't fall off ledges
     // if they are on a no-collision tile and haven't switched direction in a while, switch direction
-    if (!slime.attacking && !slime.slimeBoss){
-        try{
+    if (!slime.attacking && !slime.slimeBoss) {
+        try {
             // Tile index in front of slime
             tileIdx = levelTilesTiles[levelTiles.getTileY(slime.body.position.y) * game.world.bounds.width / tileLength + levelTiles.getTileX(slime.body.position.x + faceconstant)].index
         }
-        catch{
+        catch {
             slime.destroy();
             return;
         }
         if (!magicCliffsNoCollide.includes(tileIdx)
             && !(String(tileIdx) in exclusionLayer && tileIdx != -1)
             && game.time.now - slime.timeLastSwitch > 200
-            ){
+        ) {
             switchDirectionSlime(slime);
         }
     }
@@ -92,24 +93,31 @@ Slime.prototype.update = function (slime = this) {
         switchDirectionSlime(slime);
     }
     else if (enemyGroup) {
-        game.physics.arcade.collide(enemyGroup, enemyGroup, function (enemy1, enemy2) { 
-            switchDirectionSlime(enemy1); 
+        game.physics.arcade.collide(enemyGroup, enemyGroup, function (enemy1, enemy2) {
+            switchDirectionSlime(enemy1);
             switchDirectionSlime(enemy2);
-         });
+        });
     }
 
     // Velocity 
     slime.body.velocity.x = slime.movementSpeed;
-    if (slime.movementSpeed < 0){
-        slime.faceDirection = -1;
-        slime.scale.x = Math.abs(slime.scale.x);
+    if (!slime.currentlyHit) {
+        if (slime.movementSpeed < 0) {
+            slime.faceDirection = -1;
+            slime.scale.x = Math.abs(slime.scale.x);
+        }
+        else if (slime.movementSpeed > 0) {
+            slime.faceDirection = 1;
+            slime.scale.x = -Math.abs(slime.scale.x);
+        }
     }
-    else if (slime.movementSpeed > 0){
-        slime.faceDirection = 1;
-        slime.scale.x = -Math.abs(slime.scale.x);
+    else{
+        if (!slime.slimeBoss) {
+            slime.movementSpeed = 0;
+        }
     }
 
-    // Animations
+    // #region Animations
     if (slime.curAnimationPriority == slime.animationPriorities.idle) {
         slime.animations.play('idle', 8, true);
     }
@@ -128,22 +136,22 @@ Slime.prototype.update = function (slime = this) {
     else {
         console.log("Current animation priority [", slime.curAnimationPriority, "] is not linked to an animation")
     }
+    // #endregion
 };
 
 Slime.prototype.hit = function (damage, slime = this) {
     if (!slime.currentlyHit) {
         slime.health -= damage;
-        console.log("Slime Health: " + slime.health);
+        // console.log("Slime Health: " + slime.health);
         slime.hitSound.play();
-        if (!slime.slimeBoss){
-            slime.movementSpeed = 0;
-        }
+        console.log('1')
+
         slime.currentlyHit = true;
         if (slime.health <= 0) {
             slime.die();
         }
         else {
-            if (!slime.slimeBoss){
+            if (!slime.slimeBoss) {
                 slime.curAnimationPriority = slime.animationPriorities.hit;
             }
         }
@@ -163,7 +171,7 @@ function switchDirectionSlime(slime) {
     slime.movementSpeed *= -1;
 }
 
-Slime.prototype.kill = function(){
+Slime.prototype.kill = function () {
     this.destroy();
 }
 

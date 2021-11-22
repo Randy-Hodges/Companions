@@ -73,6 +73,7 @@ Player = function (game, x = gameWidth / 2, y = gameHeight / 2) {
     this.body.drag.x = basePlayer.dragX;
     this.body.maxVelocity.x = basePlayer.maxVelX;
     this.body.maxVelocity.y = basePlayer.maxVelY;
+    this.mass = 50;
     this.body.collideWorldBounds = true;
     // #endregion */
 
@@ -123,7 +124,8 @@ Player = function (game, x = gameWidth / 2, y = gameHeight / 2) {
     slash.body.allowGravity = false;
     slash.body.setSize(20, 28, 0, 0);
     this.slash = slash;
-    this.setSlashPosition;
+    this.setSlashPosition; // function
+    this.slashDirection;
 
     // #region Animations
     slashSide = this.animations.getAnimation('slash side');
@@ -131,6 +133,7 @@ Player = function (game, x = gameWidth / 2, y = gameHeight / 2) {
         currentPlayer.slashSound.play();
         currentPlayer.stopAnimations = true;
         currentPlayer.isSlashing = true;
+        currentPlayer.slashDirection = currentPlayer.faceDirection == 1 ? 'right' : 'left';
         currentPlayer.setSlashPosition = function () {
             slash.body.setSize(20, 28, 0, 0);
             currentPlayer.slash.x = currentPlayer.body.position.x + currentPlayer.faceDirection * 20;
@@ -146,6 +149,7 @@ Player = function (game, x = gameWidth / 2, y = gameHeight / 2) {
         currentPlayer.slashSound.play();
         currentPlayer.stopAnimations = true;
         currentPlayer.isSlashing = true;
+        currentPlayer.slashDirection = 'down';
         currentPlayer.setSlashPosition = function () {
             slash.body.setSize(28, 20, 0, 0);
             currentPlayer.slash.x = currentPlayer.body.position.x - 3;
@@ -161,6 +165,7 @@ Player = function (game, x = gameWidth / 2, y = gameHeight / 2) {
         currentPlayer.slashSound.play();
         currentPlayer.stopAnimations = true;
         currentPlayer.isSlashing = true;
+        currentPlayer.slashDirection = 'up';
         currentPlayer.setSlashPosition = function () {
             slash.body.setSize(28, 20, 0, 0);
             currentPlayer.slash.x = currentPlayer.body.position.x - 3;
@@ -325,7 +330,14 @@ Player.prototype.update = function (player = this) {
     // Slashing
     if (this.isSlashing) {
         this.setSlashPosition();
-        game.physics.arcade.overlap(this.slash, enemyGroup, function (slash, enemy) { enemy.hit(basePlayer.slashDamage) });
+        game.physics.arcade.overlap(this.slash, enemyGroup, function (slash, enemy) { 
+            enemy.hit(basePlayer.slashDamage);
+            currentPlayer.slashKnockback(enemy);
+        });
+        this.slash.body.enable = true;
+    }
+    else{
+        this.slash.body.enable = false;
     }
 
     // #region Keyboard Input */
@@ -426,6 +438,41 @@ Player.prototype.calcDamageKnockback = function (enemy, player = this) {
         }
     }
     return damageKnockbackApplied;
+}
+
+Player.prototype.slashKnockback = function(enemy){
+    if (typeof enemy.mass === 'undefined'){
+        enemy.mass = 20;
+        console.log('enemy mass undefined')
+    }
+    var velocityConstant = 3000;
+    var surfaceConstant = 20;
+    var playerKnockbackVel = velocityConstant/this.mass + surfaceConstant;
+    var enemyKnockbackVel = velocityConstant/enemy.mass + surfaceConstant;
+    console.log('2');
+    if (this.slashDirection == 'left'){
+        this.body.velocity.x = playerKnockbackVel;
+        enemyKnockbackVel *= -1;
+        enemy.body.velocity.x = enemyKnockbackVel;
+        if (enemy instanceof Slime){
+            enemy.movementSpeed = enemyKnockbackVel;
+        }
+    }
+    else if (this.slashDirection == 'right'){
+        this.body.velocity.x = -playerKnockbackVel;
+        enemy.body.velocity.x = enemyKnockbackVel;
+        if (enemy instanceof Slime){
+            enemy.movementSpeed = enemyKnockbackVel;
+        }
+    }
+    else if (this.slashDirection == 'up'){
+        this.body.velocity.y = playerKnockbackVel;
+        enemy.body.velocity.y = -enemyKnockbackVel;
+    }
+    else if (this.slashDirection == 'down'){
+        this.body.velocity.y = -playerKnockbackVel;
+        enemy.body.velocity.y = enemyKnockbackVel;
+    }
 }
 
 // Health Functions

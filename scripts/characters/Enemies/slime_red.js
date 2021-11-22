@@ -13,7 +13,7 @@ redSlime.prototype.update = function () {
     // Add red specific properties
     if (!this.currentlyHit && this.inWorld) {
         // if player is close to slime and is in front of slime
-        if (game.physics.arcade.distanceBetween(this, currentPlayer) < 160) {
+        if (game.physics.arcade.distanceBetween(this, currentPlayer) < 7*tileLength) {
             this.attacking = true;
             // If not facing player and sufficient time since last switch
             if (this.faceDirection * (this.body.position.x - currentPlayer.body.position.x) > 0 && game.time.now - this.timeLastSwitch > 500) {

@@ -32,11 +32,13 @@ Bat = function(game, x, y, spritesheetStrID){
     this.movementSpeedX = 60;
     this.movementSpeedY = 12;
     this.body.gravity.y = -globalGravity; // counteracts global gravity
+    this.mass = 15;
 
     // Dealing/receiving damage
     this.damage = {none: false, left: true, right: true, up: false, down: true};
     this.health = 10;
     this.currentlyHit = false;
+    this.hitCount = 0;
 
     // Switching Direction
     this.timeLastSwitchX = 0;
@@ -54,7 +56,9 @@ Bat.prototype.constructor = Bat;
 
 // (Automatically called by World.update)
 Bat.prototype.update = function(bat = this) {
-    bat.switchFaceDirection();
+    if (!bat.currentlyHit){
+        bat.switchFaceDirection();
+    }
 
     // If bat close to player
     if (game.physics.arcade.distanceBetween(bat, currentPlayer) < 130){
@@ -76,6 +80,15 @@ Bat.prototype.update = function(bat = this) {
         }
     }
 
+    if (bat.currentlyHit){
+        bat.hitCount += 1;
+        if (bat.hitCount >= 4){
+            bat.body.velocity.x = 0;
+            bat.body.velocity.y = 0;
+            bat.hitCount = 0;
+        }
+    }
+
     // Animations
     if (bat.curAnimation == bat.anims.flying){
         bat.animations.play('flying', 10, true);
@@ -88,8 +101,7 @@ Bat.prototype.update = function(bat = this) {
     }
     else {
         console.log("Current animation priority [", bat.curAnimationPriority, "] is not linked to an animation")
-    }
-    
+    }   
 };
 
 Bat.prototype.hit = function(damage, bat = this){
@@ -98,8 +110,7 @@ Bat.prototype.hit = function(damage, bat = this){
         // Take damage
         bat.health -= damage;
         bat.currentlyHit = true;
-        bat.body.velocity.x = 0;
-        bat.body.velocity.y = 0;
+        console.log('2')
         // Either die or get hit
         if (bat.health <= 0){
             bat.die();
