@@ -5,6 +5,7 @@ function createGameConfigs(){
     game.physics.arcade.gravity.y = globalGravity;
     game.stage.backgroundColor = 'aeffee';
     game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+    game.camera.resetFX();
 }
 
 function addCoins(){

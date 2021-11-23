@@ -63,13 +63,18 @@ demo.level3_0.prototype = {
         game.physics.arcade.collide(enemyGroup, levelTiles);
 
         // Warping
-        game.physics.arcade.collide(currentPlayer, warp1, function(player, warp){spawn = 1; changeLevel(0,"0");});
-        game.physics.arcade.collide(currentPlayer, warp2, function(player, warp){
-            backtrack.destroy(); 
-            addedAudio = false; 
-            spawn = 1; 
-            changeLevel(0,"3-1");
-            });
+        game.physics.arcade.collide(currentPlayer, warp1, function(){fade(); lvlBool = 0;})
+        game.physics.arcade.collide(currentPlayer, warp2, function(){fade(); lvlBool = 1;});
+
+        if (lvlBool == 0){
+            game.camera.onFadeComplete.add(function(player, coin){spawn = 1; changeLevel(0,"0");}, this);
+        }
+        if (lvlBool == 1){
+            game.camera.onFadeComplete.add(function(player, coin){            
+                removeMusic();
+                spawn = 1; 
+                changeLevel(0,"3-1");}, this);
+        }
     },
     render: function(){
         //console.log('rendering');

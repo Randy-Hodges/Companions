@@ -10,7 +10,7 @@ var eventTrackingList = [];
 
 var coinGroup, enemyGroup, heartGroup;
 
-var devTools = false; // Developer tools are turned on if true, otherwise, they are inactive
+var devTools = true; // Developer tools are turned on if true, otherwise, they are inactive
 
 
 function changeLevel(i, levelNum, unique = false){
@@ -55,4 +55,11 @@ function hitSpike(sprite, tile){
         currentPlayer.takeDamage(1);
     }
     return true;
+}
+
+var lvlBool;
+function fade(){
+    // fade color and duration
+    game.camera.fade(0x000000, 500);
+    // game.stage.backgroundColor = 0x000000; // figure out how to make background black for the split second that the transition is only on the screen
 }
