@@ -73,7 +73,7 @@ demo.level1.prototype = {
         game.physics.arcade.collide(enemyGroup, levelTiles);
 
         // Warping
-        game.physics.arcade.collide(currentPlayer, warp1, function(){fade(); lvlBool = 0;})
+        game.physics.arcade.collide(currentPlayer, warp1, function(){fade(); lvlBool = 0;});
         game.physics.arcade.collide(currentPlayer, warp2, function(){fade(); lvlBool = 1;});
 
         if (lvlBool == 0){
