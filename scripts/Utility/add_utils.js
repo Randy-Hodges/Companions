@@ -74,13 +74,26 @@ function addUI(){
     moneyText.fixedToCamera = true;
     
     // Hearts
-    heartText2 = game.add.text(9,9,"Hearts: ", { fontSize: '18px', fill: '#000' });
-    heartText2.fixedToCamera = true;
-    
     heartText = game.add.text(8,8,"Hearts: ", { fontSize: '18px', fill: '#fff' });
+    heartText.setShadow(1,1);
     heartText.fixedToCamera = true;
     createHearts(basePlayer.currentHearts);
     
     // Pause Menu
     addPauseMenu();
+}
+
+function addPauseMenu(){
+    // Create a label to use as a button
+    pause_button = game.add.sprite(gameWidth-20, 20, 'Gear_LightBlue');
+    pause_button.anchor.setTo(0.5, 0.5);
+    pause_button.fixedToCamera = true;
+    pause_button.inputEnabled = true;
+    // Text under button
+    pauseLabel = game.add.text(gameWidth-20, 40,"Enter", { fontSize: '12px', fill: '#fff' });
+    pauseLabel.setShadow(1,1)
+    pauseLabel.anchor.setTo(0.5, 0.5);
+    pauseLabel.fixedToCamera = true;
+
+    addKeyCallback(Phaser.Keyboard.ENTER, pause);
 }

@@ -1,14 +1,13 @@
 var demo = {};
 globalGravity = 400;
-var levelTiles, tilemap; 
-var tileLength = 16, tileWidth = 16;
+var levelTiles, tilemap, tileLength = 16, tileWidth = 16;
 var money = 0, moneyText;
 var addedAudio = false;
-
-var spawn = 1, spawndirection = 1;
 var eventTrackingList = [];
-
+var spawn = 1, spawndirection = 1;
 var coinGroup, enemyGroup, heartGroup;
+var menu, menu2, gamePaused = false;
+
 
 var devTools = true; // Developer tools are turned on if true, otherwise, they are inactive
 
@@ -55,6 +54,29 @@ function hitSpike(sprite, tile){
         currentPlayer.takeDamage(1);
     }
     return true;
+}
+    
+function pause(event){
+    // Pause
+    if (!gamePaused){
+        console.log('Paused')
+        game.paused = true;
+        gamePaused = true;
+        menu = game.add.text(currentPlayer.x, currentPlayer.y - 50, "Paused!!!", { fontSize: '18px', fill: '#000' }); //game.add.sprite(gameWidth-20, 20, 'Play_Blue');
+        menu2 = game.add.text(currentPlayer.x - 1, currentPlayer.y - 51, "Paused!!!", { fontSize: '18px', fill: '#fff' });
+        menu.anchor.setTo(0.5, 0.5);
+        menu2.anchor.setTo(0.5, 0.5);
+    }
+    // Unpause
+    else{
+        console.log('Unpaused.');
+        if (typeof menu != 'undefined'){
+            menu.destroy();
+            menu2.destroy();
+        }
+        game.paused = false;
+        gamePaused = false;
+    }  
 }
 
 var lvlBool;
