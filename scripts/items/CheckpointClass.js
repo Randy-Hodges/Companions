@@ -37,5 +37,6 @@ Checkpoint.prototype.update = function() {
     game.physics.arcade.overlap(currentPlayer, this, function(player, cp){
         // [add sound effect]
         basePlayer.lastCP = cp.base;
+        healMaxHearts();
     });
 }

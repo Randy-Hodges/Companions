@@ -51,8 +51,8 @@ demo.level1_1.prototype = {
         game.physics.arcade.collide(enemyGroup, levelTiles);
 
         // Warping
-        game.physics.arcade.collide(currentPlayer, warp1, function(){transitionLevel('1-0', false, spawnVal = 2);});
-        game.physics.arcade.collide(currentPlayer, warp2, function(){transitionLevel('1-2');});
+        game.physics.arcade.overlap(currentPlayer, warp1, function(){transitionLevel('1-0', false, spawnVal = 2);});
+        game.physics.arcade.overlap(currentPlayer, warp2, function(){transitionLevel('1-2');});
     },
     render: function(){
         //console.log('rendering');

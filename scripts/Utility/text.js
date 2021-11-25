@@ -87,7 +87,7 @@ function addChar() {
     if (!textScrollSound.isPlaying){
         textScrollSound.play();
     }
-    // Manually refresh the text box
+    // Manually refresh the text box (I think this functionality is currently broken)
     if (text[curTextIndex] == "@") {
         curTextIndex += 1;
         checkRefresh(text, true);
@@ -141,14 +141,14 @@ function findFullText(index, text) {
         if (index2 >= text.length) {
             return [fullText, totalChars, true];
         }
-        // Manually refresh the text box
+        // Manually refresh the text box (not currently functional)
         if (text[index2] == "@") {
             console.log("manual refresh")
             return [fullText, totalChars, false];
         }
         // Check if hitting the edge of text box
         // breaking up by word
-        if (curSenLen + 3 > width && text[index2] == ' ') {
+        if (curSenLen + 5 > width && text[index2] == ' ') {
             fullText += '\n';
             curSenLen = 0;
             curLineAmount += 1;

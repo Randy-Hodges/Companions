@@ -54,7 +54,7 @@ demo.level3_1.prototype = {
         game.add.existing(warp2);
 
         cp1 = new Checkpoint(game, 20*tileLength, 45*tileLength);
-        game.add.existing(cp1)
+        game.add.existing(cp1);        
 
         // Coins, Enemies, Player
         addCoins();
@@ -78,8 +78,8 @@ demo.level3_1.prototype = {
         game.physics.arcade.collide(enemyGroup, levelTiles);
 
         // Warping
-        game.physics.arcade.collide(currentPlayer, warp1, function(){transitionLevel('3-0', false, 2)});
-        game.physics.arcade.collide(currentPlayer, warp2, function(){
+        game.physics.arcade.overlap(currentPlayer, warp1, function(){transitionLevel('3-0', false, 2)});
+        game.physics.arcade.overlap(currentPlayer, warp2, function(){
             transitionLevel('0');
             level3Completed = true;
             level4Unlocked = true;

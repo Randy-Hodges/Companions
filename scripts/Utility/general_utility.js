@@ -12,13 +12,17 @@ var menu, menu2, gamePaused = false;
 var devTools = true; // Developer tools are turned on if true, otherwise, they are inactive
 
 
-function transitionLevel(level, newLevel = false, spawnVal = 1){
+function transitionLevel(level, newLevel = false, spawnVal = 1, unique = false){
+    currentPlayer.disableMovement = true;
+    currentPlayer.alpha = 0;
     fadeOut(); 
-
+    
     game.camera.onFadeComplete.add(function(player, coin){
         if (newLevel) {removeMusic()}
         spawn = spawnVal; 
-        changeLevel(0, level);
+        changeLevel(0, level, unique);
+        currentPlayer.disableMovement = false;
+        currentPlayer.alpha = 1;
         game.camera.onFadeComplete.removeAll();
     }, this);
 }
