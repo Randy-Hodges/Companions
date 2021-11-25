@@ -12,14 +12,25 @@ var menu, menu2, gamePaused = false;
 var devTools = true; // Developer tools are turned on if true, otherwise, they are inactive
 
 
-function changeLevel(i, levelNum, unique = false){
-    console.log('level change to: ' + levelNum);
+function transitionLevel(level, newLevel = false, spawnVal = 1){
+    fadeOut(); 
+
+    game.camera.onFadeComplete.add(function(player, coin){
+        if (newLevel) {removeMusic()}
+        spawn = spawnVal; 
+        changeLevel(0, level);
+        game.camera.onFadeComplete.removeAll();
+    }, this);
+}
+
+function changeLevel(i, level, unique = false){
+    console.log('level change to: ' + level);
     addedTextContinueListener = false;
     // Change level
     if (unique){
-        game.state.start(levelNum);
+        game.state.start(level);
     }
-    levelString = levelNum.includes('level') ? levelNum : 'level' + levelNum;
+    levelString = level.includes('level') ? level : 'level' + level;
     game.state.start(levelString);
 }
 
@@ -79,9 +90,12 @@ function pause(event){
     }  
 }
 
-var lvlBool;
-function fade(){
+function fadeOut(){
     // fade color and duration
     game.camera.fade(0x000000, 500);
     // game.stage.backgroundColor = 0x000000; // figure out how to make background black for the split second that the transition is only on the screen
+}
+
+function fadeIn(){
+    game.camera.flash(0x000000, 500);
 }

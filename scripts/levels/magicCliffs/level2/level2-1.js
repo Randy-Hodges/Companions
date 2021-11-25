@@ -86,21 +86,14 @@ demo.level2_1.prototype = {
             gates1.alpha = 0;
             gates2.alpha = 1;
         }
+        
         // Warping
-        game.physics.arcade.collide(currentPlayer, warp1, function(){fade(); lvlBool = 0;});
-        game.physics.arcade.collide(currentPlayer, warp2, function(){fade(); lvlBool = 1;});
-
-        if (lvlBool == 0){
-            game.camera.onFadeComplete.add(function(player, coin){spawn = 2; changeLevel(0,"2-0");}, this);
-        }
-        if (lvlBool == 1){
-            game.camera.onFadeComplete.add(function(player, coin){            
-                removeMusic();
-                spawn = 1; 
-                changeLevel(0,"0");
-                level2Completed = true;
-                level3Unlocked = true;}, this);
-        }
+        game.physics.arcade.collide(currentPlayer, warp1, function(){transitionLevel('2-0', newLevel = false, spawnVal = 2)});
+        game.physics.arcade.collide(currentPlayer, warp2, function(){
+            transitionLevel('0', newLevel = true);
+            level2Completed = true;
+            level3Unlocked = true;
+        });
         
         this.checkEvents();
     },

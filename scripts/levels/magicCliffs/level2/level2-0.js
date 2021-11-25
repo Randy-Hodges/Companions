@@ -62,18 +62,8 @@ demo.level2_0.prototype = {
         game.physics.arcade.collide(enemyGroup, levelTiles);
 
         // Warping
-        game.physics.arcade.collide(currentPlayer, warp1, function(){fade(); lvlBool = 0;});
-        game.physics.arcade.collide(currentPlayer, warp2, function(){fade(); lvlBool = 1;});
-
-        if (lvlBool == 0){
-            game.camera.onFadeComplete.add(function(player, coin){
-                removeMusic();
-                spawn = 1; 
-                changeLevel(0, "0");}, this);
-        }
-        if (lvlBool == 1){
-            game.camera.onFadeComplete.add(function(player, coin){spawn = 1; changeLevel(0,"2-1");}, this);
-        }
+        game.physics.arcade.collide(currentPlayer, warp1, function(){transitionLevel('0', newLevel = true)});
+        game.physics.arcade.collide(currentPlayer, warp2, function(){transitionLevel('2-1')});
     },
     render: function(){
         //console.log('rendering');

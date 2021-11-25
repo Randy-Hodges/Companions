@@ -78,15 +78,12 @@ demo.level3_1.prototype = {
         game.physics.arcade.collide(enemyGroup, levelTiles);
 
         // Warping
-        game.physics.arcade.collide(currentPlayer, warp1, function(){fade(); lvlBool = 0;});
-        game.physics.arcade.collide(currentPlayer, warp2, function(){fade(); lvlBool = 1;});
-
-        if (lvlBool == 0){
-            game.camera.onFadeComplete.add(function(player, coin){spawn = 2; changeLevel(0,"3-0");}, this);
-        }
-        if (lvlBool == 1){
-            game.camera.onFadeComplete.add(function(player, coin){removeMusic(); spawn = 1; changeLevel(0,"0");}, this);
-        }
+        game.physics.arcade.collide(currentPlayer, warp1, function(){transitionLevel('3-0', false, 2)});
+        game.physics.arcade.collide(currentPlayer, warp2, function(){
+            transitionLevel('0');
+            level3Completed = true;
+            level4Unlocked = true;
+        });
 
         // Events
         if (gates1Shown){

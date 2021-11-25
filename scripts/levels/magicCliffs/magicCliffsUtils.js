@@ -14,12 +14,10 @@ function loadHeadshots(){
     // game.load.image('playerHeadshot', "assets/sprites/characters/headshots/Player1.png");
 }
 
-
 function changeToMap(i) {
     console.log('change to map');
     game.state.start('Map');
 }
-
 
 function addEnemiesMC(){
     enemyGroup = game.add.group();

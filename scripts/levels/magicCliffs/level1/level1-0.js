@@ -59,13 +59,14 @@ demo.level1.prototype = {
 
         addUI();
 
-        
         // Only start events if level 1 is not completed
         if (!level1Completed) {
             rect1 = new Phaser.Rectangle(400, 0, 40, 600); // x0, y0, width, height
             rect2 = new Phaser.Rectangle(1050, 0, 40, 540); // x0, y0, width, height
             eventTrackingList = [false, false];
         }   
+
+        fadeIn();
     },
     update: function(){
         // Collision
@@ -73,18 +74,8 @@ demo.level1.prototype = {
         game.physics.arcade.collide(enemyGroup, levelTiles);
 
         // Warping
-        game.physics.arcade.collide(currentPlayer, warp1, function(){fade(); lvlBool = 0;});
-        game.physics.arcade.collide(currentPlayer, warp2, function(){fade(); lvlBool = 1;});
-
-        if (lvlBool == 0){
-            game.camera.onFadeComplete.add(function(player, coin){
-                removeMusic();
-                spawn = 1; 
-                changeLevel(0, "0");}, this);
-        }
-        if (lvlBool == 1){
-            game.camera.onFadeComplete.add(function(player, coin){spawn = 1; changeLevel(0,"1-1");}, this);
-        }
+        game.physics.arcade.collide(currentPlayer, warp1, function(){transitionLevel('0', newLevel = true)});
+        game.physics.arcade.collide(currentPlayer, warp2, function(){transitionLevel('1-1')});
 
         // Events
         this.collideEvents();

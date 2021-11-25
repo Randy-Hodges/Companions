@@ -29,6 +29,7 @@ GrandfatherNPC = function(game, x, y, spritesheetStrID){
     this.interactText = game.add.text(0, 0,"Q", { fontSize: '12px', fill: '#FFF' });
     this.interactTextShowing = false;
     this.interactText.alpha = 0;
+    this.interactText.setShadow(1,1);
 
     this.flipX();
 }
@@ -41,7 +42,7 @@ GrandfatherNPC.prototype.update = function(grandfather = this) {
     // Dialogue
     var overlapped = game.physics.arcade.overlap(currentPlayer, grandfather, function(player, grandfather){
         if (!grandfather.hasDialogue){
-            return
+            return;
         }
         if (!grandfather.isSpeaking && !grandfather.interactTextShowing){
             grandfather.interactText.x = grandfather.body.position.x + grandfather.body.width/4;

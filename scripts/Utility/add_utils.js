@@ -90,7 +90,7 @@ function addPauseMenu(){
     pause_button.fixedToCamera = true;
     pause_button.inputEnabled = true;
     // Text under button
-    pauseLabel = game.add.text(gameWidth-20, 40,"Enter", { fontSize: '12px', fill: '#fff' });
+    pauseLabel = game.add.text(gameWidth-20, 40, "Enter", { fontSize: '12px', fill: '#fff' });
     pauseLabel.setShadow(1,1)
     pauseLabel.anchor.setTo(0.5, 0.5);
     pauseLabel.fixedToCamera = true;
