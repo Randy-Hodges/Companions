@@ -9,6 +9,22 @@ magicCliffsNoCollide = [0,1768,1769,1801,1802,1803,1804,1805,1806,661,1831,1832,
 
 exclusionLayer = {};
 
+function addTilemapMC(tilemapKey){
+    // Tilemap creation
+    tilemap = game.add.tilemap(tilemapKey);
+    tilemap.addTilesetImage('Magic_Cliffs16','Magic_Cliffs16'); //make sure the tileset name is the same as the tileset name used in Tiled
+    tilemap.addTilesetImage('nes-color-palette','nes-color-palette'); 
+    tilemap.createLayer('caveBackground');  
+    levelTiles = tilemap.createLayer('mainGrass');  // layer name is the same as used in Tiled
+    // Collision
+    tilemap.setLayer('exclude');
+    tilemap.forEach(function(tile){excludeCollision(tile)},1,0,0,tilemap.width,tilemap.height);
+    tilemap.setCollisionByExclusion(Object.values(exclusionLayer), true, 'mainGrass');
+    setTileProperties();
+    // Game borders based on tilemap
+    game.world.setBounds(0, 0, tilemap.layer.widthInPixels, tilemap.layer.heightInPixels);
+}
+
 function loadHeadshots(){
     game.load.image('ghostHeadshot', "assets/sprites/characters/portraits/Icons_28.png");
     // game.load.image('playerHeadshot', "assets/sprites/characters/headshots/Player1.png");

@@ -115,6 +115,9 @@ Slime.prototype.update = function (slime = this) {
         if (!slime.slimeBoss) {
             slime.movementSpeed = 0;
         }
+        else{
+            slime.movementSpeed = slime.baseMovementSpeed * slime.faceDirection;
+        }
     }
 
     // #region Animations

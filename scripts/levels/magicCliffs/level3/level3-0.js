@@ -26,19 +26,8 @@ demo.level3_0.prototype = {
         // spawn points (in units of tiles)
         this.createSpawnPoints();
 
-        // Tilemap creation
-        tilemap = game.add.tilemap('level3-0');
-        tilemap.addTilesetImage('Magic_Cliffs16','Magic_Cliffs16'); //make sure the tileset name is the same as the tileset name used in Tiled
-        tilemap.addTilesetImage('nes-color-palette','nes-color-palette'); 
-        tilemap.createLayer('caveBackground');  
-        levelTiles = tilemap.createLayer('mainGrass');  // layer name is the same as used in Tiled
-        // Collision
-        tilemap.setLayer('exclude');
-        tilemap.forEach(function(tile){excludeCollision(tile)},1,0,0,tilemap.width,tilemap.height);
-        tilemap.setCollisionByExclusion(Object.values(exclusionLayer), true, 'mainGrass');
-        setTileProperties();
-        // Game borders based on tilemap
-        game.world.setBounds(0, 0, tilemap.layer.widthInPixels, tilemap.layer.heightInPixels);
+        // Tilemap (Most parts)
+        addTilemapMC('level3-0');
         
         // Warp points
         warp1 = new Warp(game, spawnpoint1[0]*tileLength, spawnpoint1[1]*tileLength, 180);
