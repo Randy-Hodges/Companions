@@ -9,6 +9,29 @@ magicCliffsNoCollide = [0,1768,1769,1801,1802,1803,1804,1805,1806,661,1831,1832,
 
 exclusionLayer = {};
 
+function changeToMap(i) {
+    console.log('change to map');
+    game.state.start('Map');
+}
+
+function loadHeadshots(){
+    game.load.image('ghostHeadshot', "assets/sprites/characters/portraits/Icons_28.png");
+    // game.load.image('playerHeadshot', "assets/sprites/characters/headshots/Player1.png");
+}
+
+function loadAssetsMC(){
+    loadGameConfigs();
+    loadPlayer();
+    loadCompanion();
+    loadItems();
+    loadEnemies();
+    loadUI();
+    // Hiddens
+    game.load.audio('small bell', 'assets/audio/soundeffects/small_bell2.mp3')
+}
+
+
+
 function addTilemapMC(tilemapKey){
     // Tilemap creation
     tilemap = game.add.tilemap(tilemapKey);
@@ -20,19 +43,9 @@ function addTilemapMC(tilemapKey){
     tilemap.setLayer('exclude');
     tilemap.forEach(function(tile){excludeCollision(tile)},1,0,0,tilemap.width,tilemap.height);
     tilemap.setCollisionByExclusion(Object.values(exclusionLayer), true, 'mainGrass');
-    setTileProperties();
+    setTilePropertiesMC();
     // Game borders based on tilemap
     game.world.setBounds(0, 0, tilemap.layer.widthInPixels, tilemap.layer.heightInPixels);
-}
-
-function loadHeadshots(){
-    game.load.image('ghostHeadshot', "assets/sprites/characters/portraits/Icons_28.png");
-    // game.load.image('playerHeadshot', "assets/sprites/characters/headshots/Player1.png");
-}
-
-function changeToMap(i) {
-    console.log('change to map');
-    game.state.start('Map');
 }
 
 function addEnemiesMC(){
@@ -66,7 +79,7 @@ function addEnemyFromTilemapMC(tile){
     }
 }
 
-function setTileProperties(){
+function setTilePropertiesMC(){
     function setTilePropertiesHelper(tile){
         if (tile.index == 795 || tile.index == 796){
             tile.collideUp = true;
@@ -86,15 +99,18 @@ function setTileProperties(){
     tilemap.forEach(function(tile){setTilePropertiesHelper(tile)},1,0,0,tilemap.width,tilemap.height);
 }
 
-function createGroups(){
-    // **Not used currently
-    if (typeof coinGroup == 'undefined'){
-        coinGroup = game.add.group();
-    }
-    if (typeof heartGroup == 'undefined'){
-        heartGroup = game.add.group();
-    }
-    if (typeof enemyGroup == 'undefined'){
-        enemyGroup = game.add.group();
-    }
+
+
+// TODO: Finish these functions, put them in levels
+function loadParallax(){
+    game.load.image('sea', 'assets/tiles/Magic-Cliffs-Environment/PNG/sea.png')
+}
+
+function addParallax(){
+    tilesprite = game.add.tileSprite(25*tileLength, 40*tileLength, 112, 96, 'sea');
+
+}
+
+function updateParallax(){
+
 }

@@ -1,13 +1,8 @@
-var slimeBoss
-demo.level3_1 =  function(){};
+var slimeBoss;
+demo.level3_1 = function(){};
 demo.level3_1.prototype = {
     preload: function(){
-        loadGameConfigs();
-        loadPlayer();
-        loadCompanion();
-        loadItems();
-        loadEnemies();
-        loadUI();
+        loadAssetsMC();
         // Tilemap
         game.load.tilemap('level3-1', "assets/tilemaps/Levels/Level 3/level3-1.json", null, Phaser.Tilemap.TILED_JSON);
         game.load.image('Magic_Cliffs16', "assets/tiles/Magic-Cliffs-Environment/PNG/tileset.png");
@@ -19,8 +14,6 @@ demo.level3_1.prototype = {
         game.load.spritesheet('slimeBoss', "assets/sprites/enemies/blue slime/slime-Sheet-white.png", 32, 25);
         loadHeadshots();
         game.load.spritesheet('grandfather', "assets/sprites/enemies/Plague Doctor/plague_doctor_sheet.png", 64, 64);
-
-
 
     },
     create: function(){
@@ -59,6 +52,7 @@ demo.level3_1.prototype = {
 
         // Events
         this.setUpEvents();
+        this.setUpHiddens();
 
     },
     update: function(){
@@ -75,22 +69,14 @@ demo.level3_1.prototype = {
         });
 
         // Events
-        if (gates1Shown){
-            game.physics.arcade.collide(currentPlayer, gates1);
-            game.physics.arcade.collide(enemyGroup, gates1);
-            gates1.alpha = 1;
-        }
-        else{
-            gates1.alpha = 0;
-        }
-        
-
         this.checkEvents();
+        this.checkHiddens();
     },
     render: function(){
         //console.log('rendering');
         // game.debug.body(warp2);
         // game.debug.spriteInfo(currentPlayer);
+        // game.debug.geom(hiddenRect1, 'rgb(0,0,0)');
     },
     createSpawnPoints: function(){
         // SpawnPoints are in units of tiles
@@ -113,7 +99,29 @@ demo.level3_1.prototype = {
             spawndirection = 1;
         }
     },
+    setUpEvents: function(){
+        cameraIsTweening = false;
+        tween = game.add.tween(game.camera).to({ x: currentPlayer.x - game.width/2, y: currentPlayer.y - game.height/2}, 200, 'Linear', true, 0);
+        tweeningCount = 0;
+        tilemap.setCollisionByExclusion(indexes = [0, -1], collides = true, layer = 'gates1')
+        gates1.alpha = 0;
+        gates1Shown = false;
+        if (!level3Completed) {
+            rect1 = new Phaser.Rectangle(18*tileLength, 0, 40, 1000); // x0, y0, width, height
+            rect2 = new Phaser.Rectangle(46*tileLength, 0, 40, 1000); // x0, y0, width, height
+            eventTrackingList = [false, false];
+        }
+    },
     checkEvents: function () {
+        if (gates1Shown){
+            game.physics.arcade.collide(currentPlayer, gates1);
+            game.physics.arcade.collide(enemyGroup, gates1);
+            gates1.alpha = 1;
+        }
+        else{
+            gates1.alpha = 0;
+        }
+
         if (!level3Completed) {
             if (eventTrackingList[0] == false) {
                 if (rect1.intersects(currentPlayer.body)) {
@@ -143,17 +151,21 @@ demo.level3_1.prototype = {
             // game.physics.arcade.moveToObject(game.camera, currentPlayer, 250);
         }
     },
-    setUpEvents: function(){
-        cameraIsTweening = false;
-        tween = game.add.tween(game.camera).to({ x: currentPlayer.x - game.width/2, y: currentPlayer.y - game.height/2}, 200, 'Linear', true, 0);
-        tweeningCount = 0;
-        tilemap.setCollisionByExclusion(indexes = [0, -1], collides = true, layer = 'gates1')
-        gates1.alpha = 0;
-        gates1Shown = false;
-        if (!level3Completed) {
-            rect1 = new Phaser.Rectangle(18*tileLength, 0, 40, 1000); // x0, y0, width, height
-            rect2 = new Phaser.Rectangle(46*tileLength, 0, 40, 1000); // x0, y0, width, height
-            eventTrackingList = [false, false];
+    setUpHiddens: function(){
+        smallBell = game.add.audio('small bell');
+        smallBell.volume = .1;
+        if (hiddens31[0]){
+            hidden1Layer = tilemap.createLayer('hidden1');
+            hiddenRect1 = new Phaser.Rectangle(100*tileLength, 56*tileLength, 5*tileLength, 3*tileLength); // x0, y0, width, height
+        }
+    },
+    checkHiddens: function(){
+        if (hiddens31[0]){
+            if (hiddenRect1.intersects(currentPlayer.body)){
+                hiddens31[0] = false;
+                hidden1Layer.alpha = 0;
+                smallBell.play();
+            }
         }
     }
 };

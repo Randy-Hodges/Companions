@@ -2,12 +2,7 @@
 demo.level1_2 = function () { };
 demo.level1_2.prototype = {
     preload: function () {
-        loadGameConfigs();
-        loadPlayer();
-        loadCompanion();
-        loadItems();
-        loadEnemies();
-        loadUI();
+        loadAssetsMC();
         game.load.tilemap('level1-2', "assets/tilemaps/Levels/level 1/level1-2.json", null, Phaser.Tilemap.TILED_JSON);
         game.load.image('Magic_Cliffs16', "assets/tiles/Magic-Cliffs-Environment/PNG/tileset.png");
         game.load.image('nes-color-palette', "assets/tiles/nes-color-palette.jpg");
@@ -52,19 +47,8 @@ demo.level1_2.prototype = {
 
         addUI();
 
-        // Events
-        if (!level1Completed) {
-            rect1 = new Phaser.Rectangle(310, 0, 40, 1000); // x0, y0, width, height
-            rect2 = new Phaser.Rectangle(1560, 0, 40, 1000); // x0, y0, width, height
-            eventTrackingList = [false, false];
-        }
-
-        // Companion
-        companionGroup = game.add.group();
-        pig = new CompanionPig(game, 1620, 410, false, false);
-        game.add.existing(pig);
-        companionGroup.add(pig)
-
+        this.setUpEvents();
+        this.setUpHiddens();
     },
     update: function () {
         // Collision
@@ -80,6 +64,7 @@ demo.level1_2.prototype = {
         });
 
         this.collideEvents();
+        this.checkHiddens();
     },
     render: function () {
         //game.debug.body(player);
@@ -102,6 +87,19 @@ demo.level1_2.prototype = {
             spawndirection = -1;
         }
     },
+    setUpEvents: function(){
+        // Events
+        if (!level1Completed) {
+            rect1 = new Phaser.Rectangle(310, 0, 40, 1000); // x0, y0, width, height
+            rect2 = new Phaser.Rectangle(1560, 0, 40, 1000); // x0, y0, width, height
+            eventTrackingList = [false, false];
+            // Companion
+            companionGroup = game.add.group();
+            pig = new CompanionPig(game, 1620, 410, false, false);
+            game.add.existing(pig);
+            companionGroup.add(pig)
+        }
+    },
     collideEvents: function () {
         if (!level1Completed) {
             if (eventTrackingList[0] == false) {
@@ -115,6 +113,23 @@ demo.level1_2.prototype = {
                     event4_1_2();
                     eventTrackingList[1] = true;
                 }
+            }
+        }
+    },
+    setUpHiddens: function(){
+        smallBell = game.add.audio('small bell');
+        smallBell.volume = .1;
+        if (hiddens12[0]){
+            hidden1Layer = tilemap.createLayer('hidden1');
+            hiddenRect1 = new Phaser.Rectangle(25*tileLength, 32*tileLength, 2*tileLength, 2*tileLength); // x0, y0, width, height
+        }
+    },
+    checkHiddens: function(){
+        if (hiddens12[0]){
+            if (hiddenRect1.intersects(currentPlayer.body)){
+                hiddens12[0] = false;
+                hidden1Layer.alpha = 0;
+                smallBell.play();
             }
         }
     }

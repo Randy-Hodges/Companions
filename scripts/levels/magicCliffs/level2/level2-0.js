@@ -2,12 +2,7 @@
 demo.level2_0 =  function(){};
 demo.level2_0.prototype = {
     preload: function(){
-        loadGameConfigs();
-        loadPlayer();
-        loadCompanion();
-        loadItems();
-        loadEnemies();
-        loadUI();
+        loadAssetsMC();
         // Tilemap
         game.load.tilemap('level2-0', "assets/tilemaps/Levels/Level 2/level2-0.json", null, Phaser.Tilemap.TILED_JSON);
         game.load.image('Magic_Cliffs16', "assets/tiles/Magic-Cliffs-Environment/PNG/tileset.png");
@@ -17,16 +12,13 @@ demo.level2_0.prototype = {
 
     },
     create: function(){
-        // configs
         createGameConfigs();
-
-        // music
         addMusic('backtrack');
 
         // spawn points (in units of tiles)
         this.createSpawnPoints();
 
-        // Most of the Tilemap
+        // Tilemap
         addTilemapMC('level2-0');
         
         // Warp points
@@ -39,10 +31,12 @@ demo.level2_0.prototype = {
         addEnemiesMC();
         addPlayer();
 
-        // Front Layer
+        // Front
         tilemap.createLayer('front');
 
         addUI();
+
+        this.setUpHiddens();
     },
     update: function(){
         // Collision
@@ -52,6 +46,9 @@ demo.level2_0.prototype = {
         // Warping
         game.physics.arcade.overlap(currentPlayer, warp1, function(){transitionLevel('0', newLevel = true)});
         game.physics.arcade.overlap(currentPlayer, warp2, function(){transitionLevel('2-1')});
+
+        // Events
+        this.checkHiddens();
     },
     render: function(){
         //console.log('rendering');
@@ -72,10 +69,23 @@ demo.level2_0.prototype = {
             spawnpoint = spawnpoint1.slice();
             spawnpoint[0] += 2;
         }
-        // else{
-        //     spawnpoint = spawnpoint2.slice();
-            
-        // }
+    },
+    setUpHiddens: function(){
+        smallBell = game.add.audio('small bell');
+        smallBell.volume = .1;
+        if (hiddens20[0]){
+            hidden1Layer = tilemap.createLayer('hidden1');
+            hiddenRect1 = new Phaser.Rectangle(81*tileLength, 23*tileLength, 2*tileLength, 2*tileLength); // x0, y0, width, height
+        }
+    },
+    checkHiddens: function(){
+        if (hiddens20[0]){
+            if (hiddenRect1.intersects(currentPlayer.body)){
+                hiddens20[0] = false;
+                hidden1Layer.alpha = 0;
+                smallBell.play();
+            }
+        }
     }
 };
     

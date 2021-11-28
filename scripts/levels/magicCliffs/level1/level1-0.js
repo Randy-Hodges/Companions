@@ -2,12 +2,7 @@
 demo.level1 =  function(){};
 demo.level1.prototype = {
     preload: function(){
-        loadGameConfigs();
-        loadPlayer();
-        loadCompanion();
-        loadItems();
-        loadEnemies();
-        loadUI();
+        loadAssetsMC();
         
         // Level Specific
         game.load.tilemap('level1-0', "assets/tilemaps/Levels/level 1/level1-0.json", null, Phaser.Tilemap.TILED_JSON);
@@ -30,7 +25,7 @@ demo.level1.prototype = {
         // Spawn points
         this.createSpawnPoints();
 
-        // Tilemap behind
+        // Tilemap behind (There's a function for all of this but it doesn't apply well to level 1 maps)
         tilemap = game.add.tilemap('level1-0');
         tilemap.addTilesetImage('Magic_Cliffs16','Magic_Cliffs16'); //make sure the tileset name is the same as the tileset name used in Tiled
         tilemap.addTilesetImage('Magic_Cliffs16_2','Magic_Cliffs16'); //make sure the tileset name is the same as the tileset name used in Tiled
@@ -50,10 +45,7 @@ demo.level1.prototype = {
         addHearts();
         addEnemiesMC();
         addPlayer();
-        
-        // Golden Heart
-        //addGoldHeart(82, 28);
-        
+                
         // Tilemap Infront
         tilemap.createLayer('front');
 

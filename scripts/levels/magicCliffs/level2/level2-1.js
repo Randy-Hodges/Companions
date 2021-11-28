@@ -2,12 +2,7 @@
 demo.level2_1 =  function(){};
 demo.level2_1.prototype = {
     preload: function(){
-        loadGameConfigs();
-        loadPlayer();
-        loadCompanion();
-        loadItems();
-        loadEnemies();
-        loadUI();
+        loadAssetsMC();
         game.load.tilemap('level2-1', "assets/tilemaps/Levels/Level 2/level2-1.json", null, Phaser.Tilemap.TILED_JSON);
         game.load.image('Magic_Cliffs16', "assets/tiles/Magic-Cliffs-Environment/PNG/tileset.png");
         game.load.image('nes-color-palette', "assets/tiles/nes-color-palette.jpg");
