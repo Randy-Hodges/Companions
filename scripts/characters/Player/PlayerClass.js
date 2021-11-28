@@ -226,7 +226,7 @@ Player = function (game, x = gameWidth / 2, y = gameHeight / 2) {
     playerSlashButton = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
     playerSlashButton.onDown.add(
         function () {
-            if (!currentPlayer.disableMovement) {
+            if (!currentPlayer.disableMovement && !game.paused) {
                 if (!currentPlayer.stopAnimations) {
                     if (game.input.keyboard.isDown(Phaser.Keyboard.DOWN)) {
                         currentPlayer.animations.play('slash down');
@@ -254,8 +254,10 @@ Player = function (game, x = gameWidth / 2, y = gameHeight / 2) {
     playerDashButton.onDown.add(function () {
         if (game.time.now - currentPlayer.lastDash >= currentPlayer.dashCooldownLength 
             && currentPlayer.dashEnabled
-            && !currentPlayer.disableMovement) {
-            // Note: this particular code does not feel clean
+            && !currentPlayer.disableMovement
+            && !game.paused
+            ) {
+            // Note: this particular code feels weird, but it works smoothly
             currentPlayer.lastDash = game.time.now;
             
             function dash(timer) {

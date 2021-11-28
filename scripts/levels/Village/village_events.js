@@ -18,6 +18,13 @@ function event1_village(){
 
     var endOfDialogueFunction = function(){
         grandfather.leave();
+        grandfather = new GrandfatherNPC(game, 24*tileLength, 15*tileLength, 'grandfather');
+        grandfather.flipX();
+        grandfather.setIdle();
+        grandfather.setDialogue([[
+            'Here you will be able to spend coins, heal up, visit your saved companions and meet towns folk.' + 
+            '*Developers Note: Not implemented yet', 'ghostHeadshot']])    
+        game.add.existing(grandfather);
     }
 
     startDialogue(eventDialogueList, endOfDialogueFunction);

@@ -66,7 +66,7 @@ function event3_1_2(){
     var eventDialogueList = [];
     player = 'playerHeadshot';
     ghost = 'ghostHeadshot';
-    text1 = ['I have a lot of hope for you. I think there is a lot of potential in you.', ghost];
+    text1 = ['I have a lot of hope for you. I think there is a lot of  potential in you.', ghost];
     for (i = 1; i<=1; i += 1){
         eventDialogueList.push(eval("text" + i));
     }
@@ -90,9 +90,11 @@ function event4_1_2(){
     var eventDialogueList = [];
     player = 'playerHeadshot';
     ghost = 'ghostHeadshot';
-    text1 = ['Hey look, a companion. Go ahead and free it from '+
-                'that cage.', ghost];
-    for (i = 1; i<=1; i += 1){
+    text1 = ['Hey look, a companion. I am surprised to see it out like this. The Collector '+
+                'has captured most of the companions in this realm...', ghost];
+    text2 = ['You should try and free as many of those as possible from the Collector\'s grasp. '+
+    'Good luck!', ghost];
+    for (i = 1; i<=2; i += 1){
         eventDialogueList.push(eval("text" + i));
     }
     
