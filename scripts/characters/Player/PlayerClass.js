@@ -52,7 +52,9 @@ Player = function (game, x = gameWidth / 2, y = gameHeight / 2) {
     this.jumpSound = game.add.audio('jump sound');
     this.jumpSound.volume = .15;
     this.slashSound = game.add.audio('air slash sound');
-    this.slashSound.volume = .07;
+    this.slashSound.volume = .1;
+    this.dashSound = game.add.audio('dash sound');
+    this.dashSound.volume = .07;
 
     // Animations
     this.animations.add('idle side', [11, 12, 13, 14, 15], frameRate = 10);
@@ -263,6 +265,7 @@ Player = function (game, x = gameWidth / 2, y = gameHeight / 2) {
             function dash(timer) {
                 currentPlayer.isDashing = true;
                 // Start Dash
+                currentPlayer.dashSound.play();
                 dashVelocity = 500;
                 currentPlayer.body.maxVelocity.x = dashVelocity;
                 currentPlayer.body.velocity.x = currentPlayer.faceDirection * dashVelocity;

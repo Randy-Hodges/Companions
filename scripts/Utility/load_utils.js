@@ -2,6 +2,7 @@ function loadPlayer(){
     game.load.spritesheet('player', "assets/sprites/characters/RPG Character/main_character_all.png", 64, 64);
     game.load.audio('air slash sound', "assets/audio/soundeffects/air_slash.wav");
     game.load.audio('jump sound', "assets/audio/soundeffects/jump.mp3");
+    game.load.audio('dash sound', "assets/audio/soundeffects/dash.wav");
 
 }
 
