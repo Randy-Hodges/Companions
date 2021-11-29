@@ -52,9 +52,12 @@ Player = function (game, x = gameWidth / 2, y = gameHeight / 2) {
     this.jumpSound = game.add.audio('jump sound');
     this.jumpSound.volume = .15;
     this.slashSound = game.add.audio('air slash sound');
-    this.slashSound.volume = .1;
+    this.slashSound.volume = .09;
     this.dashSound = game.add.audio('dash sound');
-    this.dashSound.volume = .07;
+    this.dashSound.volume = .05;
+    this.damagedSound = game.add.audio('damaged sound');
+    this.damagedSound.volume = .05;
+
 
     // Animations
     this.animations.add('idle side', [11, 12, 13, 14, 15], frameRate = 10);
@@ -419,6 +422,7 @@ Player.prototype.calcDamageKnockback = function (enemy, player = this) {
         if (enemy.damage.right) {
             damageKnockbackApplied = true;
             player.takeDamage(1);
+            player.damagedSound.play();
         }
     }
     if (player.body.touching.right) {
@@ -426,6 +430,7 @@ Player.prototype.calcDamageKnockback = function (enemy, player = this) {
         if (enemy.damage.left) {
             damageKnockbackApplied = true;
             player.takeDamage(1);
+            player.damagedSound.play();
         }
     }
     if (player.body.touching.up) {
@@ -433,6 +438,7 @@ Player.prototype.calcDamageKnockback = function (enemy, player = this) {
         if (enemy.damage.down) {
             damageKnockbackApplied = true;
             player.takeDamage(1);
+            player.damagedSound.play();
         }
     }
     if (player.body.touching.down) {
@@ -440,6 +446,7 @@ Player.prototype.calcDamageKnockback = function (enemy, player = this) {
         if (enemy.damage.up) {
             damageKnockbackApplied = true;
             player.takeDamage(1);
+            player.damagedSound.play();
         }
     }
     return damageKnockbackApplied;
