@@ -99,7 +99,7 @@ demo.level0.prototype = {
     },
     createSpawnPoints: function(){
         spawnpoint0 = [25, 35];
-        spawnpoint1 = [61, 14];
+        spawnpoint1 = [62, 14];
         spawnpoint2 = [25, 35];  
         if (spawn == 0){
             spawnpoint = spawnpoint0.slice();
