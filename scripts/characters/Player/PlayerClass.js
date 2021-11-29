@@ -56,7 +56,7 @@ Player = function (game, x = gameWidth / 2, y = gameHeight / 2) {
     this.dashSound = game.add.audio('dash sound');
     this.dashSound.volume = .05;
     this.damagedSound = game.add.audio('damaged sound');
-    this.damagedSound.volume = .05;
+    this.damagedSound.volume = .2;
 
 
     // Animations

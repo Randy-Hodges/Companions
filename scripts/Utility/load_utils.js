@@ -3,7 +3,7 @@ function loadPlayer(){
     game.load.audio('air slash sound', "assets/audio/soundeffects/air_slash.wav");
     game.load.audio('jump sound', "assets/audio/soundeffects/jump.mp3");
     game.load.audio('dash sound', "assets/audio/soundeffects/dash.wav");
-    game.load.audio('damaged sound', "assets/audio/soundeffects/player_damaged1.wav");
+    game.load.audio('damaged sound', "assets/audio/soundeffects/player_damaged.ogg");
 }
 
 function loadCompanion(){
