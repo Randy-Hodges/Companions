@@ -63,7 +63,7 @@ demo.level3_1.prototype = {
         // Warping
         game.physics.arcade.overlap(currentPlayer, warp1, function(){transitionLevel('3-0', false, 2)});
         game.physics.arcade.overlap(currentPlayer, warp2, function(){
-            transitionLevel('0');
+            transitionLevel('0', true);
             level3Completed = true;
             level4Unlocked = true;
         });
