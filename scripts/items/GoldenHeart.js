@@ -13,6 +13,9 @@ GoldenHeart = function(game, x, y){
 
     this.killable = true;
 
+    // Sound
+    this.heartCollect = game.add.audio('heart collect');
+    this.heartCollect.volume = .2;
 }
 
 GoldenHeart.prototype = Object.create(Phaser.Sprite.prototype);
@@ -21,7 +24,7 @@ GoldenHeart.prototype.constructor = GoldenHeart;
 // (Automatically called by World.update)
 GoldenHeart.prototype.update = function() {
     this.animations.play('heartbeat', 10);
-    game.physics.arcade.overlap(currentPlayer, goldHeartGroup, function(player, heart){heart.kill(); healMaxHearts(); /*heartCollect.play();*/});
+    game.physics.arcade.overlap(currentPlayer, goldHeartGroup, function(player, heart){heart.kill(); healMaxHearts(); heart.heartCollect.play();});
 }
 
 

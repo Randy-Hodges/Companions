@@ -14,7 +14,7 @@ Coin = function(game, x, y){
 
     // Sound
     this.coinCollect = game.add.audio('coin collect');
-    this.coinCollect.volume = .5;
+    this.coinCollect.volume = .4;
 }
 
 Coin.prototype = Object.create(Phaser.Sprite.prototype);

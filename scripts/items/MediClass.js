@@ -10,10 +10,11 @@ Medi = function(game, x, y){
 
     // physics
     game.physics.enable(this);
-    //this.body.setSize(9,28,28,20); // Creating hitbox. first two params are size of body, second two are offset of body
-    //this.body.data.gravityScale=0;
     this.body.acceleration.y = -globalGravity;
 
+    // Sound
+    this.heartCollect = game.add.audio('heart collect');
+    this.heartCollect.volume = .2;
 }
 
 Medi.prototype = Object.create(Phaser.Sprite.prototype);
@@ -22,5 +23,5 @@ Medi.prototype.constructor = Medi;
 // (Automatically called by World.update)
 Medi.prototype.update = function() {
     this.animations.play('heartbeat', 10);
-    game.physics.arcade.overlap(currentPlayer, heartGroup, function(player, heart){heart.kill(); healHearts(1); /*heartCollect.play();*/});
+    game.physics.arcade.overlap(currentPlayer, heartGroup, function(player, heart){heart.kill(); healHearts(1); heart.heartCollect.play();});
 }
