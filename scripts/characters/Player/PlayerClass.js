@@ -422,7 +422,6 @@ Player.prototype.calcDamageKnockback = function (enemy, player = this) {
         if (enemy.damage.right) {
             damageKnockbackApplied = true;
             player.takeDamage(1);
-            player.damagedSound.play();
         }
     }
     if (player.body.touching.right) {
@@ -430,7 +429,6 @@ Player.prototype.calcDamageKnockback = function (enemy, player = this) {
         if (enemy.damage.left) {
             damageKnockbackApplied = true;
             player.takeDamage(1);
-            player.damagedSound.play();
         }
     }
     if (player.body.touching.up) {
@@ -438,7 +436,6 @@ Player.prototype.calcDamageKnockback = function (enemy, player = this) {
         if (enemy.damage.down) {
             damageKnockbackApplied = true;
             player.takeDamage(1);
-            player.damagedSound.play();
         }
     }
     if (player.body.touching.down) {
@@ -446,7 +443,6 @@ Player.prototype.calcDamageKnockback = function (enemy, player = this) {
         if (enemy.damage.up) {
             damageKnockbackApplied = true;
             player.takeDamage(1);
-            player.damagedSound.play();
         }
     }
     return damageKnockbackApplied;
@@ -503,6 +499,7 @@ Player.prototype.takeDamage = function (dmg = 1) {
         for (var i = 1; i <= dmg; i += 1){
             hearts.removeChildAt(numhearts - i);
         }
+        this.damagedSound.play();
         this.invulnerable = true;
         this.invulnerableTime = game.time.now;
         // console.log("Got hit. Current hearts:", basePlayer.currentHearts, "Num hearts:", numhearts - dmg);
