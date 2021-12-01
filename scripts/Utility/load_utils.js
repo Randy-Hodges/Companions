@@ -39,6 +39,8 @@ function loadUI(){
     game.load.image('Green', "assets/UI/Green.png");
     game.load.audio('textContinue', "assets/audio/soundeffects/progress_text.wav");
     game.load.audio('text scroll sound', "assets/audio/soundeffects/primary_text_scroll.mp3");
+    game.load.audio('pause sound', "assets/audio/soundeffects/pause.mp3");
+    game.load.audio('unpause sound', "assets/audio/soundeffects/unpause.mp3");
 }
 
 function loadGameConfigs(){

@@ -96,4 +96,10 @@ function addPauseMenu(){
     pauseLabel.fixedToCamera = true;
 
     addKeyCallback(Phaser.Keyboard.ENTER, pause);
+
+    // Sound
+    pauseSound = game.add.audio('pause sound');
+    pauseSound.volume = .3;
+    unpauseSound = game.add.audio('unpause sound');
+    unpauseSound.volume = .3;
 }

@@ -74,6 +74,7 @@ function hitSpike(sprite, tile){
 function pause(event){
     // Pause
     if (!gamePaused){
+        pauseSound.play();
         console.log('Paused')
         game.paused = true;
         gamePaused = true;
@@ -88,6 +89,7 @@ function pause(event){
         if (typeof menu != 'undefined'){
             menu.destroy();
             menu2.destroy();
+            unpauseSound.play();
         }
         game.paused = false;
         gamePaused = false;
