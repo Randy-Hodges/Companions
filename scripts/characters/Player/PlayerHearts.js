@@ -23,12 +23,14 @@ function healHearts(heal = 1) {
         basePlayer.currentHearts = basePlayer.maxHearts;
     }
     
+    heart.heartCollect.play();
     hearts.destroy();
     createHearts(basePlayer.currentHearts);
 }
 
 function healMaxHearts() {
     if (basePlayer.currentHearts < basePlayer.maxHearts){
+        heart.heartCollect.play();
         basePlayer.currentHearts = basePlayer.maxHearts;
         numhearts = basePlayer.currentHearts;
         
