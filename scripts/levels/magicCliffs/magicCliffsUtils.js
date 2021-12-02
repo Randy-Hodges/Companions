@@ -22,7 +22,7 @@ function loadHeadshots(){
 function loadAssetsMC(){
     loadGameConfigs();
     loadPlayer();
-    loadCompanion();
+    loadCompanions();
     loadItems();
     loadEnemies();
     loadUI();

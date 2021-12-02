@@ -9,10 +9,22 @@ function createHearts(numhearts) {
     }
 }
 
-function increaseMaxHearts(increasenum) {
-    var numhearts = basePlayer.currentHearts + increasenum;
-    basePlayer.currentHearts += increasenum;
-    
+function increaseMaxHearts(increaseNum = 1) {
+    var numhearts = basePlayer.currentHearts + increaseNum;
+    basePlayer.maxHearts += increaseNum;
+    basePlayer.currentHearts += increaseNum;
+    currentPlayer.maxHearts += increaseNum;
+    currentPlayer.currentHearts += increaseNum;
+    hearts.destroy();
+    createHearts(numhearts);
+}
+
+function decreaseMaxHearts(decreaseNum = 1){
+    var numhearts = basePlayer.currentHearts - decreaseNum;
+    basePlayer.maxHearts -= decreaseNum;
+    basePlayer.currentHearts -= decreaseNum;
+    currentPlayer.maxHearts -= decreaseNum;
+    currentPlayer.currentHearts -= decreaseNum;
     hearts.destroy();
     createHearts(numhearts);
 }
@@ -37,11 +49,5 @@ function healMaxHearts() {
         hearts.destroy();
         createHearts(basePlayer.currentHearts);
     }
-}
-
-// Companion Functions - Powerups
-function increaseMaxHearts(num) {
-    basePlayer.maxHearts = basePlayer.maxHearts + num;
-    //console.log(basePlayer.maxHearts);
 }
 // #endregion

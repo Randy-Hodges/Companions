@@ -30,10 +30,10 @@ Companion = function(game, spritesheetStrID, x = gameWidth/2, y = gameHeight/2, 
     this.body.maxVelocity.y = 300;
 
     // Text
-    this.equipText1 = game.add.text(this.body.position.x, this.body.position.y,"Q", { fontSize: '12px', fill: '#000' });
+    this.equipText = game.add.text(this.body.position.x, this.body.position.y,"Q", { fontSize: '12px', fill: '#000' });
+    this.equipTextShowing = false;
+    this.equipText.alpha = 0;
     this.equipText2 = game.add.text(this.body.position.x, this.body.position.y,"Q", { fontSize: '12px', fill: '#fff' });
-    this.equipText1Showing = false;
-    this.equipText1.alpha = 0;
     this.equipText2Showing = false;
     this.equipText2.alpha = 0;
 }
@@ -45,11 +45,11 @@ Companion.prototype.constructor = Companion;
 Companion.prototype.update = function(companion = this) {
     // Equipping
     var overlapped = game.physics.arcade.overlap(currentPlayer, companionGroup, function(player, companion){
-        if (!companion.isEquipped && !companion.equipText1Showing){
-            companion.equipText1.x = companion.body.position.x + 3;
-            companion.equipText1.y = companion.body.position.y - 12;
-            companion.equipText1.alpha = 1;
-            companion.equipText1Showing = true;
+        if (!companion.isEquipped && !companion.equipTextShowing){
+            companion.equipText.x = companion.body.position.x + 3;
+            companion.equipText.y = companion.body.position.y - 12;
+            companion.equipText.alpha = 1;
+            companion.equipTextShowing = true;
 
             companion.equipText2.x = companion.body.position.x + 2;
             companion.equipText2.y = companion.body.position.y - 13;
@@ -62,8 +62,8 @@ Companion.prototype.update = function(companion = this) {
         }
     });
     if (!overlapped){
-        companion.equipText1.alpha = 0;
-        companion.equipText1Showing = false;
+        companion.equipText.alpha = 0;
+        companion.equipTextShowing = false;
         companion.equipText2.alpha = 0;
         companion.equipText2Showing = false;
     }
@@ -94,6 +94,7 @@ Companion.prototype.update = function(companion = this) {
 };
 
 Companion.prototype.returnHome = function(){
+    this.equipTextShowing = false;
     if (game.state.current == 'level0'){
         this.followObject = this.home;
     }
@@ -102,72 +103,10 @@ Companion.prototype.returnHome = function(){
     }
 }
 
-// TODO: Needs to be moved outside of the class script
-function createEquippedCompanion(companionName, followObject, positionX, positionY){
-
-    if (companionName == 'piggy'){
-        pig = new CompanionPig(game, positionX, positionY, true, true);
-        pig.followObject = followObject;
-        pig.isEquipped = true;
-        game.add.existing(pig);
-        return pig;
-    } 
-    if (companionName == 'froggy'){
-        frog = new CompanionFrog(game, positionX, positionY, true, true);
-        frog.followObject = followObject;
-        frog.isEquipped = true;
-        game.add.existing(frog);
-        return frog;
-    }
+Companion.prototype.equip = function(){
+    console.log('equipping ' + this.name)
 }
 
-// TODO: Needs to be moved outside of the class script
-equipCompanion = function(companion){
-    // Fill undefined slots
-    for (var i = 0; i < basePlayer.companionNames.length; i += 1){
-        if (basePlayer.companionNames[i] == undefined){
-            // update player companions
-            basePlayer.companionNames[i] = companion.name;
-            currentPlayer.companionSlots[i] = companion;
-            // update companion equip/followObject data
-            companion.isEquipped = true;
-            if (i > 0){
-                companion.followObject = currentPlayer.companionSlots[i-1];
-            }
-            else{
-                companion.followObject = currentPlayer;
-            }
-
-            return;
-        }
-    }
-    unequipCompanion();
-    
-    basePlayer.companionNames.push(companion.name);
-    currentPlayer.companionSlots.push(companion);
-    companion.isEquipped = true;
-    updateEquippedCompanionFollowObjects();
-    // console.log('Companion Slot 1:', currentPlayer.companionSlots[0].name, '| Companion Slot 2:', currentPlayer.companionSlots[1].name);
-}
-
-// TODO: move to part of a class
-updateEquippedCompanionFollowObjects = function () {
-    // updates the followObject property of equipped companions
-    for (var i = 0; i < currentPlayer.companionSlots.length; i += 1) {
-        if (i > 0) {
-            currentPlayer.companionSlots[i].followObject = currentPlayer.companionSlots[i - 1];
-        }
-        else {
-            currentPlayer.companionSlots[i].followObject = currentPlayer;
-        }
-    }
-}
-
-// TODO: add as part of companion class and override with subclasses to create effects for player
-unequipCompanion = function(){
-    // Remove the first slot, shift names down, append to end.
-    basePlayer.companionNames.shift();
-    unequippedCompanion = currentPlayer.companionSlots.shift();
-    unequippedCompanion.isEquipped = false;
-    unequippedCompanion.returnHome();
+Companion.prototype.unequip = function(){
+    console.log('unequipping ' + this.name)
 }

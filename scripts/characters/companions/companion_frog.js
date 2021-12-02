@@ -23,3 +23,10 @@ CompanionFrog.prototype.update = function() {
     Companion.prototype.update(this); // Update like a companion
     this.animations.play('froggy idle');
 }
+
+CompanionFrog.prototype.equip = function(){
+    increaseMaxHearts();
+}
+CompanionFrog.prototype.unequip = function(){
+    decreaseMaxHearts();
+}

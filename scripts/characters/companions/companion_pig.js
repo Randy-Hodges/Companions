@@ -23,3 +23,10 @@ CompanionPig.prototype.update = function() {
     Companion.prototype.update(this); // Update like a companion
     this.animations.play('piggy idle');
 }
+
+CompanionPig.prototype.equip = function(){
+    increaseMaxHearts();
+}
+CompanionPig.prototype.unequip = function(){
+    decreaseMaxHearts();
+}

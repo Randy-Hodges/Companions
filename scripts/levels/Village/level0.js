@@ -3,16 +3,19 @@ demo.level0.prototype = {
     preload: function(){
         loadGameConfigs();
         loadPlayer();
-        loadCompanion();
+        loadCompanions();
         loadItems();
-        loadUI();
         loadEnemies();
+        loadUI();
         game.load.tilemap('level0', "assets/tilemaps/village/village_tilemap.json", null, Phaser.Tilemap.TILED_JSON);
         game.load.image('Village Tileset', "assets/tiles/village/Village Tileset.png");
         game.load.image('nes-color-palette', "assets/tiles/nes-color-palette.jpg");
         
         game.load.audio('village', "assets/audio/music/Treasure Town.mp3");
-        
+
+        // Events
+        loadHeadshots();
+        game.load.spritesheet('grandfather', "assets/sprites/enemies/Plague Doctor/plague_doctor_sheet.png", 64, 64);
     },
     create: function(){
         // configs
