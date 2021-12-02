@@ -273,6 +273,7 @@ function dialogueReset(){
     dialogueList = [];
     textBox.alpha = 0;
     currentPlayer.disableMovement = false;
+    currentPlayer.stopAnimations = false;
     firstTextBox = true;
 }
 

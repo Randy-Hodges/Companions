@@ -65,6 +65,9 @@ Player = function (game, x = gameWidth / 2, y = gameHeight / 2) {
     this.animations.add('slash side', [8, 9, 10], frameRate = 10);
     this.animations.add('slash down', [0, 1, 2], frameRate = 10);
     this.animations.add('slash up', [22, 23, 24], frameRate = 10);
+    this.animations.add('jump', [ 26, 27], frameRate = 10); // TODO: remove x and y
+    this.animations.add('fall', [32, 33, 34], frameRate = 10);
+
     this.frame = 11;
     this.stopAnimations = false;
     this.faceDirection = 1; // x Direction player is facing. 1 or -1 (positive is right)
@@ -87,7 +90,7 @@ Player = function (game, x = gameWidth / 2, y = gameHeight / 2) {
     this.jumpAccel = basePlayer.jumpAccel;
     this.jumpInputTime = basePlayer.jumpInputTime; //ms
     this.jumpStorage = basePlayer.jumpStorage; // should be initialized to 0, can increase for dev purposes
-    this.currentlyJumping = false;
+    this.isJumping = false;
     this.jumpEnabled = true;
     playerJumpButton = game.input.keyboard.addKey(Phaser.Keyboard.UP);
     playerJumpButton.onDown.add(
@@ -98,23 +101,29 @@ Player = function (game, x = gameWidth / 2, y = gameHeight / 2) {
                     currentPlayer.jumpStorage += 1;
                 }
                 // jumping 
-                if (devTools && currentPlayer.jumpStorage > 0) { // infinite jump, developer tool
-                    currentPlayer.currentlyJumping = true;
-                    //currentPlayer.body.velocity.y = currentPlayer.jumpVel;
+                // infinite jump, developer tool
+                if (devTools && currentPlayer.jumpStorage > 0) { 
+                    currentPlayer.isJumping = true;
                     currentPlayer.body.acceleration.y = currentPlayer.jumpAccel;
                     currentPlayer.jumpSound.play();
+                    if (!currentPlayer.stopAnimations){
+                        currentPlayer.animations.play('jump')
+                    }
                 }
                 else if (currentPlayer.jumpStorage > 0) { // normal jump
                     currentPlayer.jumpStorage -= 1;
-                    currentPlayer.currentlyJumping = true;
-                    //currentPlayer.body.velocity.y = currentPlayer.jumpVel;
+                    currentPlayer.isJumping = true;
                     currentPlayer.body.acceleration.y = currentPlayer.jumpAccel;
+                    currentPlayer.jumpSound.play();
+                    if (!currentPlayer.stopAnimations){
+                        currentPlayer.animations.play('jump')
+                    }
                 }
             }
         })
     playerJumpButton.onUp.add(
         function () {
-            currentPlayer.currentlyJumping = false;
+            currentPlayer.isJumping = false;
             currentPlayer.body.acceleration.y = 0;
         })
     // #endregion
@@ -264,11 +273,13 @@ Player = function (game, x = gameWidth / 2, y = gameHeight / 2) {
             ) {
             // Note: this particular code feels weird, but it works smoothly
             currentPlayer.lastDash = game.time.now;
-            
+            //currentPlayer.dashSound.play();
+            if(!currentPlayer.stopAnimations){
+                currentPlayer.animations.play('walk side')
+            }
             function dash(timer) {
                 currentPlayer.isDashing = true;
                 // Start Dash
-                currentPlayer.dashSound.play();
                 dashVelocity = 500;
                 currentPlayer.body.maxVelocity.x = dashVelocity;
                 currentPlayer.body.velocity.x = currentPlayer.faceDirection * dashVelocity;
@@ -312,7 +323,6 @@ Player.prototype.constructor = Player;
 
 // (Automatically called by World.update)
 Player.prototype.update = function (player = this) {
-
     // #region Dev tool clipping
     if (devTools && game.input.keyboard.isDown(Phaser.Keyboard.Z)) {
         if (game.input.keyboard.isDown(Phaser.Keyboard.LEFT)) {
@@ -365,22 +375,31 @@ Player.prototype.update = function (player = this) {
             this.body.acceleration.x = 0;
         }
         framerate = Math.abs(parseInt(this.body.velocity.x / 50)) + 10;
-        // Animation
+        // ----- Animation -----
         if (!currentPlayer.stopAnimations) {
-            // left ----Animation----
+            // left
             if (this.body.acceleration.x < 0) {
                 this.scale.x = Math.abs(this.scale.x);
                 this.faceDirection = -1;
-                this.animations.play('walk side', framerate);
+                if (this.body.onFloor() && !this.isJumping){
+                    this.animations.play('walk side', framerate);
+                }
             }
             // right
             else if (this.body.acceleration.x > 0) {
                 this.scale.x = -Math.abs(this.scale.x);
                 this.faceDirection = 1;
-                this.animations.play('walk side', framerate);
+                if (this.body.onFloor() && !this.isJumping){
+                    this.animations.play('walk side', framerate);
+                }
             }
+            // Falling
+            if (this.body.velocity.y > 100){
+                this.animations.play('fall')
+            }
+            
             // idle
-            if (this.body.velocity.x == 0) {
+            if (this.body.velocity.x == 0  && !this.isJumping && this.body.onFloor()) {
                 this.animations.play('idle side', textLoop = true);
             }
         }
