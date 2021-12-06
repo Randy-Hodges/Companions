@@ -25,7 +25,7 @@ demo.level3_0.prototype = {
         addTilemapMC('level3-0');
         
         // Warp points
-        warp1 = new Warp(game, spawnpoint1[0]*tileLength, spawnpoint1[1]*tileLength, 180);
+        warp1 = new Warp(game, spawnpoint1[0]*tileLength, spawnpoint1[1]*tileLength);
         game.add.existing(warp1);
         warp2 = new Warp(game, spawnpoint2[0]*tileLength, spawnpoint2[1]*tileLength);
         game.add.existing(warp2);
@@ -63,7 +63,7 @@ demo.level3_0.prototype = {
     },
     createSpawnPoints: function(){
         //SpawnPoints are in units of tiles
-        spawnpoint1 = [78, 59];
+        spawnpoint1 = [78, 55];
         spawnpoint2 = [444, 40];
         if (spawn == 2){
             spawnpoint = spawnpoint2.slice();
