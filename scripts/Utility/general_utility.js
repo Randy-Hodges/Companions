@@ -11,6 +11,10 @@ var menu, menu2, gamePaused = false;
 
 var devTools = true; // Developer tools are turned on if true, otherwise, they are inactive
 
+function textOverlap(x, y, string, styleBase = { fontSize: '18px', fill: '#000'}, styleOverlap = { fontSize: '18px', fill: '#fff'}, fixedBoolean = true){
+    game.add.text(x, y, string, styleBase).fixedToCamera = fixedBoolean;
+    game.add.text(x - 1, y - 1, string, styleOverlap).fixedToCamera = fixedBoolean;
+}
 
 function transitionLevel(level, newLevel = false, spawnVal = 1, unique = false){
     currentPlayer.disableMovement = true;
@@ -57,7 +61,6 @@ function rgbToHex(r, g, b) {
 
 function updateMoney(){
     moneyText.text = "Coins: " + money;
-    moneyText2.text = "Coins: " + money;
 }
 
 function hitSpike(sprite, tile){
@@ -74,12 +77,14 @@ function hitSpike(sprite, tile){
 function pause(event){
     // Pause
     if (!gamePaused){
-        pauseSound.play();
+        pauseSound.play(); 
+        // need to find a way to play the previous sound in a seperate event before this one
         console.log('Paused')
         game.paused = true;
         gamePaused = true;
-        menu = game.add.text(currentPlayer.x, currentPlayer.y - 50, "Paused!!!", { fontSize: '18px', fill: '#000' }); //game.add.sprite(gameWidth-20, 20, 'Play_Blue');
+        menu = game.add.text(currentPlayer.x, currentPlayer.y - 50, "Paused!!!", { fontSize: '18px', fill: '#000' });
         menu2 = game.add.text(currentPlayer.x - 1, currentPlayer.y - 51, "Paused!!!", { fontSize: '18px', fill: '#fff' });
+        
         menu.anchor.setTo(0.5, 0.5);
         menu2.anchor.setTo(0.5, 0.5);
     }

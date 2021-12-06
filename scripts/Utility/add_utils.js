@@ -67,16 +67,12 @@ function removeMusic(music = backtrack){
 
 function addUI(){
     // Money - Coins
-    moneyText2 = game.add.text(9,27,"Coins: "  + money, { fontSize: '18px', fill: '#000' });
-    moneyText2.fixedToCamera = true;
-    
-    moneyText = game.add.text(8,26,"Coins: " + money, { fontSize: '18px', fill: '#fff' });
-    moneyText.fixedToCamera = true;
+    moneyText = "Coins: "  + money;
+    textOverlap(9, 27, moneyText);
     
     // Hearts
-    heartText = game.add.text(8,8,"Hearts: ", { fontSize: '18px', fill: '#fff' });
-    heartText.setShadow(1,1);
-    heartText.fixedToCamera = true;
+    heartText = "Hearts: ";
+    textOverlap(8, 8, heartText);
     createHearts(basePlayer.currentHearts);
     
     // Pause Menu
@@ -89,11 +85,12 @@ function addPauseMenu(){
     pause_button.anchor.setTo(0.5, 0.5);
     pause_button.fixedToCamera = true;
     pause_button.inputEnabled = true;
+
     // Text under button
-    pauseLabel = game.add.text(gameWidth-20, 40, "Enter", { fontSize: '12px', fill: '#fff' });
-    pauseLabel.setShadow(1,1)
-    pauseLabel.anchor.setTo(0.5, 0.5);
-    pauseLabel.fixedToCamera = true;
+    style_button = { fontSize: '11px', fill: '#000' };
+    overlap_button = { fontSize: '11px', fill: '#fff' };
+    pauseLabelText = "Enter";
+    textOverlap(gameWidth - 34, 34, pauseLabelText, style_button, overlap_button);
 
     addKeyCallback(Phaser.Keyboard.ENTER, pause);
 

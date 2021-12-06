@@ -7,6 +7,7 @@ demo.level0.prototype = {
         loadItems();
         loadEnemies();
         loadUI();
+        
         game.load.tilemap('level0', "assets/tilemaps/village/village_tilemap.json", null, Phaser.Tilemap.TILED_JSON);
         game.load.image('Village Tileset', "assets/tiles/village/Village Tileset.png");
         game.load.image('nes-color-palette', "assets/tiles/nes-color-palette.jpg");
@@ -41,8 +42,10 @@ demo.level0.prototype = {
         game.world.setBounds(0, 0, tilemap.layer.widthInPixels, tilemap.layer.heightInPixels);
 
         // Text Instructions
-        equipText1 = game.add.text(6*tileLength + 1, 30*tileLength + 1,"Press Q to Equip.", { fontSize: '14px', fill: '#000' });
-        equipText2 = game.add.text(6*tileLength, 30*tileLength,"Press Q to Equip.", { fontSize: '14px', fill: '#fff' });
+        equipText = "Press Q to Equip."; 
+        equipStyle = { fontSize: '14px', fill: '#000' };
+        equipOverlap = { fontSize: '14px', fill: '#fff' };
+        textOverlap(6*tileLength + 1, 30*tileLength + 1, equipText, equipStyle, equipOverlap, false)
         
         // Warp points
         warp1 = new Warp(game, spawnpoint1[0]*tileLength, spawnpoint1[1]*tileLength);

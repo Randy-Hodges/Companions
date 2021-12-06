@@ -33,12 +33,7 @@ demo.overworldMap.prototype = {
         createGameConfigs();
         
         // music
-        if (!addedAudio){
-            backtrack = game.add.audio('mapMusic');
-            backtrack.play();
-            backtrack.volume = .1;
-            addedAudio = true;
-        }
+        addMusic('mapMusic');
 
         // Tilemap
         var map = game.add.tilemap('overworldMap');
@@ -65,7 +60,8 @@ demo.overworldMap.prototype = {
         layer.scale.set(1);
         layer.resizeWorld();
 
-        style = { fontSize: '11px', fill: '#fff', backgroundColor: '#343131' };
+        style = { fontSize: '14px', fill: '#000'};
+        overlap = { fontSize: '14px', fill: '#fff'};
 
         // create view, clouds, level select UI, change as more levels are unlocked
         if (level3Unlocked){ // 3 unlocked
@@ -75,8 +71,8 @@ demo.overworldMap.prototype = {
             // clouds for level 3
             level3_clouds();
             
-            levelUI = game.add.text(8, 8, "  Use the arrow keys to move around the map.  \n      • 'V' - Village\n      • 'R' - Rocky Pass\n      • 'A' - Abandoned Caverns\n      • 'S' - Slime Valley", style);
-            levelUI.fixedToCamera = true;
+            levelUI = "Use the arrow keys to move around the map.  \n      • V - Village\n      • R - Rocky Pass\n      • A - Abandoned Caverns\n      • S - Slime Valley";
+            textOverlap(8, 8, levelUI, style, overlap);
         } else if (level2Unlocked){ // level 2 unlocked
             game.camera.x = 85;
             game.camera.y = 525;
@@ -86,8 +82,8 @@ demo.overworldMap.prototype = {
             // clouds for level 2
             level2_clouds();
 
-            levelUI = game.add.text(8, 8, "  Use the arrow keys to move around the map.  \n      • 'V' - Village\n      • 'R' - Rocky Pass\n      • 'A' - Abandoned Caverns", style);
-            levelUI.fixedToCamera = true;
+            levelUI = "Use the arrow keys to move around the map.  \n      • V - Village\n      • R - Rocky Pass\n      • A - Abandoned Caverns";
+            textOverlap(8, 8, levelUI, style, overlap);
         } else if (level1Unlocked){ // level 1 unlocked
             game.camera.x = 25;
             game.camera.y = 375;
@@ -97,10 +93,8 @@ demo.overworldMap.prototype = {
             // clouds for level 2
             level2_clouds();   
 
-            levelUI = game.add.text(8, 8, "  Use the arrow keys to move around the map.  \n      • 'V' - Village\n      • 'R' - Rocky Pass", style);
-            levelUI.fixedToCamera = true;
-
-
+            levelUI = "Use the arrow keys to move around the map.  \n      • V - Village\n      • R - Rocky Pass";
+            textOverlap(8, 8, levelUI, style, overlap);
 
             // If we want to use a background image, uncomment this
                 // UI_background = game.add.sprite(0, 0, 'background');
@@ -120,8 +114,8 @@ demo.overworldMap.prototype = {
             // clouds for level 2
             level2_clouds();
 
-            levelUI = game.add.text(8, 8, "  Use the arrow keys to move around the map.  \n      • 'V' - Village", style);
-            levelUI.fixedToCamera = true;
+            levelUI = "Use the arrow keys to move around the map.  \n      • V - Village";
+            textOverlap(8, 8, levelUI, style, overlap);
         }
 
         // level select
