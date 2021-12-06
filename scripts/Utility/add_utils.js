@@ -56,6 +56,7 @@ function addMusic(music = 'backtrack', vol = .1){
         backtrack = game.add.audio(music);
         backtrack.play();
         backtrack.volume = vol;
+        backtrack.loopFull();
         addedAudio = true;
     }
 }
