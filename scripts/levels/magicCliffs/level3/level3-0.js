@@ -8,7 +8,7 @@ demo.level3_0.prototype = {
         game.load.image('Magic_Cliffs16', "assets/tiles/Magic-Cliffs-Environment/PNG/tileset.png");
         game.load.image('nes-color-palette', "assets/tiles/nes-color-palette.jpg");
         // Music
-        game.load.audio('backtrack', "assets/audio/music/Drenched Bluff.mp3");
+        game.load.audio('backtrack', "assets/audio/music/Faint - Discovery.wav");
 
     },
     create: function(){
@@ -16,7 +16,7 @@ demo.level3_0.prototype = {
         createGameConfigs();
 
         // music
-        addMusic('backtrack');
+        addMusic('backtrack', .2);
 
         // spawn points (in units of tiles)
         this.createSpawnPoints();

@@ -7,8 +7,6 @@ demo.level2_1.prototype = {
         game.load.image('Magic_Cliffs16', "assets/tiles/Magic-Cliffs-Environment/PNG/tileset.png");
         game.load.image('nes-color-palette', "assets/tiles/nes-color-palette.jpg");
 
-        game.load.audio('backtrack', "assets/audio/music/Waterfall Cave.mp3");
-
         // Events
         loadHeadshots();
         game.load.spritesheet('grandfather', "assets/sprites/enemies/Plague Doctor/plague_doctor_sheet.png", 64, 64);
@@ -17,9 +15,6 @@ demo.level2_1.prototype = {
     create: function(){
         // Configs
         createGameConfigs();
-
-        // Music
-        addMusic('backtrack');
 
         // Spawn points (in units of tiles)
         this.createSpawnPoints();

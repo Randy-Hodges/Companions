@@ -8,8 +8,8 @@ demo.level3_1.prototype = {
         game.load.image('Magic_Cliffs16', "assets/tiles/Magic-Cliffs-Environment/PNG/tileset.png");
         game.load.image('nes-color-palette', "assets/tiles/nes-color-palette.jpg");
         // Music
-        game.load.audio('bossFight', "assets/audio/music/Defy the Legends.mp3");
-        game.load.audio('backtrack', "assets/audio/music/Drenched Bluff.mp3");
+        game.load.audio('bossFight', "assets/audio/music/Ketsa - Criss Cross Skies.mp3");
+        game.load.audio('backtrack', "assets/audio/music/Faint - Discovery.wav");
         // Events
         game.load.spritesheet('slimeBoss', "assets/sprites/enemies/blue slime/slime-Sheet-white.png", 32, 25);
         loadHeadshots();
@@ -26,8 +26,8 @@ demo.level3_1.prototype = {
         // spawn points (in units of tiles)
         this.createSpawnPoints();
 
-       // Tilemap (Most parts)
-       addTilemapMC('level3-1');
+        // Tilemap (Most parts)
+        addTilemapMC('level3-1');
         
         // Warp points
         warp1 = new Warp(game, spawnpoint1[0]*tileLength, spawnpoint1[1]*tileLength);
@@ -63,7 +63,7 @@ demo.level3_1.prototype = {
         // Warping
         game.physics.arcade.overlap(currentPlayer, warp1, function(){transitionLevel('3-0', false, 2)});
         game.physics.arcade.overlap(currentPlayer, warp2, function(){
-            transitionLevel('0', true);
+            transitionLevel('0', newLevel = true);
             level3Completed = true;
             level4Unlocked = true;
         });

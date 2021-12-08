@@ -12,7 +12,7 @@ demo.level0.prototype = {
         game.load.image('Village Tileset', "assets/tiles/village/Village Tileset.png");
         game.load.image('nes-color-palette', "assets/tiles/nes-color-palette.jpg");
         
-        game.load.audio('village', "assets/audio/music/Treasure Town.mp3");
+        game.load.audio('village', "assets/audio/music/Ketsa - Glow-Flow.mp3");
 
         // Events
         loadHeadshots();
@@ -21,7 +21,7 @@ demo.level0.prototype = {
     create: function(){
         // configs
         createGameConfigs();
-        addMusic('village');
+        addMusic('village', .15);
 
         // Spawn points
         this.createSpawnPoints();

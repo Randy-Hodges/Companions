@@ -50,11 +50,11 @@ Player = function (game, x = gameWidth / 2, y = gameHeight / 2) {
 
     // Sound
     this.jumpSound = game.add.audio('jump sound');
-    this.jumpSound.volume = .15;
+    this.jumpSound.volume = .2;
     this.slashSound = game.add.audio('air slash sound');
     this.slashSound.volume = .09;
     this.dashSound = game.add.audio('dash sound');
-    this.dashSound.volume = .05;
+    this.dashSound.volume = .02;
     this.damagedSound = game.add.audio('damaged sound');
     this.damagedSound.volume = .2;
 
@@ -273,7 +273,7 @@ Player = function (game, x = gameWidth / 2, y = gameHeight / 2) {
             ) {
             // Note: this particular code feels weird, but it works smoothly
             currentPlayer.lastDash = game.time.now;
-            //currentPlayer.dashSound.play();
+            currentPlayer.dashSound.play();
             if(!currentPlayer.stopAnimations){
                 currentPlayer.animations.play('walk side')
             }

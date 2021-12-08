@@ -40,9 +40,11 @@ function event_bossStart_3_1(){
     var timer = game.time.create(false);
     timer.add(3000, function(){
         gates1Shown = true;
-        bossMusic = game.add.audio('bossFight');
-        bossMusic.volume = .1;
-        bossMusic.fadeIn(1000);
+        removeMusic();
+        // Don't use addMusic here
+        backtrack = game.add.audio('bossFight');
+        backtrack.play();
+        backtrack.volume = .2;
         game.camera.shake(.04, 1500);
         var timer2 = game.time.create(false);
         timer2.add(1500, function(){
@@ -57,6 +59,9 @@ function event_bossStart_3_1(){
 function event_bossEnd_3_1(){
     gates1Shown = false;
     cameraIsTweening = true;
-    bossMusic.fadeOut(500);
-    backtrack.fadeIn(2000);
+    backtrack.fadeOut(1000);
+    // Don't use addMusic here
+    backtrack = game.add.audio('backtrack');
+    backtrack.play();
+    backtrack.volume = .2;
 }

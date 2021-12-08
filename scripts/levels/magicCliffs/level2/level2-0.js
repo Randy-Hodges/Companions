@@ -8,12 +8,13 @@ demo.level2_0.prototype = {
         game.load.image('Magic_Cliffs16', "assets/tiles/Magic-Cliffs-Environment/PNG/tileset.png");
         game.load.image('nes-color-palette', "assets/tiles/nes-color-palette.jpg");
         // Music
-        game.load.audio('backtrack', "assets/audio/music/Waterfall Cave.mp3");
+        game.load.audio('backtrack', "assets/audio/music/Faint - Haven.wav");
 
     },
     create: function(){
         createGameConfigs();
-        addMusic('backtrack');
+        
+        addMusic('backtrack', .5);
 
         // spawn points (in units of tiles)
         this.createSpawnPoints();

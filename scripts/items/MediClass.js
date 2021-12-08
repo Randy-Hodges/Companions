@@ -14,7 +14,7 @@ Medi = function(game, x, y){
 
     // Sound
     this.heartCollect = game.add.audio('heart collect');
-    this.heartCollect.volume = .2;
+    this.heartCollect.volume = .1;
 }
 
 Medi.prototype = Object.create(Phaser.Sprite.prototype);

@@ -24,7 +24,7 @@ demo.overworldMap.prototype = {
         // game.load.image('background', "");
 
         // change this later
-        game.load.audio('mapMusic', "assets/audio/music/Personality Test.mp3");
+        game.load.audio('mapMusic', "assets/audio/music/Ketsa - Glow-Flow.mp3");
 
     },
 
@@ -33,7 +33,7 @@ demo.overworldMap.prototype = {
         createGameConfigs();
         
         // music
-        addMusic('mapMusic');
+        addMusic('mapMusic', .15);
 
         // Tilemap
         var map = game.add.tilemap('overworldMap');
