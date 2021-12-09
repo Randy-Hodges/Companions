@@ -34,7 +34,6 @@ Companion = function(game, spritesheetStrID, x = gameWidth/2, y = gameHeight/2, 
     this.equipTextShowing = false;
     this.equipText.alpha = 0;
     this.equipText2 = game.add.text(this.body.position.x, this.body.position.y,"Q", { fontSize: '12px', fill: '#fff' });
-    this.equipText2Showing = false;
     this.equipText2.alpha = 0;
 }
 
@@ -54,7 +53,6 @@ Companion.prototype.update = function(companion = this) {
             companion.equipText2.x = companion.body.position.x + 2;
             companion.equipText2.y = companion.body.position.y - 13;
             companion.equipText2.alpha = 1;
-            companion.equipText2Showing = true;
         }
         customKeys = new CustomKeys();
         if (customKeys.isDown("Q") && !companion.isEquipped){
@@ -65,7 +63,6 @@ Companion.prototype.update = function(companion = this) {
         companion.equipText.alpha = 0;
         companion.equipTextShowing = false;
         companion.equipText2.alpha = 0;
-        companion.equipText2Showing = false;
     }
     
     // Follow Logic

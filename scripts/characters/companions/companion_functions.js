@@ -53,6 +53,7 @@ unequipCompanion = function(){
     basePlayer.companionNames.shift();
     unequippedCompanion = currentPlayer.companionSlots.shift();
     unequippedCompanion.isEquipped = false;
+    unequippedCompanion.equipTextShowing = false;
     unequippedCompanion.unequip();
     unequippedCompanion.returnHome();
 }

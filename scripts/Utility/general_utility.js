@@ -108,5 +108,6 @@ function fadeOut(){
 }
 
 function fadeIn(){
+    // Note: Not functional currently
     game.camera.flash(0x000000, 500);
 }

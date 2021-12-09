@@ -67,6 +67,7 @@ Player = function (game, x = gameWidth / 2, y = gameHeight / 2) {
     this.animations.add('slash up', [22, 23, 24], frameRate = 10);
     this.animations.add('jump', [ 26, 27], frameRate = 10); // TODO: remove x and y
     this.animations.add('fall', [32, 33, 34], frameRate = 10);
+    this.animations.add('hover', [28], framerate = 10);
 
     this.frame = 11;
     this.stopAnimations = false;
@@ -273,7 +274,7 @@ Player = function (game, x = gameWidth / 2, y = gameHeight / 2) {
             ) {
             // Note: this particular code feels weird, but it works smoothly
             currentPlayer.lastDash = game.time.now;
-            currentPlayer.dashSound.play();
+            //currentPlayer.dashSound.play();
             if(!currentPlayer.stopAnimations){
                 currentPlayer.animations.play('walk side')
             }
@@ -393,9 +394,13 @@ Player.prototype.update = function (player = this) {
                     this.animations.play('walk side', framerate);
                 }
             }
+            // Hovering
+            if (Math.abs(this.body.velocity.y) < 20 && !this.body.onFloor()){
+                //this.animations.play('walk side');
+            }
             // Falling
             if (this.body.velocity.y > 100){
-                this.animations.play('fall')
+                this.animations.play('fall');
             }
             
             // idle
