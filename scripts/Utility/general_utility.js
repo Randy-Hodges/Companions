@@ -9,7 +9,7 @@ var coinGroup, enemyGroup, heartGroup;
 var menu, menu2, gamePaused = false;
 
 
-var devTools = true; // Developer tools are turned on if true, otherwise, they are inactive
+var devTools = false; // Developer tools are turned on if true, otherwise, they are inactive
 
 function textOverlap(x, y, string, styleBase = { fontSize: '18px', fill: '#000'}, styleOverlap = { fontSize: '18px', fill: '#fff'}, fixedBoolean = true){
     game.add.text(x, y, string, styleBase).fixedToCamera = fixedBoolean;
@@ -60,7 +60,8 @@ function rgbToHex(r, g, b) {
 }
 
 function updateMoney(){
-    moneyText.text = "Coins: " + money;
+    moneyText = "Coins: " + money;
+    console.log("Money updated");
 }
 
 function hitSpike(sprite, tile){
