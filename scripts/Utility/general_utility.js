@@ -60,8 +60,8 @@ function rgbToHex(r, g, b) {
 }
 
 function updateMoney(){
-    moneyText = "Coins: " + money;
-    console.log("Money updated");
+    moneyText.text = "Coins: " + money;
+    moneyText2.text = "Coins: " + money;
 }
 
 function hitSpike(sprite, tile){
