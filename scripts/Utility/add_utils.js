@@ -68,8 +68,11 @@ function removeMusic(music = backtrack){
 
 function addUI(){
     // Money - Coins
-    moneyText = "Coins: "  + money;
-    textOverlap(9, 27, moneyText);
+    moneyText2 = game.add.text(9,27,"Coins: "  + money, { fontSize: '18px', fill: '#000' });
+    moneyText2.fixedToCamera = true;
+
+    moneyText = game.add.text(8,26,"Coins: " + money, { fontSize: '18px', fill: '#fff' });
+    moneyText.fixedToCamera = true;
     
     // Hearts
     heartText = "Hearts: ";
