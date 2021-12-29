@@ -65,9 +65,11 @@ Player = function (game, x = gameWidth / 2, y = gameHeight / 2) {
     this.animations.add('slash side', [8, 9, 10], frameRate = 10);
     this.animations.add('slash down', [0, 1, 2], frameRate = 10);
     this.animations.add('slash up', [22, 23, 24], frameRate = 10);
-    this.animations.add('jump', [ 26, 27], frameRate = 10); // TODO: remove x and y
-    this.animations.add('fall', [32, 33, 34], frameRate = 10);
-    this.animations.add('hover', [28], framerate = 10);
+    this.animations.add('rise', [ 28, 29, 30], frameRate = 10); 
+    this.animations.add('fall', [33, 34, 35], frameRate = 10);
+    this.animations.add('hover', [31, 32], framerate = 10);
+    this.animations.add('jump', [ 26, 27], frameRate = 7); 
+    this.animations.add('dash', [21], framerate = 10);
 
     this.frame = 11;
     this.stopAnimations = false;
@@ -93,31 +95,38 @@ Player = function (game, x = gameWidth / 2, y = gameHeight / 2) {
     this.jumpStorage = basePlayer.jumpStorage; // should be initialized to 0, can increase for dev purposes
     this.isJumping = false;
     this.jumpEnabled = true;
+    jumpAnim = this.animations.getAnimation('jump');
+    jumpAnim.onComplete.add(function(){
+        currentPlayer.isJumping = false;
+        console.log('done jumping')
+    })
     playerJumpButton = game.input.keyboard.addKey(Phaser.Keyboard.UP);
     playerJumpButton.onDown.add(
         function () {
             if (!currentPlayer.disableMovement && currentPlayer.jumpEnabled) {
                 // give player ability to jump when touching ground
-                if (currentPlayer.body.blocked.down && currentPlayer.jumpStorage == 0) {
+                if (currentPlayer.body.onFloor() && currentPlayer.jumpStorage == 0) {
                     currentPlayer.jumpStorage += 1;
                 }
                 // jumping 
                 // infinite jump, developer tool
-                if (devTools && currentPlayer.jumpStorage > 0) { 
+                if (devTools) { 
                     currentPlayer.isJumping = true;
                     currentPlayer.body.acceleration.y = currentPlayer.jumpAccel;
+                    currentPlayer.body.velocity.y = 0;
                     currentPlayer.jumpSound.play();
                     if (!currentPlayer.stopAnimations){
                         currentPlayer.animations.play('jump')
                     }
                 }
-                else if (currentPlayer.jumpStorage > 0) { // normal jump
+                // normal jump
+                else if (currentPlayer.jumpStorage > 0) { 
                     currentPlayer.jumpStorage -= 1;
                     currentPlayer.isJumping = true;
                     currentPlayer.body.acceleration.y = currentPlayer.jumpAccel;
                     currentPlayer.jumpSound.play();
                     if (!currentPlayer.stopAnimations){
-                        currentPlayer.animations.play('jump')
+                        currentPlayer.animations.play('jump');
                     }
                 }
             }
@@ -127,6 +136,7 @@ Player = function (game, x = gameWidth / 2, y = gameHeight / 2) {
             currentPlayer.isJumping = false;
             currentPlayer.body.acceleration.y = 0;
         })
+    
     // #endregion
 
     // #region SLASHING 
@@ -276,7 +286,7 @@ Player = function (game, x = gameWidth / 2, y = gameHeight / 2) {
             currentPlayer.lastDash = game.time.now;
             //currentPlayer.dashSound.play();
             if(!currentPlayer.stopAnimations){
-                currentPlayer.animations.play('walk side')
+                currentPlayer.animations.play('dash')
             }
             function dash(timer) {
                 currentPlayer.isDashing = true;
@@ -362,7 +372,7 @@ Player.prototype.update = function (player = this) {
     // #region Keyboard Input */
     if (!this.disableMovement) {
         customKeys = new CustomKeys();
-        // ----- LATERAL MOVEMENT -----
+        // #region ----- LATERAL MOVEMENT -----
         // Left
         if (customKeys.isDown("left")) {
             this.body.acceleration.x = -this.accelx;
@@ -375,8 +385,11 @@ Player.prototype.update = function (player = this) {
         if (customKeys.isUp("left") && customKeys.isUp("right")) {
             this.body.acceleration.x = 0;
         }
-        framerate = Math.abs(parseInt(this.body.velocity.x / 50)) + 10;
+        // #endregion
         // ----- Animation -----
+        framerate = Math.abs(parseInt(this.body.velocity.x / 50)) + 10;
+        lower_transition_threshold = -180; //-180
+        upper_transition_threshold = 140; //330
         if (!currentPlayer.stopAnimations) {
             // left
             if (this.body.acceleration.x < 0) {
@@ -394,12 +407,19 @@ Player.prototype.update = function (player = this) {
                     this.animations.play('walk side', framerate);
                 }
             }
+            // Rising
+            if (this.body.velocity.y < lower_transition_threshold && !this.isJumping){
+                this.animations.play('rise');
+            }
             // Hovering
-            if (Math.abs(this.body.velocity.y) < 20 && !this.body.onFloor()){
-                //this.animations.play('walk side');
+            if (this.body.velocity.y <= upper_transition_threshold 
+                && this.body.velocity.y >= lower_transition_threshold
+                && !this.body.onFloor() 
+                && !this.isJumping){
+                //this.animations.play('walk side', 10);
             }
             // Falling
-            if (this.body.velocity.y > 100){
+            if (this.body.velocity.y > upper_transition_threshold){
                 this.animations.play('fall');
             }
             
