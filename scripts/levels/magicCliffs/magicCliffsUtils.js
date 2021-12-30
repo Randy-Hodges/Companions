@@ -26,6 +26,10 @@ function loadAssetsMC(){
     loadItems();
     loadEnemies();
     loadUI();
+    // tilesets
+    game.load.image('Magic_Cliffs16', "assets/tiles/Magic-Cliffs-Environment/PNG/tileset.png");
+    game.load.image('nes-color-palette', "assets/tiles/nes-color-palette.jpg");
+
     // Hiddens
     game.load.audio('small bell', 'assets/audio/soundeffects/small_bell2.mp3')
 }

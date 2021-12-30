@@ -112,3 +112,11 @@ function fadeIn(){
     // Note: Not functional currently
     game.camera.flash(0x000000, 500);
 }
+
+function removeItemOnce(arr, value) {
+    var index = arr.indexOf(value);
+    if (index > -1) {
+      arr.splice(index, 1);
+    }
+    return arr;
+  }

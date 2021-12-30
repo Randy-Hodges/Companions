@@ -4,13 +4,10 @@ demo.level2_1.prototype = {
     preload: function(){
         loadAssetsMC();
         game.load.tilemap('level2-1', "assets/tilemaps/Levels/Level 2/level2-1.json", null, Phaser.Tilemap.TILED_JSON);
-        game.load.image('Magic_Cliffs16', "assets/tiles/Magic-Cliffs-Environment/PNG/tileset.png");
-        game.load.image('nes-color-palette', "assets/tiles/nes-color-palette.jpg");
 
         // Events
         loadHeadshots();
         game.load.spritesheet('grandfather', "assets/sprites/enemies/Plague Doctor/plague_doctor_sheet.png", 64, 64);
-
     },
     create: function(){
         // Configs

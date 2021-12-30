@@ -3,10 +3,7 @@ demo.level3_1 = function(){};
 demo.level3_1.prototype = {
     preload: function(){
         loadAssetsMC();
-        // Tilemap
         game.load.tilemap('level3-1', "assets/tilemaps/Levels/Level 3/level3-1.json", null, Phaser.Tilemap.TILED_JSON);
-        game.load.image('Magic_Cliffs16', "assets/tiles/Magic-Cliffs-Environment/PNG/tileset.png");
-        game.load.image('nes-color-palette', "assets/tiles/nes-color-palette.jpg");
         // Music
         game.load.audio('bossFight', "assets/audio/music/Ketsa - Criss Cross Skies.mp3");
         game.load.audio('backtrack', "assets/audio/music/Faint - Discovery.wav");

@@ -6,8 +6,6 @@ demo.level1.prototype = {
         
         // Level Specific
         game.load.tilemap('level1-0', "assets/tilemaps/Levels/level 1/level1-0.json", null, Phaser.Tilemap.TILED_JSON);
-        game.load.image('Magic_Cliffs16', "assets/tiles/Magic-Cliffs-Environment/PNG/tileset.png");
-        game.load.image('nes-color-palette', "assets/tiles/nes-color-palette.jpg");
         game.load.audio('backtrack', "assets/audio/music/Faint - Discovery.wav");
         
         // Event Specific
