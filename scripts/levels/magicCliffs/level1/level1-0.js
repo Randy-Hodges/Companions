@@ -1,6 +1,6 @@
 
-demo.level1 =  function(){};
-demo.level1.prototype = {
+demo.level1_0 = function(){};
+demo.level1_0.prototype = {
     preload: function(){
         loadAssetsMC();
         
@@ -23,18 +23,9 @@ demo.level1.prototype = {
         // Spawn points
         this.createSpawnPoints();
 
-        // Tilemap behind (There's a function for all of this but it doesn't apply well to level 1 maps)
-        tilemap = game.add.tilemap('level1-0');
-        tilemap.addTilesetImage('Magic_Cliffs16','Magic_Cliffs16'); //make sure the tileset name is the same as the tileset name used in Tiled
-        tilemap.addTilesetImage('Magic_Cliffs16_2','Magic_Cliffs16'); //make sure the tileset name is the same as the tileset name used in Tiled
-        tilemap.addTilesetImage('nes-color-palette','nes-color-palette'); //make sure the tileset name is the same as the tileset name used in Tiled
-        tilemap.createLayer('caveBackground');  
-        levelTiles = tilemap.createLayer('mainGrass');  // layer name is the same as used in Tiled
-        tilemap.setCollisionByExclusion(magicCliffsNoCollide, true, 'mainGrass');
-        // Game borders based on tilemap
-        game.world.setBounds(0, 0, tilemap.layer.widthInPixels, tilemap.layer.heightInPixels);
+        addTilemapMC("level1-0");
         
-        // Warp points (doing it with coins that aren't physically loaded in the game)
+        // Warp points
         warp1 = new Warp(game, spawnpoint0[0]*tileLength, spawnpoint0[1]*tileLength);
         warp2 = new Warp(game, spawnpoint2[0]*tileLength, spawnpoint2[1]*tileLength);
 
@@ -71,7 +62,7 @@ demo.level1.prototype = {
         this.collideEvents();
     },
     render: function(){
-    //    game.debug.body(currentPlayer.slash);
+        // game.debug.body(currentPlayer.slash);
         // game.debug.spriteInfo(currentPlayer);
         // game.debug.geom(rect1, 'rgb(0,0,0)');
     },

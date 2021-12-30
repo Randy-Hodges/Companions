@@ -64,7 +64,7 @@ Player = function (game, x = gameWidth / 2, y = gameHeight / 2) {
     this.animations.add('rise', [28, 29, 30], frameRate = 10);
     this.animations.add('fall', [33, 34, 35], frameRate = 10);
     this.animations.add('hover', [31, 32], framerate = 10);
-    this.animations.add('jump', [26, 27], frameRate = 7);
+    this.animations.add('jump', [26, 27], frameRate = 10);
     this.animations.add('dash', [21], framerate = 10);
 
     this.frame = 11;
@@ -101,7 +101,7 @@ Player = function (game, x = gameWidth / 2, y = gameHeight / 2) {
     playerJumpButton = game.input.keyboard.addKey(Phaser.Keyboard.UP);
     playerJumpButton.onDown.add(
         function () {
-            if (!currentPlayer.disableMovement && currentPlayer.jumpEnabled) {
+            if (!currentPlayer.disableMovement && currentPlayer.jumpEnabled && !game.paused) {
                 // give player ability to jump when touching ground
                 if (currentPlayer.body.onFloor() && currentPlayer.jumpStorage == 0) {
                     currentPlayer.jumpStorage += 1;

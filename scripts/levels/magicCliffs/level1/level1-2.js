@@ -16,17 +16,7 @@ demo.level1_2.prototype = {
         //spawn points (in tiles)
         this.createSpawnPoints();
 
-        // Tilemap behind
-        tilemap = game.add.tilemap('level1-2');
-        tilemap.addTilesetImage('Magic_Cliffs16', 'Magic_Cliffs16'); //make sure the tileset name is the same as the tileset name used in Tiled
-        tilemap.addTilesetImage('Magic_Cliffs16_2', 'Magic_Cliffs16');
-        tilemap.addTilesetImage('Magic_Cliffs16_3', 'Magic_Cliffs16');
-        tilemap.addTilesetImage('nes-color-palette', 'nes-color-palette'); //make sure the tileset name is the same as the tileset name used in Tiled
-        tilemap.createLayer('caveBackground');
-        levelTiles = tilemap.createLayer('mainGrass');  // layer name is the same as used in Tiled
-        tilemap.setCollisionByExclusion(magicCliffsNoCollide, true, 'mainGrass');
-        // Game borders based on tilemap
-        game.world.setBounds(0, 0, tilemap.layer.widthInPixels, tilemap.layer.heightInPixels);
+        addTilemapMC("level1-2");
 
         // Warp points (doing it with coins bc I'm pressed for time)
         warp1 = new Warp(game, spawnpoint1[0]*tileLength, spawnpoint1[1]*tileLength);
