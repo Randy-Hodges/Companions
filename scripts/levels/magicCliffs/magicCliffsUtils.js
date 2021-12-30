@@ -27,6 +27,7 @@ function loadAssetsMC() {
     loadItems();
     loadEnemies();
     loadUI();
+    loadBackgroundMC();
     // tilesets
     game.load.image('Magic_Cliffs16', "assets/tiles/Magic-Cliffs-Environment/PNG/tileset.png");
     game.load.image('nes-color-palette', "assets/tiles/nes-color-palette.jpg");
@@ -35,17 +36,18 @@ function loadAssetsMC() {
     game.load.audio('small bell', 'assets/audio/soundeffects/small_bell2.mp3')
 }
 
-
 function loadBackgroundMC() {
     game.load.image('mar sin isla', "assets/tiles/Magic-Cliffs-Environment/PNG/no_land_tilesprite.png");
     game.load.image('sea with island', "assets/tiles/Magic-Cliffs-Environment/PNG/island_no_clouds.png");
     game.load.image('sea with island and clouds', "assets/tiles/Magic-Cliffs-Environment/PNG/island_with_clouds.png");
     game.load.image('island far-grounds', "assets/tiles/Magic-Cliffs-Environment/PNG/far-grounds.png");
-    game.load.image('background large white clouds', "assets/tiles/Magic-Cliffs-Environment/PNG/clouds.png");
+    game.load.image('large white clouds', "assets/tiles/Magic-Cliffs-Environment/PNG/clouds.png");
 }
 
 // --- ADDING ---
 function addTilemapMC(tilemapKey) {
+    addBackgroundMC();
+
     // Tilemap creation
     tilemap = game.add.tilemap(tilemapKey);
     tilemap.addTilesetImage('Magic_Cliffs16', 'Magic_Cliffs16'); //make sure the tileset name is the same as the tileset name used in Tiled
@@ -130,8 +132,25 @@ function setTilePropertiesMC() {
 
 
 // TODO: Finish these functions, put them in levels
-function addParallax() {
-    tilesprite = game.add.tileSprite(25 * tileLength, 40 * tileLength, 112, 96, 'sea');
+function addBackgroundMC(mode = 1) {
+    //sea
+    var seaSprite = game.add.tileSprite(0, 0, 532, 400, 'mar sin isla');
+    seaSprite.fixedToCamera = true;
+    seaSprite.tileScale.x = gameHeight/seaSprite.height
+    seaSprite.tileScale.y = gameHeight/seaSprite.height
+    seaSprite.update = function(){
+        this.tilePosition.x -= .015;
+    }
+    //clouds
+    var cloudsSprite = game.add.tileSprite(0, 0, 544, 236, 'large white clouds');
+    cloudsSprite.fixedToCamera = true;
+    cloudsSprite.tileScale.x = gameHeight/cloudsSprite.height
+    cloudsSprite.tileScale.y = gameHeight/cloudsSprite.height
+    cloudsSprite.cameraOffset.y = 5;
+    cloudsSprite.update = function(){
+        this.tilePosition.x -= .035;
+    }
+
 
 }
 

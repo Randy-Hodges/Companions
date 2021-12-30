@@ -427,7 +427,7 @@ Player.prototype.update = function (player = this) {
         // ----- Animation -----
         framerate = Math.abs(parseInt(this.body.velocity.x / 50)) + 10;
         lower_transition_threshold = -180; //-180
-        upper_transition_threshold = 140; //330
+        upper_transition_threshold = 160; //330
         if (!currentPlayer.stopAnimations) {
             // left
             if (this.body.acceleration.x < 0) {

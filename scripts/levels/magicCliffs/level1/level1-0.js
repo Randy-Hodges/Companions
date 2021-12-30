@@ -20,13 +20,14 @@ demo.level1_0.prototype = {
         // music
         addMusic('backtrack', .2);
 
+        // Tilemap
+        addTilemapMC('level1-0');
+        
         // Spawn points
         this.createSpawnPoints();
 
-        addTilemapMC("level1-0");
-        
         // Warp points
-        warp1 = new Warp(game, spawnpoint0[0]*tileLength, spawnpoint0[1]*tileLength);
+        warp1 = new Warp(game, spawnpoint0[0]*tileLength, spawnpoint0[1]*tileLength); // Custom class
         warp2 = new Warp(game, spawnpoint2[0]*tileLength, spawnpoint2[1]*tileLength);
 
         // Coins, Enemies, Player
@@ -47,7 +48,7 @@ demo.level1_0.prototype = {
             eventTrackingList = [false, false];
         }   
 
-        fadeIn();
+        fadeIn(); // Not functional yet
     },
     update: function(){
         // Collision
