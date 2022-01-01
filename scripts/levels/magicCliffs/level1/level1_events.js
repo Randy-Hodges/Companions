@@ -1,3 +1,33 @@
+function revive_event_level1(){
+    game.physics.arcade.isPaused = true;
+    currentPlayer.healMax();
+    var eventDialogueList = [];
+    player = 'playerHeadshot';
+    ghost = 'ghostHeadshot';
+    text1 = ["HEY! Looks like you died there, which isn't the greatest idea.", ghost];
+    text2 = ["Luckily I was here to save you, but I'm not going to be here often. "
+              +  "This is your one freebie.", ghost];
+    for (i = 1; i<=2; i += 1){
+        eventDialogueList.push(eval("text" + i));
+    }
+
+    // Ghost
+    if (typeof grandfather !== 'undefined'){
+        grandfather.leave();
+    }
+    grandfather = new GrandfatherNPC(game, currentPlayer.x - 3*tileLength, currentPlayer.y, 'grandfather');
+    grandfather.flipX();
+    game.add.existing(grandfather);
+
+    var endOfDialogueFunction = function(){
+        grandfather.leave();
+        currentPlayer.becomeInvulnerable();
+        game.physics.arcade.isPaused = false;
+    }
+
+    startDialogue(eventDialogueList, endOfDialogueFunction);
+}
+
 // For dialogue, push [text, spritesheet Id] into dialogueList for each piece of dialogue
 // you want to run. Then run startDialogue()
 function event1_1_0(){

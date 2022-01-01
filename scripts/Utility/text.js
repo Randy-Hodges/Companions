@@ -273,7 +273,8 @@ function dialogueReset(){
     dialogueList = [];
     textBox.alpha = 0;
     currentPlayer.disableMovement = false;
-    currentPlayer.stopAnimations = false;
+    currentPlayer.stopMovementAnimations = false;
+    currentPlayer.inConversation = false;
     firstTextBox = true;
 }
 
@@ -282,5 +283,6 @@ function startDialogue(dialogueListIncoming, endFunction = undefined, functionLi
     dialogueEndFunction = endFunction;
     dialogueFunctionList = functionList;
     currentPlayer.disableMovement = true;
+    currentPlayer.inConversation = true;
     generateText(dialogueList[dialogueIndex][0], dialogueList[dialogueIndex][1]);
 }

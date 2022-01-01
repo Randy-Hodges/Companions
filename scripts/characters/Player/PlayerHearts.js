@@ -1,5 +1,6 @@
 // #region Hearts
-// TODO: make as part of the player class
+// TODO: make as part of the player class. Personally, I didn't want this to ever be 
+//       apart from the player, but sometimes you gotta delegate work to others.
 // Heart Functions - Health
 function createHearts(numhearts) {
     hearts = game.add.group();
@@ -48,6 +49,16 @@ function healMaxHearts() {
         
         hearts.destroy();
         createHearts(basePlayer.currentHearts);
+    }
+}
+
+function removeHearts(numhearts, dmg = 1){
+    basePlayer.currentHearts -= dmg;
+    for (var i = 1; i <= dmg; i += 1) {
+        if (hearts.length == 0){
+            break;
+        }
+        hearts.removeChildAt(numhearts - i);
     }
 }
 // #endregion

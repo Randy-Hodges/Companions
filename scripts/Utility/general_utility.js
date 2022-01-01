@@ -17,9 +17,10 @@ function transitionLevel(level, newLevel = false, spawnVal = 1, unique = false){
     currentPlayer.disableMovement = true;
     currentPlayer.alpha = 0;
     fadeOut(); 
-    
     game.camera.onFadeComplete.add(function(player, coin){
-        if (newLevel) {removeMusic()}
+        if (newLevel) {
+            removeMusic();
+        }
         spawn = spawnVal; 
         changeLevel(0, level, unique);
         currentPlayer.disableMovement = false;
@@ -99,8 +100,12 @@ function pause(event){
     }  
 }
 
-function fadeOut(){
+function fadeOut(endFunction = undefined){
     // fade color and duration
+    if (typeof endFunction !== "undefined"){
+        game.camera.onFadeComplete.add(endFunction, this);
+        game.camera.onFadeComplete.removeAll();
+    }
     game.camera.fade(0x000000, 500);
     // game.stage.backgroundColor = 0x000000; // figure out how to make background black for the split second that the transition is only on the screen
 }

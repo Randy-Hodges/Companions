@@ -18,7 +18,7 @@ Companion = function(game, spritesheetStrID, x = gameWidth/2, y = gameHeight/2, 
     this.followObject;
 
     // animations
-    this.stopAnimations = false;
+    this.stopMovementAnimations = false;
     
     /* #region Physics */
     this.accelx = basePlayer.accelx;
