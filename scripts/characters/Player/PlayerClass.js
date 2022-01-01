@@ -10,7 +10,7 @@ transitioning between states.
 BasePlayer = function () {
 
     // hearts - HP
-    this.maxHearts = 2;
+    this.maxHearts = 3;
     this.currentHearts = this.maxHearts;
 
     // companions (string)
@@ -607,6 +607,7 @@ Player.prototype.preDie = function(numhearts, dmg){
     currentPlayer.disableMovement = true;
     currentPlayer.stopMovementAnimations = true;
     currentPlayer.body.enable = false;
+    currentPlayer.becomeInvulnerable();
     currentPlayer.animations.play("die");
 }
 

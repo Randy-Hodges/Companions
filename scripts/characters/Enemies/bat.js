@@ -15,7 +15,7 @@ Bat = function(game, x, y, spritesheetStrID){
 
     // Add animations
     this.animations.add('flying', [0,1,2,3,4,5,6]);
-    this.animations.add('attacking', [7,8,9,10,11,12,13,14,15,16]);
+    this.animations.add('attacking', [5,6,7,14,15,16]);
     this.animations.add('hit', [17,18,19]);
     this.animations.getAnimation('hit').onComplete.add(function(bat) {bat.curAnimation = bat.anims.flying; 
                                                                     bat.currentlyHit = false;
