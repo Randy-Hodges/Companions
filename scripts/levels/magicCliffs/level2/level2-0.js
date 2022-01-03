@@ -22,6 +22,7 @@ demo.level2_0.prototype = {
         // Warp points
         warp1 = new Warp(game, spawnpoint1[0]*tileLength, spawnpoint1[1]*tileLength);
         warp2 = new Warp(game, spawnpoint2[0]*tileLength, spawnpoint2[1]*tileLength, 270);
+        game.add.existing(warp1);
 
         // Coins, Enemies, Player
         addCoins();
@@ -55,17 +56,19 @@ demo.level2_0.prototype = {
     },
     createSpawnPoints: function(){
         //SpawnPoints are in units of tiles
-        spawnpoint1 = [4, 44];
+        spawnpoint1 = [4, 49];
         spawnpoint2 = [119, 2];
         if (spawn == 2){
             spawndirection = -1;
             spawnpoint = spawnpoint2.slice();
             spawnpoint[0] += 2;
+            spawnpoint[1] += 1;
         }
         else { // (spawn == 1)
             spawndirection = 1;
             spawnpoint = spawnpoint1.slice();
             spawnpoint[0] += 2;
+            spawnpoint[1] += 2;
         }
     },
     setUpHiddens: function(){

@@ -27,7 +27,8 @@ demo.level1_0.prototype = {
         this.createSpawnPoints();
 
         // Warp points
-        warp1 = new Warp(game, spawnpoint0[0]*tileLength, spawnpoint0[1]*tileLength); // Custom class
+        warp0 = new Warp(game, spawnpoint0[0]*tileLength, spawnpoint0[1]*tileLength); // Custom class
+        warp1 = new Warp(game, spawnpoint1[0]*tileLength, spawnpoint1[1]*tileLength);
         warp2 = new Warp(game, spawnpoint2[0]*tileLength, spawnpoint2[1]*tileLength);
 
         // Coins, Enemies, Player
@@ -42,13 +43,15 @@ demo.level1_0.prototype = {
         addUI();
 
         // Only start events if level 1 is not completed
+        level1Completed = true; //// **************** please remove *****************************************
         if (!level1Completed) {
             rect1 = new Phaser.Rectangle(400, 0, 40, 600); // x0, y0, width, height
             rect2 = new Phaser.Rectangle(1050, 0, 40, 540); // x0, y0, width, height
             eventTrackingList = [false, false];
         }   
-
-        //fadeIn();
+        else{
+            game.add.existing(warp1);
+        }
     },
     update: function(){
         // Collision
@@ -56,6 +59,7 @@ demo.level1_0.prototype = {
         game.physics.arcade.collide(enemyGroup, levelTiles);
 
         // Warping
+        game.physics.arcade.overlap(currentPlayer, warp0, function(){transitionLevel('0', newLevel = true)});
         game.physics.arcade.overlap(currentPlayer, warp1, function(){transitionLevel('0', newLevel = true)});
         game.physics.arcade.overlap(currentPlayer, warp2, function(){transitionLevel('1-1')});
 
@@ -69,7 +73,7 @@ demo.level1_0.prototype = {
     },
     createSpawnPoints: function(){
         spawnpoint0 = [0,6];
-        spawnpoint1 = [23, 35]
+        spawnpoint1 = [24, 32]
         spawnpoint2 = [229,12];
         if (spawn == 0){
             spawnpoint = spawnpoint0.slice();
@@ -77,6 +81,7 @@ demo.level1_0.prototype = {
         else if (spawn == 1){
             spawnpoint = spawnpoint1.slice();
             spawnpoint[0] += 2;
+            spawnpoint[1] += 3;
             spawndirection = 1;
         }
         else{ 

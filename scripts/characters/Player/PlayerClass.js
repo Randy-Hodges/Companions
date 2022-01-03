@@ -682,3 +682,8 @@ Player.prototype.disableAllInput = function(){
     currentPlayer.disableMovement = true;
     currentPlayer.stopMovementAnimations = true;
 }
+
+Player.prototype.stopMovementX = function(){
+    this.body.velocity.x = 0;
+    this.body.acceleration.x = 0;
+}

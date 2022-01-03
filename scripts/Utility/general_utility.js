@@ -22,6 +22,7 @@ function updateMoney(){
 // #region Transitioning
 function transitionLevel(level, newLevel = false, spawnVal = 1, unique = false){
     currentPlayer.disableMovement = true;
+    currentPlayer.stopMovementX();
     currentPlayer.alpha = 0;
     fadeOut(); 
     game.camera.onFadeComplete.add(function(player, coin){
