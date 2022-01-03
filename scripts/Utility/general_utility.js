@@ -1,7 +1,6 @@
 var demo = {};
 globalGravity = 400;
 var levelTiles, tilemap, tileLength = 16, tileWidth = 16;
-var money = 0, moneyText;
 var addedAudio = false;
 var eventTrackingList = [];
 var spawn = 1, spawndirection = 1;
@@ -15,8 +14,8 @@ function textOverlap(x, y, string, styleBase = { fontSize: '18px', fill: '#000'}
 }
 
 function updateMoney(){
-    moneyText.text = "Coins: " + money;
-    moneyText2.text = "Coins: " + money;
+    moneyText.text = "Coins: " + basePlayer.money;
+    moneyText2.text = "Coins: " + basePlayer.money;
 }
 // #endregion
 
@@ -46,6 +45,7 @@ function changeLevel(i, level, unique = false){
     }
     levelString = level.includes('level') ? level : 'level' + level;
     game.state.start(levelString);
+    fadeIn();
 }
 
 function fadeOut(endFunction = undefined){
@@ -55,12 +55,10 @@ function fadeOut(endFunction = undefined){
         game.camera.onFadeComplete.removeAll();
     }
     game.camera.fade(0x000000, 500);
-    // game.stage.backgroundColor = 0x000000; // figure out how to make background black for the split second that the transition is only on the screen
 }
 
 function fadeIn(){
-    // Note: Not functional currently
-    game.camera.flash(0x000000, 500);
+    game.camera.flash(0x000000, 1000, true)
 }
 // #endregion 
 

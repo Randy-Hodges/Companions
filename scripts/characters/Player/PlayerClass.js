@@ -10,8 +10,11 @@ transitioning between states.
 BasePlayer = function () {
 
     // hearts - HP
-    this.maxHearts = 3;
+    this.maxHearts = 5;
     this.currentHearts = this.maxHearts;
+
+    // Money
+    this.money = 0;
 
     // companions (string)
     this.companionNames = [undefined, undefined];
@@ -64,7 +67,7 @@ Player = function (game, x = gameWidth / 2, y = gameHeight / 2) {
     this.animations.add('faceplant', [7], frameRate = 3);
     this.animations.add('reverse die', [7, 5, 11], frameRate = 3);
     this.animations.add('slash side', [8, 9, 10], frameRate = 10);
-    this.animations.add('idle side', [11, 12, 13, 14, 15], frameRate = 10);
+    this.animations.add('idle side', [11, 12, 13, 14, 15], frameRate = 10, loop = true);
     this.animations.add('walk side', [16, 17, 18, 19, 20, 21], frameRate = 10);
     this.animations.add('dash', [21], framerate = 10);
     this.animations.add('slash up', [22, 23, 24], frameRate = 10);
@@ -511,6 +514,7 @@ Player.prototype.update = function (player = this) {
             });
             if (!collided){
                 var overlap = game.physics.arcade.overlap(currentPlayer, enemyGroup, function (player, enemy) {
+                    console.log('overlap damage')
                     player.takeDamage()
                 });
             }
@@ -615,8 +619,7 @@ Player.prototype.takeDamage = function (dmg = 1) {
 
 Player.prototype.preDie = function (numhearts, dmg) {
     this.tint = this.iTint;
-    currentPlayer.disableMovement = true;
-    currentPlayer.stopMovementAnimations = true;
+    currentPlayer.disableAllInput();
     currentPlayer.body.enable = false;
     currentPlayer.body.acceleration.x = 0;
     currentPlayer.body.velocity.x = 0;
@@ -673,4 +676,9 @@ Player.prototype.becomeInvulnerable = function () {
     var flashCount = 10;
     iTimer.repeat(parseInt(currentPlayer.iFrames/flashCount), flashCount, iAnimFlash);
     iTimer.start();
+}
+
+Player.prototype.disableAllInput = function(){
+    currentPlayer.disableMovement = true;
+    currentPlayer.stopMovementAnimations = true;
 }

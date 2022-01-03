@@ -23,6 +23,11 @@ Coin.prototype.constructor = Coin;
 // (Automatically called by World.update)
 Coin.prototype.update = function() {
     this.animations.play('rotate', 10);
-    game.physics.arcade.overlap(currentPlayer, coinGroup, function(player, coin){coin.kill(); coin.coinCollect.play(); money+=1; updateMoney();});
+    game.physics.arcade.overlap(currentPlayer, coinGroup, function(player, coin){
+        coin.kill(); 
+        coin.coinCollect.play(); 
+        basePlayer.money+=1; 
+        updateMoney();
+    });
 
 }

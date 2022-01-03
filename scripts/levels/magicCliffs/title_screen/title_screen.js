@@ -1,11 +1,11 @@
 
-demo.level1_0 = function(){};
-demo.level1_0.prototype = {
+demo.title_screen = function(){};
+demo.title_screen.prototype = {
     preload: function(){
         loadAssetsMC();
         
         // Level Specific
-        game.load.tilemap('level1-0', "assets/tilemaps/Levels/level 1/level1-0.json", null, Phaser.Tilemap.TILED_JSON);
+        game.load.tilemap('title screen', "assets/tilemaps/Cutscenes+Main/Title Screen.json", null, Phaser.Tilemap.TILED_JSON);
         game.load.audio('backtrack', "assets/audio/music/Faint - Discovery.wav");
         
         // Event Specific
@@ -21,13 +21,13 @@ demo.level1_0.prototype = {
         addMusic('backtrack', .2);
 
         // Tilemap
-        addTilemapMC('level1-0');
+        addTilemapMC('title screen');
         
         // Spawn points
         this.createSpawnPoints();
 
         // Warp points
-        warp1 = new Warp(game, spawnpoint0[0]*tileLength, spawnpoint0[1]*tileLength); // Custom class
+        warp1 = new Warp(game, spawnpoint1[0]*tileLength, spawnpoint1[1]*tileLength); // Custom class
         warp2 = new Warp(game, spawnpoint2[0]*tileLength, spawnpoint2[1]*tileLength);
 
         // Coins, Enemies, Player
@@ -35,20 +35,27 @@ demo.level1_0.prototype = {
         addHearts();
         addEnemiesMC();
         addPlayer();
+        currentPlayer.disableAllInput();
+        currentPlayer.animations.play('idle side');
+        game.camera.unfollow();
                 
         // Tilemap Infront
         tilemap.createLayer('front');
 
-        addUI();
+        game.camera.x = 22*tileLength;
+        game.camera.y = 13*tileLength;
 
-        // Only start events if level 1 is not completed
-        if (!level1Completed) {
-            rect1 = new Phaser.Rectangle(400, 0, 40, 600); // x0, y0, width, height
-            rect2 = new Phaser.Rectangle(1050, 0, 40, 540); // x0, y0, width, height
-            eventTrackingList = [false, false];
-        }   
+        // Companions
+        companionGroup = game.add.group();
+        pig = new CompanionPig(game,  28*tileLength, 30.4*tileLength, false, false);
+        pig.scale.x *= -1;
+        game.add.existing(pig);
+        companionGroup.add(pig);
+        // frog = new CompanionFrog(game, 47*tileLength, 27*tileLength, false, false);
+        // game.add.existing(frog);
+        // companionGroup.add(frog);
 
-        //fadeIn();
+        fadeIn();
     },
     update: function(){
         // Collision
@@ -60,7 +67,10 @@ demo.level1_0.prototype = {
         game.physics.arcade.overlap(currentPlayer, warp2, function(){transitionLevel('1-1')});
 
         // Events
-        this.collideEvents();
+        if (game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)){
+            this.startGame();
+        }
+        //this.collideEvents();
     },
     render: function(){
         // game.debug.body(currentPlayer.slash);
@@ -68,16 +78,12 @@ demo.level1_0.prototype = {
         // game.debug.geom(rect1, 'rgb(0,0,0)');
     },
     createSpawnPoints: function(){
-        spawnpoint0 = [0,6];
-        spawnpoint1 = [23, 35]
+        spawnpoint1 = [47, 27]
         spawnpoint2 = [229,12];
-        if (spawn == 0){
-            spawnpoint = spawnpoint0.slice();
-        }
-        else if (spawn == 1){
+        if (spawn == 1){
             spawnpoint = spawnpoint1.slice();
-            spawnpoint[0] += 2;
-            spawndirection = 1;
+            spawnpoint[0] -= 2;
+            spawndirection = -1;
         }
         else{ 
             spawnpoint = spawnpoint2.slice();
@@ -85,23 +91,8 @@ demo.level1_0.prototype = {
             spawndirection = -1;
         }
     },
-    collideEvents: function(){
-        if (!level1Completed){
-            // Event 1
-            if (eventTrackingList[0] == false){
-                if(rect1.intersects(currentPlayer.body)){
-                    event1_1_0();
-                    eventTrackingList[0] = true;
-                }
-            }
-            // Event 2
-            if (eventTrackingList[1] == false){
-                if(rect2.intersects(currentPlayer.body)){
-                    event2_1_0();
-                    eventTrackingList[1] = true;
-                }
-            }
-        }
+    startGame: function(){
+        transitionLevel('level1-0');
     }
 };
 

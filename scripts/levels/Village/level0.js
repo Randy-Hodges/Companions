@@ -21,6 +21,7 @@ demo.level0.prototype = {
     create: function(){
         // configs
         createGameConfigs();
+        game.stage.backgroundColor = 'aeffee';
         addMusic('village', .15);
 
         // Spawn points

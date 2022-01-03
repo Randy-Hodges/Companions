@@ -3,9 +3,10 @@ function createGameConfigs(){
     // configs
     game.physics.startSystem(Phaser.Physics.ARCADE);
     game.physics.arcade.gravity.y = globalGravity;
-    game.stage.backgroundColor = 'aeffee';
+    game.stage.backgroundColor = '000000';
     game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
     game.camera.resetFX();
+    fadeIn();
 }
 
 function addCoins(){
@@ -68,17 +69,16 @@ function removeMusic(music = backtrack){
 
 function addUI(){
     // Money - Coins
-    moneyText2 = game.add.text(9,27,"Coins: "  + money, { fontSize: '18px', fill: '#000' });
+    moneyText2 = game.add.text(9,27,"Coins: "  + basePlayer.money, { fontSize: '18px', fill: '#000' });
     moneyText2.fixedToCamera = true;
     
-    moneyText = game.add.text(8,26,"Coins: " + money, { fontSize: '18px', fill: '#fff' });
+    moneyText = game.add.text(8,26,"Coins: " + basePlayer.money, { fontSize: '18px', fill: '#fff' });
     moneyText.fixedToCamera = true;
     
     // Hearts
     heartText = "Hearts: ";
     textOverlap(8, 8, heartText);
     createHearts(basePlayer.currentHearts);
-    
     // Pause Menu
     addPauseMenu();
 }

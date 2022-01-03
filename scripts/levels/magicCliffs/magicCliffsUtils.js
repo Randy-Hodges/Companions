@@ -15,6 +15,10 @@ function changeToMap(i) {
 }
 
 // --- LOADING ---
+function loadingScreen(){
+
+}
+
 function loadHeadshots() {
     game.load.image('ghostHeadshot', "assets/sprites/characters/portraits/Icons_28.png");
     // game.load.image('playerHeadshot', "assets/sprites/characters/headshots/Player1.png");
@@ -151,9 +155,5 @@ function addBackgroundMC(mode = 1) {
         this.tilePosition.x -= .035;
     }
 
-
-}
-
-function updateParallax() {
 
 }
