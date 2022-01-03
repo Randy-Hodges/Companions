@@ -10,10 +10,8 @@ Slime = function (game, x, y, spritesheetStrID) {
     slime = this;
 
     // Sound
-    this.hitSound = game.add.audio('enemy hit sound');
-    this.hitSound.volume = 1;
-    this.deathSound = game.add.audio('slime death sound');
-    this.deathSound.volume = .7;
+    this.hitSound = game.add.audio('enemy hit sound', 1);
+    this.deathSound = game.add.audio('slime death sound', .7);
 
     // add animations
     this.animations.add('idle', [0, 1, 2, 3]);
@@ -99,7 +97,7 @@ Slime.prototype.update = function (slime = this) {
         });
     }
 
-    // Velocity 
+    // #region Velocity 
     slime.body.velocity.x = slime.movementSpeed;
     if (!slime.currentlyHit) {
         if (slime.movementSpeed < 0) {
@@ -119,6 +117,7 @@ Slime.prototype.update = function (slime = this) {
             slime.movementSpeed = slime.baseMovementSpeed * slime.faceDirection;
         }
     }
+    // #endregion
 
     // #region Animations
     if (slime.curAnimationPriority == slime.animationPriorities.idle) {

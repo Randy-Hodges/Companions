@@ -45,7 +45,7 @@ Bat = function(game, x, y, spritesheetStrID){
     this.timeLastSwitchY = 0;
     this.roamFirstCall = true;
 
-    // Preventing bugs
+    // Preventing bugs?
     this.autoCull = true;
     this.outOfBoundsKill = true;
 

@@ -89,7 +89,10 @@ Player = function (game, x = gameWidth / 2, y = gameHeight / 2) {
     // Invulnerability
     this.invulnerableTime = game.time.now;
     this.invulnerable = false;
-    this.iFrames = 2000 //actually in milliseconds, not frames  
+    this.iFrames = 2000 //actually in milliseconds, not frames 
+    this.iTint = 0xff0f0f; 
+    this.iAlpha = .7;
+    this.iAnimCount = 0;
 
     // Misc 
     this.inConversation = false;
@@ -342,6 +345,7 @@ Player = function (game, x = gameWidth / 2, y = gameHeight / 2) {
     // TODO: loop through all of these instead of manually doing it
     this.companionSlots[0] = createEquippedCompanion(basePlayer.companionNames[0], this, this.body.position.x - 50, this.body.position.y - 50);
     this.companionSlots[1] = createEquippedCompanion(basePlayer.companionNames[1], this.companionSlots[0], this.body.position.x - 75, this.body.position.y - 75);
+
 }
 
 Player.prototype = Object.create(Phaser.Sprite.prototype);
@@ -491,7 +495,7 @@ Player.prototype.update = function (player = this) {
         }
     }
     // #endregion */
-    
+
     // Conversation
     if (this.inConversation) {
         this.animations.play('idle side');
@@ -502,16 +506,27 @@ Player.prototype.update = function (player = this) {
     // Collision with enemies
     if (typeof enemyGroup !== 'undefined') {
         if (!this.invulnerable) {
-            game.physics.arcade.collide(currentPlayer, enemyGroup, function (player, enemy) {
+            var collided = game.physics.arcade.collide(currentPlayer, enemyGroup, function (player, enemy) {
                 player.calcDamageKnockback(enemy);
             });
+            if (!collided){
+                var overlap = game.physics.arcade.overlap(currentPlayer, enemyGroup, function (player, enemy) {
+                    player.takeDamage()
+                });
+            }
         }
     }
 
-    // Remove invulnerability after set time
-    if (this.invulnerable && game.time.now - this.invulnerableTime > this.iFrames) {
-        this.invulnerable = false;
+    // #region Invulnerability
+    // Note: invulnerableTime is the start time of the invulnerability
+    if (this.invulnerable ) {
+        // Turn off
+        if (game.time.now - this.invulnerableTime > this.iFrames) {
+            this.tint = 0xffffff;
+            this.invulnerable = false;
+        }
     }
+    // #endregion
 };
 
 Player.prototype.calcDamageKnockback = function (enemy, player = this) {
@@ -589,25 +604,23 @@ Player.prototype.takeDamage = function (dmg = 1) {
         return;
     }
     numhearts = basePlayer.currentHearts;
+    removeHearts(numhearts, dmg);
+    this.damagedSound.play();
+    this.becomeInvulnerable();
     // If Dead
     if (numhearts <= 1) {
-        this.preDie(numhearts, dmg)
-    }
-    // Otherwise, Remove hearts
-    else {
-        removeHearts(numhearts, dmg);
-        this.damagedSound.play();
-        this.becomeInvulnerable();
-        // console.log("Got hit. Current hearts:", basePlayer.currentHearts, "Num hearts:", numhearts - dmg);
+        this.preDie(numhearts, dmg);
     }
 }
 
-Player.prototype.preDie = function(numhearts, dmg){
-    removeHearts(numhearts, dmg);
+Player.prototype.preDie = function (numhearts, dmg) {
+    this.tint = this.iTint;
     currentPlayer.disableMovement = true;
     currentPlayer.stopMovementAnimations = true;
     currentPlayer.body.enable = false;
-    currentPlayer.becomeInvulnerable();
+    currentPlayer.body.acceleration.x = 0;
+    currentPlayer.body.velocity.x = 0;
+
     currentPlayer.animations.play("die");
 }
 
@@ -616,18 +629,18 @@ Player.prototype.postDie = function () {
     basePlayer.deathCount += 1;
     // Specialties/Revives
     var state = game.state.getCurrentState().key;
-    if (state.slice(0, 6) == 'level1'){
-        if (basePlayer.deathCount < 2){
+    if (state.slice(0, 6) == 'level1') {
+        if (basePlayer.deathCount < 2) {
             revive_event_level1();
         }
-        else{
+        else {
             basePlayer.currentHearts = basePlayer.maxHearts;
             transitionLevel(basePlayer.lastCP.level);
         }
         return
     }
     // Die
-    
+
     removeMusic();
     if (typeof bossMusic !== 'undefined') {
         removeMusic(bossMusic);
@@ -637,17 +650,27 @@ Player.prototype.postDie = function () {
     basePlayer.currentHearts = basePlayer.maxHearts;
 }
 
-Player.prototype.heal = function(heal = 1){
+Player.prototype.heal = function (heal = 1) {
     healHearts(heal);
 }
 
-Player.prototype.healMax = function(){
+Player.prototype.healMax = function () {
     healMaxHearts();
 }
 
-Player.prototype.becomeInvulnerable = function(){
+Player.prototype.becomeInvulnerable = function () {
     this.invulnerable = true;
     this.invulnerableTime = game.time.now;
+    if (basePlayer.currentHearts <= 0){
+        currentPlayer.tint = currentPlayer.iTint;
+        return;
+    }
+    function iAnimFlash(){
+        //currentPlayer.tint = currentPlayer.tint == 0xffffff ? currentPlayer.iTint : 0xffffff;
+        currentPlayer.alpha = currentPlayer.alpha == 1 ? currentPlayer.iAlpha : 1;
+    }
+    var iTimer = game.time.create(false);
+    var flashCount = 10;
+    iTimer.repeat(parseInt(currentPlayer.iFrames/flashCount), flashCount, iAnimFlash);
+    iTimer.start();
 }
-
-
