@@ -2,23 +2,11 @@ var slimeBoss;
 demo.level3_1 = function(){};
 demo.level3_1.prototype = {
     preload: function(){
-        loadAssetsMC();
-        game.load.tilemap('level3-1', "assets/tilemaps/Levels/Level 3/level3-1.json", null, Phaser.Tilemap.TILED_JSON);
-        // Music
-        game.load.audio('bossFight', "assets/audio/music/Ketsa - Criss Cross Skies.mp3");
-        game.load.audio('backtrack', "assets/audio/music/Faint - Discovery.wav");
-        // Events
-        game.load.spritesheet('slimeBoss', "assets/sprites/enemies/blue slime/slime-Sheet-white.png", 32, 25);
-        loadHeadshots();
-        game.load.spritesheet('grandfather', "assets/sprites/enemies/Plague Doctor/plague_doctor_sheet.png", 64, 64);
 
     },
     create: function(){
         // configs
         createGameConfigs();
-
-        // music
-        addMusic('backtrack');
 
         // spawn points (in units of tiles)
         this.createSpawnPoints();

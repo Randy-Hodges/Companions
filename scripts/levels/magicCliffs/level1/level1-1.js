@@ -1,8 +1,6 @@
 demo.level1_1 = function(){};
 demo.level1_1.prototype = {
     preload: function(){
-        loadAssetsMC();
-        game.load.tilemap('level1-1', "assets/tilemaps/Levels/level 1/level1-1.json", null, Phaser.Tilemap.TILED_JSON);
     },
     create: function(){
         // configs

@@ -54,15 +54,15 @@ function addPlayer(){
 
 function addMusic(music = 'backtrack', vol = .1){
     if (!addedAudio){
-        backtrack = game.add.audio(music);
-        backtrack.play();
-        backtrack.volume = vol;
-        backtrack.loopFull();
+        this.backtrack = game.add.audio(music, vol, true);
+        this.backtrack.play();
         addedAudio = true;
     }
 }
 
-function removeMusic(music = backtrack){
+function removeMusic(music = this.backtrack){
+    this.backtrack.stop();
+    this.backtrack.destroy()
     music.destroy(); 
     addedAudio = false; 
 }

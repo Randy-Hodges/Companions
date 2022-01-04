@@ -2,16 +2,11 @@
 demo.level2_0 =  function(){};
 demo.level2_0.prototype = {
     preload: function(){
-        loadAssetsMC();
-        game.load.tilemap('level2-0', "assets/tilemaps/Levels/Level 2/level2-0.json", null, Phaser.Tilemap.TILED_JSON);
-        
-        // Music
-        game.load.audio('backtrack', "assets/audio/music/Faint - Haven.wav");
     },
     create: function(){
         createGameConfigs();
         
-        addMusic('backtrack', .5);
+        addMusic('haven music', .5);
 
         // spawn points (in units of tiles)
         this.createSpawnPoints();

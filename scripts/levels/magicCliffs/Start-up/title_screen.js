@@ -2,23 +2,13 @@
 demo.title_screen = function(){};
 demo.title_screen.prototype = {
     preload: function(){
-        loadAssetsMC();
-        
-        // Level Specific
-        game.load.tilemap('title screen', "assets/tilemaps/Cutscenes+Main/Title Screen.json", null, Phaser.Tilemap.TILED_JSON);
-        game.load.audio('backtrack', "assets/audio/music/Faint - Discovery.wav");
-        
-        // Event Specific
-        loadHeadshots();
-        game.load.spritesheet('grandfather', "assets/sprites/enemies/Plague Doctor/plague_doctor_sheet.png", 64, 64)
-
     },
     create: function(){
         // configs
         createGameConfigs();
 
         // music
-        addMusic('backtrack', .2);
+        addMusic('criss cross skies music', .2);
 
         // Tilemap
         addTilemapMC('title screen');
@@ -68,7 +58,7 @@ demo.title_screen.prototype = {
 
         // Events
         if (game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)){
-            this.startGame();
+            this.transitionToGame();
         }
         //this.collideEvents();
     },
@@ -91,8 +81,8 @@ demo.title_screen.prototype = {
             spawndirection = -1;
         }
     },
-    startGame: function(){
-        transitionLevel('level1-0');
+    transitionToGame: function(){
+        transitionLevel('level1-0', true);
     }
 };
 

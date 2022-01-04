@@ -1,24 +1,13 @@
 
 demo.level1_0 = function(){};
 demo.level1_0.prototype = {
-    preload: function(){
-        loadAssetsMC();
-        
-        // Level Specific
-        game.load.tilemap('level1-0', "assets/tilemaps/Levels/level 1/level1-0.json", null, Phaser.Tilemap.TILED_JSON);
-        game.load.audio('backtrack', "assets/audio/music/Faint - Discovery.wav");
-        
-        // Event Specific
-        loadHeadshots();
-        game.load.spritesheet('grandfather', "assets/sprites/enemies/Plague Doctor/plague_doctor_sheet.png", 64, 64)
-
-    },
+    preload: function(){},
     create: function(){
         // configs
         createGameConfigs();
 
         // music
-        addMusic('backtrack', .2);
+        addMusic('discovery music', .2);
 
         // Tilemap
         addTilemapMC('level1-0');
@@ -43,7 +32,6 @@ demo.level1_0.prototype = {
         addUI();
 
         // Only start events if level 1 is not completed
-        level1Completed = true; //// **************** please remove *****************************************
         if (!level1Completed) {
             rect1 = new Phaser.Rectangle(400, 0, 40, 600); // x0, y0, width, height
             rect2 = new Phaser.Rectangle(1050, 0, 40, 540); // x0, y0, width, height
@@ -60,7 +48,9 @@ demo.level1_0.prototype = {
 
         // Warping
         game.physics.arcade.overlap(currentPlayer, warp0, function(){transitionLevel('0', newLevel = true)});
-        game.physics.arcade.overlap(currentPlayer, warp1, function(){transitionLevel('0', newLevel = true)});
+        if (level1Completed){
+            game.physics.arcade.overlap(currentPlayer, warp1, function(){transitionLevel('0', newLevel = true)});
+        }
         game.physics.arcade.overlap(currentPlayer, warp2, function(){transitionLevel('1-1')});
 
         // Events

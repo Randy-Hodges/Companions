@@ -94,7 +94,7 @@ Player = function (game, x = gameWidth / 2, y = gameHeight / 2) {
     this.invulnerable = false;
     this.iFrames = 2000 //actually in milliseconds, not frames 
     this.iTint = 0xff0f0f; 
-    this.iAlpha = .7;
+    this.iAlpha = .6;
     this.iAnimCount = 0;
 
     // Misc 
@@ -349,6 +349,16 @@ Player = function (game, x = gameWidth / 2, y = gameHeight / 2) {
     this.companionSlots[0] = createEquippedCompanion(basePlayer.companionNames[0], this, this.body.position.x - 50, this.body.position.y - 50);
     this.companionSlots[1] = createEquippedCompanion(basePlayer.companionNames[1], this.companionSlots[0], this.body.position.x - 75, this.body.position.y - 75);
 
+    if (devTools){
+        ONEButton = game.input.keyboard.addKey(Phaser.Keyboard.ONE);
+        ONEButton.onDown.add(function(){transitionLevel("1-0", true)})
+        TWOButton = game.input.keyboard.addKey(Phaser.Keyboard.TWO);
+        TWOButton.onDown.add(function(){transitionLevel("2-0", true)})
+        THREEButton = game.input.keyboard.addKey(Phaser.Keyboard.THREE);
+        THREEButton.onDown.add(function(){transitionLevel("3-0", true)})
+        FOURButton = game.input.keyboard.addKey(Phaser.Keyboard.FOUR);
+        FOURButton.onDown.add(function(){game.sound.stopAll()})
+    }
 }
 
 Player.prototype = Object.create(Phaser.Sprite.prototype);

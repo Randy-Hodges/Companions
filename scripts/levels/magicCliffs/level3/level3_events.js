@@ -41,8 +41,8 @@ function event_bossStart_3_1(){
     timer.add(3000, function(){
         gates1Shown = true;
         removeMusic();
-        // Don't use addMusic here
-        backtrack = game.add.audio('bossFight');
+        // (addMusic is not appropriate in this location)
+        backtrack = game.add.audio('criss cross skies music');
         backtrack.play();
         backtrack.volume = .2;
         game.camera.shake(.04, 1500);
@@ -61,7 +61,7 @@ function event_bossEnd_3_1(){
     cameraIsTweening = true;
     backtrack.fadeOut(1000);
     // Don't use addMusic here
-    backtrack = game.add.audio('backtrack');
+    backtrack = game.add.audio('discovery music');
     backtrack.play();
     backtrack.volume = .2;
 }

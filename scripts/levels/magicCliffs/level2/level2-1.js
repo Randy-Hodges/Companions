@@ -2,12 +2,6 @@
 demo.level2_1 =  function(){};
 demo.level2_1.prototype = {
     preload: function(){
-        loadAssetsMC();
-        game.load.tilemap('level2-1', "assets/tilemaps/Levels/Level 2/level2-1.json", null, Phaser.Tilemap.TILED_JSON);
-
-        // Events
-        loadHeadshots();
-        game.load.spritesheet('grandfather', "assets/sprites/enemies/Plague Doctor/plague_doctor_sheet.png", 64, 64);
     },
     create: function(){
         // Configs

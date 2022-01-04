@@ -3,17 +3,15 @@ demo.level3_0 =  function(){};
 demo.level3_0.prototype = {
     preload: function(){
         loadAssetsMC();
-        game.load.tilemap('level3-0', "assets/tilemaps/Levels/Level 3/level3-0.json", null, Phaser.Tilemap.TILED_JSON);
         
         // Music
-        game.load.audio('backtrack', "assets/audio/music/Faint - Discovery.wav");
     },
     create: function(){
         // configs
         createGameConfigs();
 
         // music
-        addMusic('backtrack', .2);
+        addMusic('discovery music', .2);
 
         // spawn points (in units of tiles)
         this.createSpawnPoints();

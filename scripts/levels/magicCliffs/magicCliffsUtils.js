@@ -15,16 +15,13 @@ function changeToMap(i) {
 }
 
 // --- LOADING ---
-function loadingScreen(){
-
-}
-
 function loadHeadshots() {
     game.load.image('ghostHeadshot', "assets/sprites/characters/portraits/Icons_28.png");
     // game.load.image('playerHeadshot', "assets/sprites/characters/headshots/Player1.png");
 }
 
 function loadAssetsMC() {
+    addLoadingScreen();
     loadGameConfigs();
     loadPlayer();
     loadCompanions();
@@ -48,7 +45,7 @@ function loadBackgroundMC() {
     game.load.image('large white clouds', "assets/tiles/Magic-Cliffs-Environment/PNG/clouds.png");
 }
 
-// --- ADDING ---
+// #region --- ADDING ---
 function addTilemapMC(tilemapKey) {
     addBackgroundMC();
 
@@ -114,28 +111,6 @@ function addEnemyFromTilemapMC(tile) {
     }
 }
 
-function setTilePropertiesMC() {
-    function setTilePropertiesHelper(tile) {
-        if (tile.index == 795 || tile.index == 796) {
-            tile.collideUp = true;
-            tile.collideDown = false;
-            tile.collideLeft = false;
-            tile.collideRight = false;
-            tile.faceTop = true;
-            tile.faceBottom = false;
-            tile.faceLeft = false;
-            tile.faceRight = false;
-        }
-        if (tile.index == 1023) {
-            tile.setCollisionCallback(hitSpike, this);
-        }
-    }
-    tilemap.setLayer('mainGrass');
-    tilemap.forEach(function (tile) { setTilePropertiesHelper(tile) }, 1, 0, 0, tilemap.width, tilemap.height);
-}
-
-
-// TODO: Finish these functions, put them in levels
 function addBackgroundMC(mode = 1) {
     //sea
     var seaSprite = game.add.tileSprite(0, 0, 532, 400, 'mar sin isla');
@@ -156,4 +131,26 @@ function addBackgroundMC(mode = 1) {
     }
 
 
+}
+// #endregion
+
+
+function setTilePropertiesMC() {
+    function setTilePropertiesHelper(tile) {
+        if (tile.index == 795 || tile.index == 796) {
+            tile.collideUp = true;
+            tile.collideDown = false;
+            tile.collideLeft = false;
+            tile.collideRight = false;
+            tile.faceTop = true;
+            tile.faceBottom = false;
+            tile.faceLeft = false;
+            tile.faceRight = false;
+        }
+        if (tile.index == 1023) {
+            tile.setCollisionCallback(hitSpike, this);
+        }
+    }
+    tilemap.setLayer('mainGrass');
+    tilemap.forEach(function (tile) { setTilePropertiesHelper(tile) }, 1, 0, 0, tilemap.width, tilemap.height);
 }
