@@ -42,7 +42,7 @@ function event_bossStart_3_1(){
         gates1Shown = true;
         removeMusic();
         // (addMusic is not appropriate in this location)
-        backtrack = game.add.audio('criss cross skies music');
+        backtrack = game.add.audio('prepare for battle music');
         backtrack.play();
         backtrack.volume = .2;
         game.camera.shake(.04, 1500);

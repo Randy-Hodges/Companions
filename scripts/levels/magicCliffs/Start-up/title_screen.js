@@ -8,7 +8,7 @@ demo.title_screen.prototype = {
         createGameConfigs();
 
         // music
-        addMusic('criss cross skies music', .2);
+        addMusic('discovery music', .2);
 
         // Tilemap
         addTilemapMC('title screen');

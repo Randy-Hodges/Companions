@@ -16,7 +16,7 @@ demo.Boot.prototype = {
         if (this.game.device.desktop)
         {
             //  If you have any desktop specific settings, they can go in here
-            this.scale.pageAlignHorizontally = true;
+            //this.scale.pageAlignHorizontally = true;
         }
         else
         {

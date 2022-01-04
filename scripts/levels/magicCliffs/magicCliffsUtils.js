@@ -21,7 +21,6 @@ function loadHeadshots() {
 }
 
 function loadAssetsMC() {
-    addLoadingScreen();
     loadGameConfigs();
     loadPlayer();
     loadCompanions();

@@ -6,7 +6,7 @@ demo.level2_0.prototype = {
     create: function(){
         createGameConfigs();
         
-        addMusic('haven music', .5);
+        addMusic('criss cross skies music', .2);
 
         // spawn points (in units of tiles)
         this.createSpawnPoints();

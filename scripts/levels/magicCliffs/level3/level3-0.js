@@ -11,7 +11,7 @@ demo.level3_0.prototype = {
         createGameConfigs();
 
         // music
-        addMusic('discovery music', .2);
+        addMusic('mysterious dungeon music', .2);
 
         // spawn points (in units of tiles)
         this.createSpawnPoints();

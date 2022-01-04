@@ -7,7 +7,7 @@ demo.level1_0.prototype = {
         createGameConfigs();
 
         // music
-        addMusic('discovery music', .2);
+        addMusic('haven music', .5);
 
         // Tilemap
         addTilemapMC('level1-0');

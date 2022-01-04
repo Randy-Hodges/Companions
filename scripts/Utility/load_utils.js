@@ -1,11 +1,4 @@
 
-function addLoadingScreen(){
-    //game.add.text(game.height/2, game.width/2, "loading", { fontSize: '18px', fill: '#000' })
-    //game.load.spritesheet('piggy', "assets/sprites/companions/piggy_animation.png", 30, 30);
-    //piggyLoading = game.add.sprite(this.game.world.centerX, this.game.world.centerY, 'piggy')
-    //this.pigglyLoading.animations.add('piggy idle', [0, 1, 2, 3], frameRate=5, true);
-}
-
 function loadPlayer(){
     game.load.spritesheet('player', "assets/sprites/characters/RPG Character/main_character_all_v5.png", 64, 64);
     game.load.audio('air slash sound', "assets/audio/soundeffects/air_slash.wav");

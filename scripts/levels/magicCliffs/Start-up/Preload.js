@@ -1,6 +1,7 @@
 
 demo.Preloader = function (game) {
 
+	this.loadingText = null;
 	this.background = null;
 	this.preloadBar = null;
 
@@ -14,8 +15,11 @@ demo.Preloader.prototype = {
 
 		//	These are the assets we loaded in Boot.js
 		//	A nice sparkly background and a loading progress bar
-		this.background = this.add.sprite(game.width/2, game.height/2, 'piggyLoad');
+		this.loadingText = this.add.text(game.width/2, game.height/2, "loading...", { fontSize: '24px', fill: '#fff' })
+		this.loadingText.anchor.setTo(.5,.5);
+		//this.background = this.add.sprite(game.width/2, game.height/2, 'piggyLoad');
 		this.preloadBar = this.add.sprite(game.width/2, game.height/2 + 100, 'piggyLoad');
+		this.preloadBar.anchor.setTo(.5,.5);
 
 		//	This sets the preloadBar sprite as a loader sprite.
 		//	What that does is automatically crop the sprite from 0 to full-width
@@ -40,6 +44,8 @@ demo.Preloader.prototype = {
         game.load.audio('discovery music', "assets/audio/music/Faint - Discovery.wav");
         game.load.audio('haven music', "assets/audio/music/Faint - Haven.wav");
         game.load.audio('criss cross skies music', "assets/audio/music/Ketsa - Criss Cross Skies.mp3");
+        game.load.audio('prepare for battle music', "assets/audio/music/xDeviruchi/xDeviruchi - Prepare for Battle! .wav");
+        game.load.audio('mysterious dungeon music', "assets/audio/music/xDeviruchi/xDeviruchi - Mysterious Dungeon.wav");
 
         // Bosses
         game.load.spritesheet('slimeBoss', "assets/sprites/enemies/blue slime/slime-Sheet-white.png", 32, 25);
@@ -47,7 +53,6 @@ demo.Preloader.prototype = {
         // Event Specific
         loadHeadshots();
         game.load.spritesheet('grandfather', "assets/sprites/enemies/Plague Doctor/plague_doctor_sheet.png", 64, 64);
-
 
 
 	},
