@@ -52,8 +52,8 @@ function changeLevel(i, level, unique = false){
 function fadeOut(endFunction = undefined){
     // fade color and duration
     if (typeof endFunction !== "undefined"){
+        console.log(endFunction)
         game.camera.onFadeComplete.add(endFunction, this);
-        game.camera.onFadeComplete.removeAll();
     }
     game.camera.fade(0x000000, 500);
 }

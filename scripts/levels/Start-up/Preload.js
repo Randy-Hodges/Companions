@@ -14,7 +14,6 @@ demo.Preloader.prototype = {
 	preload: function () {
 
 		//	These are the assets we loaded in Boot.js
-		//	A nice sparkly background and a loading progress bar
 		this.loadingText = this.add.text(game.width/2, game.height/2, "loading...", { fontSize: '24px', fill: '#fff' })
 		this.loadingText.anchor.setTo(.5,.5);
 		//this.background = this.add.sprite(game.width/2, game.height/2, 'piggyLoad');
@@ -27,7 +26,6 @@ demo.Preloader.prototype = {
 		this.load.setPreloadSprite(this.preloadBar);
 
 		//	Here we load the rest of the assets our game needs.
-		//  As this is just a Project Template I've not provided these assets, swap them for your own.
 		loadAssetsMC();
 
         // Levels
@@ -54,7 +52,9 @@ demo.Preloader.prototype = {
         loadHeadshots();
         game.load.spritesheet('grandfather', "assets/sprites/enemies/Plague Doctor/plague_doctor_sheet.png", 64, 64);
 
-
+		// Misc
+		game.load.spritesheet('concealed dragon', "assets/sprites/Misc/title_dragon.png", 64, 64);
+		
 	},
 
 	create: function () {
