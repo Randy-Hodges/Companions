@@ -2,9 +2,6 @@
 demo.level3_0 =  function(){};
 demo.level3_0.prototype = {
     preload: function(){
-        loadAssetsMC();
-        
-        // Music
     },
     create: function(){
         // configs

@@ -32,8 +32,41 @@ demo.title_screen.prototype = {
         // Tilemap Infront
         tilemap.createLayer('front');
 
+        // Title screen stuff
         game.camera.x = 22*tileLength;
         game.camera.y = 13*tileLength;
+        game.add.text(23*tileLength, 14*tileLength, "Companions", 
+            { 
+            font: "Georgia",
+            fontSize: '72px', 
+            fill: '#fff' , 
+            strokeThickness: 2
+        
+        })
+
+        game.add.text(23*tileLength, 20*tileLength, "A platforming game", 
+            { 
+            font: "Georgia",
+            fontSize: '28px', 
+            fill: '#fff' , 
+            strokeThickness: 1
+        
+        })
+        startText = game.add.text(game.width/2, game.height - 20, "(Press Space to start)", 
+            { 
+            font: "Georgia",
+            fontSize: '18px', 
+            fill: '#494' , 
+            strokeThickness: 1
+        
+        })
+        startText.anchor.setTo(.5, .5);
+        startText.fixedToCamera = true;
+        // startText.body.enable = true;
+        game.physics.arcade.enable([startText]);
+        startText.body.velocity.setTo(0, 10);
+        startText.body.collideWorldBounds = true;
+        startText.body.bounce.set(1);
 
         // Companions
         companionGroup = game.add.group();

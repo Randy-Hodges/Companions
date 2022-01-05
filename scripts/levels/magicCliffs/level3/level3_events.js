@@ -53,6 +53,7 @@ function event_bossStart_3_1(){
         timer2.start();
     })
     currentPlayer.disableMovement = true;
+    currentPlayer.stopMovementX();
     timer.start();
 }
 
