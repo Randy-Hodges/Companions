@@ -79,6 +79,26 @@ function addTilemapMC(tilemapKey) {
     game.world.setBounds(0, 0, tilemap.layer.widthInPixels, tilemap.layer.heightInPixels);
 }
 
+function setTilePropertiesMC() {
+    function setTilePropertiesHelper(tile) {
+        if (tile.index == 795 || tile.index == 796) {
+            tile.collideUp = true;
+            tile.collideDown = false;
+            tile.collideLeft = false;
+            tile.collideRight = false;
+            tile.faceTop = true;
+            tile.faceBottom = false;
+            tile.faceLeft = false;
+            tile.faceRight = false;
+        }
+        if (tile.index == 1023) {
+            tile.setCollisionCallback(hitSpike, this);
+        }
+    }
+    tilemap.setLayer('mainGrass');
+    tilemap.forEach(function (tile) { setTilePropertiesHelper(tile) }, 1, 0, 0, tilemap.width, tilemap.height);
+}
+
 function addEnemiesMC() {
     enemyGroup = game.add.group();
     tilemap.setLayer('enemies');
@@ -134,22 +154,3 @@ function addBackgroundMC(mode = 1) {
 // #endregion
 
 
-function setTilePropertiesMC() {
-    function setTilePropertiesHelper(tile) {
-        if (tile.index == 795 || tile.index == 796) {
-            tile.collideUp = true;
-            tile.collideDown = false;
-            tile.collideLeft = false;
-            tile.collideRight = false;
-            tile.faceTop = true;
-            tile.faceBottom = false;
-            tile.faceLeft = false;
-            tile.faceRight = false;
-        }
-        if (tile.index == 1023) {
-            tile.setCollisionCallback(hitSpike, this);
-        }
-    }
-    tilemap.setLayer('mainGrass');
-    tilemap.forEach(function (tile) { setTilePropertiesHelper(tile) }, 1, 0, 0, tilemap.width, tilemap.height);
-}

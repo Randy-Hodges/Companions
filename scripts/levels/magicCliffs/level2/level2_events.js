@@ -17,7 +17,8 @@ function event1_2_1(){
 
     var endOfDialogueFunction = function(){
         grandfather.leave();
-        grandfather = new GrandfatherNPC(game, 295*tileLength, 29*tileLength, 'grandfather');
+        grandfather = new GrandfatherNPC(game, 257*tileLength, 20*tileLength, 'grandfather');
+        grandfather.flipX();
         grandfather.setIdle();
         grandfather.setDialogue([['Press \'A\' to dash', 'ghostHeadshot']])    
         game.add.existing(grandfather);

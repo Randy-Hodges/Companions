@@ -1,0 +1,4 @@
+These files are assets/scripts that are currently unused for the project. They are here because I might
+want to use the assets at a later time or might want to use old scripts for reference. Making an Unused 
+folder helps with compile time and reduces the size of material that needs to be compiled and uploaded
+when publishing the game.

@@ -1,4 +1,4 @@
-var devTools = true; // Developer tools are turned on if true, otherwise, they are inactive
+var devTools = false; // Developer tools are turned on if true, otherwise, they are inactive
 
 var gameWidth = 500, gameHeight = 315;
 var game = new Phaser.Game(gameWidth, gameHeight, Phaser.CANVAS);
