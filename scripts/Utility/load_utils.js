@@ -34,14 +34,34 @@ function loadEnemies(){
 }
 
 function loadUI(){
-    game.load.image('Blank_Blue', "assets/UI/Blank_Blue.png");
-    game.load.image('Gear_LightBlue', "assets/UI/Gear_LightBlue.png");
-    game.load.image('Play_Blue', "assets/UI/Play_Blue.png");
-    game.load.image('Green', "assets/UI/Green.png");
-    game.load.audio('textContinue', "assets/audio/soundeffects/progress_text.wav");
-    game.load.audio('text scroll sound', "assets/audio/soundeffects/primary_text_scroll.mp3");
-    game.load.audio('pause sound', "assets/audio/soundeffects/pause.mp3");
-    game.load.audio('unpause sound', "assets/audio/soundeffects/unpause.mp3");
+    game.load.image('Blank_Blue', "assets/sprites/UI/Blank_Blue.png");
+    game.load.image('Gear_LightBlue', "assets/sprites/UI/Gear_LightBlue.png");
+    game.load.image('Play_Blue', "assets/sprites/UI/Play_Blue.png");
+    game.load.image('Green', "assets/sprites/UI/Green.png");
+    game.load.audio('textContinue', "assets/sprites/audio/soundeffects/progress_text.wav");
+    game.load.audio('text scroll sound', "assets/sprites/audio/soundeffects/primary_text_scroll.mp3");
+    game.load.audio('pause sound', "assets/sprites/audio/soundeffects/pause.mp3");
+    game.load.audio('unpause sound', "assets/sprites/audio/soundeffects/unpause.mp3");
+}
+
+function loadOverworldMap(){
+    // loading in assets for map
+    game.load.tilemap('overworldMap', "assets/tilemaps/overworld/overworld.json", null, Phaser.Tilemap.TILED_JSON);
+    game.load.image('RedMarket', "assets/sprites/overworld_map/Buildings/Red/RedMarket.png");
+    game.load.image('RedTaverns', "assets/sprites/overworld_map/Buildings/Red/RedTaverns.png");
+    game.load.image('TexturedGrass', "assets/sprites/overworld_map/Ground/TexturedGrass.png");
+    game.load.image('Trees', "assets/sprites/overworld_map/Nature/Trees.png");
+    game.load.image('Cliff', "assets/sprites/overworld_map/Ground/Cliff.png");
+    game.load.image('AssortedGround', "assets/sprites/overworld_map/Ground/Grass.png");
+    game.load.image('Chests', "assets/sprites/overworld_map/Miscellaneous/Chests.png");
+    game.load.image('QuestBoard', "assets/sprites/overworld_map/Miscellaneous/QuestBoard.png");
+    game.load.image('Rocks', "assets/sprites/overworld_map/Nature/Rocks.png");
+    game.load.image('StreetSigns', "assets/sprites/overworld_map/Miscellaneous/StreetSigns.png");
+    game.load.image('Static_cloud_group', "assets/sprites/tiles/painted style/PNG/Mountains/Layer 1 cloud anim1.png");
+    game.load.image('Static_cloud_large', "assets/sprites/tiles/painted style/PNG/Mountains/Layer 3 cloud anim1.png");
+
+    game.load.image('Moving_cloud', "assets/overworld_map/Clouds/cloud1.png");
+    game.load.image('Moving_cloud2', "assets/overworld_map/Clouds/cloud2.png");
 }
 
 function loadGameConfigs(){
