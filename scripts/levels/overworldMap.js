@@ -1,31 +1,6 @@
 demo.overworldMap = function(){};
 demo.overworldMap.prototype = {
     preload: function(){
-        loadGameConfigs();
-
-        // loading in assets for map
-        game.load.tilemap('overworldMap', "assets/tilemaps/overworld/overworld.json", null, Phaser.Tilemap.TILED_JSON);
-        game.load.image('RedMarket', "assets/overworld_map/Buildings/Red/RedMarket.png");
-        game.load.image('RedTaverns', "assets/overworld_map/Buildings/Red/RedTaverns.png");
-        game.load.image('TexturedGrass', "assets/overworld_map/Ground/TexturedGrass.png");
-        game.load.image('Trees', "assets/overworld_map/Nature/Trees.png");
-        game.load.image('Cliff', "assets/overworld_map/Ground/Cliff.png");
-        game.load.image('AssortedGround', "assets/overworld_map/Ground/Grass.png");
-        game.load.image('Chests', "assets/overworld_map/Miscellaneous/Chests.png");
-        game.load.image('QuestBoard', "assets/overworld_map/Miscellaneous/QuestBoard.png");
-        game.load.image('Rocks', "assets/overworld_map/Nature/Rocks.png");
-        game.load.image('StreetSigns', "assets/overworld_map/Miscellaneous/StreetSigns.png");
-        game.load.image('Static_cloud_group', "assets/tiles/painted style/PNG/Mountains/Layer 1 cloud anim1.png");
-        game.load.image('Static_cloud_large', "assets/tiles/painted style/PNG/Mountains/Layer 3 cloud anim1.png");
-
-        game.load.image('Moving_cloud', "assets/overworld_map/Clouds/cloud1.png");
-        game.load.image('Moving_cloud2', "assets/overworld_map/Clouds/cloud2.png");
-
-        // game.load.image('background', "");
-
-        // change this later
-        game.load.audio('mapMusic', "assets/audio/music/Ketsa - Glow-Flow.mp3");
-
     },
 
     create: function(){     

@@ -27,6 +27,7 @@ demo.Preloader.prototype = {
 
 		//	Here we load the rest of the assets our game needs.
 		loadAssetsMC();
+		loadOverworldMap();
 
         // Levels
         game.load.tilemap('title screen', "assets/tilemaps/Cutscenes+Main/Title Screen.json", null, Phaser.Tilemap.TILED_JSON);
@@ -44,6 +45,7 @@ demo.Preloader.prototype = {
         game.load.audio('criss cross skies music', "assets/audio/music/Ketsa - Criss Cross Skies.mp3");
         game.load.audio('prepare for battle music', "assets/audio/music/xDeviruchi/xDeviruchi - Prepare for Battle! .wav");
         game.load.audio('mysterious dungeon music', "assets/audio/music/xDeviruchi/xDeviruchi - Mysterious Dungeon.wav");
+		game.load.audio('mapMusic', "assets/audio/music/Ketsa - Glow-Flow.mp3");
 
         // Bosses
         game.load.spritesheet('slimeBoss', "assets/sprites/enemies/blue slime/slime-Sheet-white.png", 32, 25);
