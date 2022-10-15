@@ -95,7 +95,10 @@ demo.level0.prototype = {
         game.physics.arcade.collide(currentPlayer, levelTiles);
         
         // Warping
-        game.physics.arcade.collide(currentPlayer, warp1, function(){warp1.body.enable = false; transitionLevel('Map', newLevel = true, spawn = 2, unique = true);});
+        game.physics.arcade.collide(currentPlayer, warp1, function(){
+            warp1.body.enable = false; 
+            transitionLevel('Map', newLevel = true, spawn = 2, unique = true);
+        });
 
         this.checkEvents();
     },

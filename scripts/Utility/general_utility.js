@@ -49,7 +49,7 @@ function changeLevel(i, level, unique = false){
     if (unique){
         game.state.start(level);
     }
-    levelString = level.includes('level') ? level : 'level' + level;
+    levelString = level.includes('level') || level.includes('Map') ? level : 'level' + level;
     game.state.start(levelString);
     fadeIn();
 }
