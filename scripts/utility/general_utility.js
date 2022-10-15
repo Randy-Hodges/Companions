@@ -13,11 +13,13 @@ function textOverlap(x, y, string, styleBase = { fontSize: '18px', fill: '#000'}
     game.add.text(x - 1, y - 1, string, styleOverlap).fixedToCamera = fixedBoolean;
 }
 
+
 function updateMoney(){
     moneyText.text = "Coins: " + basePlayer.money;
     moneyText2.text = "Coins: " + basePlayer.money;
 }
 // #endregion
+
 
 // #region Transitioning
 function transitionLevel(level, newLevel = false, spawnVal = 1, unique = false){
@@ -42,6 +44,7 @@ function transitionLevel(level, newLevel = false, spawnVal = 1, unique = false){
     }, this);
 }
 
+
 function changeLevel(i, level, unique = false){
     console.log('level change to: ' + level);
     addedTextContinueListener = false;
@@ -54,6 +57,7 @@ function changeLevel(i, level, unique = false){
     fadeIn();
 }
 
+
 function fadeOut(endFunction = undefined){
     // fade color and duration
     if (typeof endFunction !== "undefined"){
@@ -63,10 +67,12 @@ function fadeOut(endFunction = undefined){
     game.camera.fade(0x000000, 500);
 }
 
+
 function fadeIn(){
     game.camera.flash(0x000000, 1000, true)
 }
 // #endregion 
+
 
 // #region Tiles
 function excludeCollision(tile){
@@ -75,6 +81,7 @@ function excludeCollision(tile){
         exclusionLayer[tile.index] = tile.index;
     }
 }
+
 
 function hitSpike(sprite, tile){
     if (enemyGroup.contains(sprite)){
@@ -131,6 +138,7 @@ function invertPixel (pixel) {
 }
 // #endregion
 
+
 // #region Other
 function pause(event){
     // Pause
@@ -158,6 +166,7 @@ function pause(event){
         gamePaused = false;
     }  
 }
+
 
 function removeItemOnce(arr, value) {
     var index = arr.indexOf(value);
