@@ -343,7 +343,7 @@ Player = function (game, x = gameWidth / 2, y = gameHeight / 2) {
 
     // #endregion
 
-    // Companions
+    // #region Companions
     this.companionSlots = [undefined, undefined];
     // TODO: loop through all of these instead of manually doing it
     this.companionSlots[0] = createEquippedCompanion(basePlayer.companionNames[0], this, this.body.position.x - 50, this.body.position.y - 50);
@@ -359,6 +359,8 @@ Player = function (game, x = gameWidth / 2, y = gameHeight / 2) {
         FOURButton = game.input.keyboard.addKey(Phaser.Keyboard.FOUR);
         FOURButton.onDown.add(function(){game.sound.stopAll()})
     }
+    // #endregion
+
 }
 
 Player.prototype = Object.create(Phaser.Sprite.prototype);

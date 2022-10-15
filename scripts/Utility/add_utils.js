@@ -6,6 +6,14 @@ function createGameConfigs(){
     game.stage.backgroundColor = '000000';
     game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
     game.camera.resetFX();
+    // Adding Reset Button
+    resetEnabled = true;
+    resetButton = game.input.keyboard.addKey(Phaser.Keyboard.H);
+    resetButton.onDown.add(function () {
+        if (resetEnabled) {
+            transitionLevel('0', newLevel = true);
+        }
+    })
     fadeIn();
 }
 

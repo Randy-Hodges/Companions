@@ -21,9 +21,12 @@ function updateMoney(){
 
 // #region Transitioning
 function transitionLevel(level, newLevel = false, spawnVal = 1, unique = false){
-    currentPlayer.disableMovement = true;
-    currentPlayer.stopMovementX();
-    currentPlayer.alpha = 0;
+    playerExists = currentPlayer.alive;
+    if (playerExists){
+        currentPlayer.disableMovement = true;
+        currentPlayer.stopMovementX();
+        currentPlayer.alpha = 0;
+    }
     fadeOut(); 
     game.camera.onFadeComplete.add(function(){
         if (newLevel) {
@@ -31,8 +34,10 @@ function transitionLevel(level, newLevel = false, spawnVal = 1, unique = false){
         }
         spawn = spawnVal; 
         changeLevel(0, level, unique);
-        currentPlayer.disableMovement = false;
-        currentPlayer.alpha = 1;
+        if (playerExists){
+            currentPlayer.disableMovement = false;
+            currentPlayer.alpha = 1;
+        }
         game.camera.onFadeComplete.removeAll();
     }, this);
 }
