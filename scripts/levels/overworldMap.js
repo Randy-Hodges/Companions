@@ -10,6 +10,8 @@ demo.overworldMap.prototype = {
         // music
         addMusic('mapMusic', .15);
 
+        // loadOverworldMap()
+
         // Tilemap
         var map = game.add.tilemap('overworldMap');
         map.addTilesetImage('Overworld_RedMarket','RedMarket'); // make sure the tileset name is the same as the tileset name used in Tiled
@@ -91,6 +93,7 @@ demo.overworldMap.prototype = {
 
             levelUI = "Use the arrow keys to move around the map.  \n      • V - Village";
             textOverlap(8, 8, levelUI, style, overlap);
+            console.log("This 'else' statement should not have been reached. See overworldMap.js line 84")
         }
 
         // level select

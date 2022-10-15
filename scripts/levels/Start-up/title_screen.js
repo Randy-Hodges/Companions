@@ -74,7 +74,7 @@ demo.title_screen.prototype = {
         game.add.existing(pig);
         companionGroup.add(pig);
 
-        dragon = game.add.sprite(34 * tileLength, 51 * tileLength, 'concealed dragon');
+        dragon = game.add.sprite(33 * tileLength, 51 * tileLength, 'concealed dragon');
         dragon.animations.add('awaken', [1,2,3,4,5,4,5,4,3,2,1], framerate = 10);
         dragon.scale.setTo(2.5, 2.5);
 

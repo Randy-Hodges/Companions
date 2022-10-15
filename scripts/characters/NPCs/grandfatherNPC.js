@@ -15,7 +15,7 @@ GrandfatherNPC = function(game, x, y, spritesheetStrID){
 
     // Physics
     game.physics.enable(this);
-    this.movementSpeedY = 30;
+    this.movementSpeedY = 8;
     this.body.gravity.y = -globalGravity; // counteracts global gravity
 
     // Switching Direction
