@@ -24,7 +24,7 @@ From that point forward, player input decides when and how files/levels are acti
 ## People
 
 #### Randy Hodges 
-- Responsible for nearly everything in this repo.
+- Responsible for most things in this repo.
 - Contact: 
   - Email: randyhodges0303@gmail.com
 #### Lori Vanhoose 
