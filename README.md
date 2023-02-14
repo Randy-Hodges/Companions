@@ -8,7 +8,7 @@
 
 Welcome to our project. Companions is game that was inspired by video games we developers played as kids which has resulted in our game being akin to a mix of Mario, Hollow Knight, and Pokemon Mystery Dungeon. Whether you're here because you played the demo or for another reason, we're excited to see that you're interested in the code. If you want to play the game in your browser, you can visit https://randy-hodges.itch.io/companions-a-platforming-game.
 
->You can see all of our current, future, and past tasks by visiting our trello board: https://trello.com/b/VMfbqora
+>You can see all of our current, future, and past tasks by visiting our trello board: https://trello.com/b/VMfbqora/companions-board
 
 ## File layout
 
